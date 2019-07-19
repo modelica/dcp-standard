@@ -1,0 +1,59 @@
+== 3 Protocol Specification
+---
+**3.1 Basic Definitions**
+
+The DCP is a platform-independent protocol which enables communication and data exchange for co-simulation, between a multitude of different computing platforms, operating systems and software. This section defines the data types supported by the DCP and their encodings to enable interoperability between these systems.
+
+**3.1.1 Keyword**
+Unless noted otherwise, the meaning of keywords (must, must not, should, …) as stated in Ap-pendix A of this document applies.
+
+**3.1.2  Version Descriptor**
+This DCP specification utilizes the following version descriptor numbering scheme. See also sec-tion 5.4.
+
+*	dcpMajorVersion: First level version number. Indicates a major specification release that is relevant to compliant implementation.
+*	dcpMinorVersion: Second level version number. Indicates a minor specification release that is relevant to compliant implementation.
+*	dcpMaintenanceVersion: Third level version number. Indicates a specification release that is not relevant to compliant implementation.
+
+**3.1.3 DCP Slave**
+
+A DCP slave is either a simulation model or a real-time system on a ready-to-run execution plat-form that is accessible via DCP over a given supported communication medium.
+
+**3.1.4 DCP File**
+
+All static information related to a DCP slave is stored in an accompanying DCP file (file extension: .dcp). This file is a zip file. The compression method used for the zip file must be "deflate".
+Any tool exporting or importing such a file must obey the following.
+
+**Exporter for DCP files version 1.0**
+
+Any tool creating DCP files according to this version of the specification. Its internal structure must be as follows.
+
+.Internal structure of DCP file
+[width= 100%, cols="2,6", options="header"]
+|====
+|Structure
+|Description
+
+|/
+|Root of the zip file.
+
+Note: It is not allowed to place any other files and folders at the same hierarchy level than the "v1.0" folder.
+
+
+|/v1.0
+|Folder in the root of the zip file.
+This is mandatory.
+
+
+|/v1.0/dcpSlaveDescription.dcpx
+|DCP slave description according to this specification. See sec-tion 5 for details.
+This is mandatory.
+
+
+|/v1.0/documentation
+|Directory containing documentation for the DCP slave.
+This is optional.
+
+|/v1.0/*
+|Other files and folders might be included.
+This is optional.
+|====
