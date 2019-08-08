@@ -1,2 +1,0 @@
-===== Initialization
-The DCP superstate +Initialization+ is used by a DCP master to align multiple DCP slaves before running a simulation. The states +CONFIGURED, INITIALIZING, INITIALIZED+ and +SENDING_I+ together with their transitions allow the master to apply iterative algorithms to reach a consistent initial state over all slaves within a scenario. Initialization is independent from absolute time and the chosen operating mode.
