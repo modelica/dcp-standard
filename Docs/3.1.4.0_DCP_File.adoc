@@ -1,3 +1,0 @@
-==== DCP File
-All static information related to a DCP slave is stored in an accompanying DCP file (file extension: .dcp). This file is a zip file. The compression method used for the zip file must be "+deflate+".
-Any tool exporting or importing such a file must obey the following.
