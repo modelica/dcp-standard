@@ -1,2 +1,0 @@
-===== Log Mode
-A log mode for specific log messages is set by the master using the PDU +CFG_logging+. The default value for all log messages is No logging via DCP (0). See section 3.3.3.9 for a list of valid log modes.
