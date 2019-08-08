@@ -1,2 +1,0 @@
-==== State Machine
-Each DCP slave internally implements a state machine, where a transition refers to a change of a state. Transitions can be triggered by PDUs. Details are given in section 3.2. At any given instant of time a DCP slave is in exactly one state. This assumes that transitions are instantaneous.
