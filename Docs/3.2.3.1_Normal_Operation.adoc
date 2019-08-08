@@ -1,2 +1,0 @@
-===== Normal Operation
-The states +CONFIGURATION, CONFIGURING, PREPARING, PREPARED, CONFIGURED, INITIALIZING, INITIALIZED, SENDING_I, RUNNING, COMPUTING, COMPUTED, SENDING_D, STOPPING+, and +STOPPED+ belong to a super-state called “Normal Operation”. This superstate assumes that the DCP slave operates as intended by the DCP slave provider.
