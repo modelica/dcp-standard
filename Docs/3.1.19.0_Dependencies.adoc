@@ -1,5 +1,0 @@
-==== Dependencies
-The outputs of a DCP slave might depend on its inputs and parameters.
-These dependencies can be described in the DCP slave description (see section 5.13.5). Additionally, the kind of dependency can be expressed, to allow for an optimized initialization of the DCP slave.
-
- Note: This information can be utilized to e.g. detect the presence or absence of algebraic loops in the configured scenario.
