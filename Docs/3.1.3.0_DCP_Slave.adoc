@@ -1,2 +1,0 @@
-==== DCP Slave
-A DCP slave is either a simulation model or a real-time system on a ready-to-run execution platform that is accessible via DCP over a given supported communication medium.
