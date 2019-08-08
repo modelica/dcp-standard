@@ -1,2 +1,0 @@
-===== Error
-The states +ERRORHANDLING+ and +ERRORRESOLVED+ belong to a superstate Error. This superstate is used to handle exceptional conditions that are defined by the DCP slave provider.
