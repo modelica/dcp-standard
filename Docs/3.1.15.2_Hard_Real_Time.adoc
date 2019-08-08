@@ -1,4 +1,0 @@
-===== Hard Real-Time (HRT)
-All deadlines for all outputs must be met. Simulation time is synchronous to absolute time. In case of any deviations, the DCP slave transitions to the error state.
-
-  Note: Synchronous means that one unit of elapsed absolute time corresponds to the same unit of simulation time.
