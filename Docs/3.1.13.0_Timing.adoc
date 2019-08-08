@@ -1,2 +1,0 @@
-==== Timing
-DCP does not include mechanisms for time synchronization. If such mechanisms are needed, existing mechanism for time synchronization between nodes shall be used. A typical example for such a mechanism can be found in [3].
