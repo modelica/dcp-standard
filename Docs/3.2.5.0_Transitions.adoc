@@ -1,2 +1,0 @@
-==== Transitions
-The following subsections describe the valid state transitions of the DCP slave state machine.
