@@ -1,4 +1,0 @@
-===== Absolute Time
-The absolute time is the newtonian time represented by a UNIX time stamp in UTC format. It is defined in seconds since January 1^st^, 1970, 00:00:00 UTC, minus the number of leap seconds from that date till now.
-
-  Note: This is also referred as epoch.
