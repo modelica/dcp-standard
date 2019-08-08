@@ -1,2 +1,0 @@
-===== Simulation Time
-The simulation time is the time value to which simulation models inside DCP slaves refer to.
