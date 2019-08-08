@@ -1,3 +1,0 @@
-===== Structural Parameters
-Structural parameters may be used to indicate variable dimensions. This is used to define e.g. vectors and matrices. +
-Structural parameters have a start value and may be modified during simulation time.
