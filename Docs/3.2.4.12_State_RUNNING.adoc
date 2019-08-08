@@ -1,0 +1,22 @@
+===== State RUNNING
+
+.State RUNNING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|For real-time operating modes SRT and HRT: The DCP slave is running and inputs/outputs are exchanged. Simulation time is mapped to absolute time.
+
+For non-real-time operating mode (NRT): Simulation time is not advanced but can be increased by transitioning to the NRT-specific state +COMPUTING+. The DCP slave can receive inputs.
+
+The actual simulation experiment is executed in this state.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Receiving of Data PDUs in NRT operating mode +
+•	Receiving and sending Data PDUs in SRT and HRT operating modes +
+•	Report state
+
+|===

@@ -1,0 +1,19 @@
+===== Transition run
+
+.State Transition run
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|This transition indicates the start of the simulation run.
+
+|Preconditions
+|The DCP master has determined that simulation shall start either now or at a given time.
+
+|Trigger
+|+STC_run+
+
+|States
+|•	CONFIGURED => RUNNING
+
+  Note: Even if the field time within the PDU STC_run contains a time > now, the DCP slave transitions immediately to state RUNNING. In state RUNNING, it waits for time==now and then starts the simulated time.
+|===

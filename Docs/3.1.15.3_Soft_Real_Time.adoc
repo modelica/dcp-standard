@@ -1,0 +1,2 @@
+===== Soft Real-Time (SRT)
+It depends on the application if and how SRT DCP slaves are integrated into scenarios. The DCP slave tries to meet deadlines for all outputs. If deadlines are not met, the DCP slave continues operation. Simulation time should be synchronous to absolute time. It depends on the application, if and when the DCP slave signals an error.

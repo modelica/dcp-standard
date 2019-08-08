@@ -1,0 +1,18 @@
+===== Transition configured
+
+.State Transition configured
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave realized a configuration.
+
+|Preconditions
+|None.
+
+
+|Trigger
+|+SIG_configured+
+
+|States
+|•	+CONFIGURING -> CONFIGURED+
+|===

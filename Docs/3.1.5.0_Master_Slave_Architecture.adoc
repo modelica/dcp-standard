@@ -1,0 +1,4 @@
+==== Master-Slave Architecture
+Exactly one DCP master may control at least one DCP slave. The DCP master is the only one to send DCP request PDUs within a single scenario. After registration, one DCP slave shall communicate with exactly one DCP master.
+
+This DCP specification is intended for the realization of a DCP slave. It does not explicitly specify how a DCP master must be designed. A DCP master provider needs to ensure that its DCP master is able to correctly operate with at least one DCP slave according to this DCP specification.

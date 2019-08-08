@@ -1,0 +1,17 @@
+===== Transition synchronize
+
+.State Transition synchronize
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave enters the Run superstate.
+
+|Preconditions
+|None.
+
+|Trigger
+|+STC_run+
+
+|States
+|•	+CONFIGURED -> SYNCHRONIZING+
+|===

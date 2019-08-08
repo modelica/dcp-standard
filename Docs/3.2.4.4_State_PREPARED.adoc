@@ -1,0 +1,15 @@
+===== State PREPARED
+
+.State PREPARED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The slave has prepared the transport protocol and is ready to communicate or establish connections.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state
+|===

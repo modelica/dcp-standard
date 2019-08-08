@@ -1,0 +1,3 @@
+==== Time Resolution
+One atomic time step, i.e. the resolution, is defined as a fraction of two integer values numerator and denominator. It is set by the DCP master. For native DCP it is rolled out via PDU +CFG_time_res+ in state +CONFIGURATION+ (see section 3.2). The unit of the fraction is seconds.
+Possible values for the communication are defined in the DCP slave description, where either a valid range is specified or a list of valid values is provided.

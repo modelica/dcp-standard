@@ -1,0 +1,18 @@
+===== Transition prepared
+
+.State Transition prepared
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The preparation of the transport protocol has finished.
+
+|Preconditions
+|None.
+
+
+|Trigger
+|+SIG_prepared+
+
+|States
+|•	+PREPARING -> PREPARED+
+|===

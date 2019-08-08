@@ -1,0 +1,6 @@
+==== Version Descriptor
+This DCP specification utilizes the following version descriptor numbering scheme. See also section 5.4.
+
+*	+dcpMajorVersion+: First level version number. Indicates a major specification release that is relevant to compliant implementation.
+*	+dcpMinorVersion+: Second level version number. Indicates a minor specification release that is relevant to compliant implementation.
+*	+dcpMaintenanceVersion+: Third level version number. Indicates a specification release that is not relevant to compliant implementation.

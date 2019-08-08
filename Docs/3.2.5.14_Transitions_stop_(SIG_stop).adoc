@@ -1,0 +1,21 @@
+===== Transition stop (SIG_stop)
+
+.State Transition stop by SIG
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave wants to stop the simulation.
+
+|Preconditions
+|The DCP slave raised a +SIG_stop+ signal. +
+  Note: A DCP slave may request simulation stop from the DCP master by triggering SIG_stop. The master notices the state change of the DCP slave and reacts accordingly, e.g. may communicate STC_stop to other DCP slaves of the same scenario.
+
+
+|Trigger
+|+SIG_stop+
+
+|States
+|•	+SYNCHRONIZING -> STOPPING+ +
+•	+SYNCHRONIZED -> STOPPING+ +
+•	+RUNNING -> STOPPING+
+|===

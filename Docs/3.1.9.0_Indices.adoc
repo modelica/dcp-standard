@@ -1,0 +1,2 @@
+==== Indices
+All indices and positions start at 0 (“zero”) unless stated otherwise.

@@ -1,0 +1,25 @@
+==== Transport Protocol Numbering
+The transport protocols supported by this DCP specification are numbered as follows.
+
+.Transport protocol numbering
+[width="50%", cols="3,3" options="header" float="center"]
+|===
+
+|Transport protocol
+|Number~hex~
+
+|UDP/IPv4
+|0x00
+
+|rfcomm/Bluetooth
+|0x01
+
+|CAN based
+|0x02
+
+|USB (2.0)
+|0x03
+
+|TCP/IPv4
+|0x04
+|===

@@ -1,0 +1,2 @@
+==== Byte Order
+The byte order considered for this entire DCP specification document is little endian, unless explicitly noted otherwise.

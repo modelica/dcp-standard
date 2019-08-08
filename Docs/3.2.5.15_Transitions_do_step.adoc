@@ -1,0 +1,19 @@
+===== Transition do_step
+
+.State Transition do_step
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave starts one computational step.
+
+|Preconditions
+|The DCP slave is in NRT (non-real-time) operating mode.
+
+|Trigger
+|+STC_do_step+
+
+|States
+|•	+SYNCHRONIZING -> COMPUTING+ +
+•	+SYNCHRONIZED -> COMPUTING+ +
+•	+RUNNING -> COMPUTING+
+|===

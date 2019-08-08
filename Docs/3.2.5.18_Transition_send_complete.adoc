@@ -1,0 +1,21 @@
+===== Transition send_complete
+
+.State Transition send_complete
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave has finished sending its computational results.
+
+|Preconditions
+|The DCP slave is either in NRT (non-real-time) operating mode or in Initialization superstate.
+
+
+|Trigger
+|+SIG_send_complete+
+
+|States
+|•+SENDING_D -> RUNNING+ +
+• +SENDING_D -> SYNCHRONIZING+ +
+• +SENDING_D -> SYNCHRONIZED+ +
+• +SENDING_I -> CONFIGURED+
+|===

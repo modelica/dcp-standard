@@ -1,0 +1,23 @@
+===== Transition exit
+
+.State Transition exit
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|This transition marks the exit point from the state machine.
+The DCP software is unloaded from the execution platform.
+
+In case of an error, the occurred error either (1) could not be handled and the DCP software is unloaded from the execution platform, or (2) another error occurred before resetting the DCP slave.
+
+
+|Preconditions
+|None or unrecoverable error.
+
+|Trigger
+|+SIG_exit+
+
+|States
+|•	+ALIVE+ -> exitPoint +
+•+ERRORHANDLING+ -> exitPoint +
+•+ERRORRESOLVED+ -> exitPoint
+|===

@@ -1,0 +1,12 @@
+===== Run
+The states +SYNCHRONIZING, SYNCHRONIZED+ and +RUNNING+ belong to superstate Run. In contrast to superstate +Initialization+ simulation time can elapse.
+
+For real-time operating modes SRT and HRT simulation time is running and data is exchanged using the defined step size. For non-real-time operating mode NRT advance of simulation time and data exchange are handled as described in +superstate NonRealTime+.
+
+The two states +SYNCHRONIZING+ and +RUNNING+ allow for distinction a possible initial transient oscillation phase and the actual simulation experiment. By transitioning to state +SYNCHRONIZED+ the slave indicates that it has finished the transient oscillation phase.
+
+  Note: For example, when the control loop between an engine test bench and a simulation model is closed, typically initial transient oscillations occur. The actual simulation experiment should only be started after this initial transient oscillation phase.
+
+  The initial transient oscillation phase takes place in state SYNCHRONIZING. As soon as this phase is finished, the slave transitions to state SYNCHRONIZED. As soon as all slaves are in state SYNCHRONIZED, the master triggers the transition to state RUNNING. This leads to a defined point in time when the actual simulation experiment starts.
+
+For NRT operating mode, from each state of the superstate Run transition to state +COMPUTING+ of +superstate NonRealTime+ is possible. On reentry from state +SENDING_D+ to +superstate+ Run the entry state is the last state from which the superstate Run was left. This is indicated by the History element in the state chart (see Figure 1).

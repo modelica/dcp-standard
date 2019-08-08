@@ -1,0 +1,19 @@
+===== State ERRORHANDLING
+
+.State ERRORHANDLING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave tries to resolve an error.
+
+|Preconditions
+|A fault is detected.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state +
+•	Resolve occurred error using error handling routines +
+•	Ensure safe condition of model or RT system +
+•	In case of success, transition self-reliantly to state +ERRORRESOLVED+. +
+  Note: For detailed description of the DCP error handling procedure, see section 3.4.10.
+|===

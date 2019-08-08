@@ -1,0 +1,109 @@
+===== Integer Numbers
+*	Unsigned integers (+data types uint8, uint16, uint32 and uint64+) are transferred as unsigned binary numbers in little endian byte order. The number of bits used to store the integer is defined by its suffix, e. g. 8 bits for uint8.
+*	Signed integers (+data types int8, int16, int32 and int64+) are transferred as binary numbers in two's complement representation in little endian byte order. The required number of bits in memory for storing the integer is defined by the suffix, e. g. 8 bits for int8.
+*	Table 3 illustrates both the binary and the representation of the sample number i= 89498498 as int32 in PDUs.
+
+.+int32+ representation
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+|Binary
+|1 {set:cellbgcolor:#4db4eb}
+|1 {set:cellbgcolor:#f2fc92}
+|1
+|1
+|1
+|0
+|1
+|0
+|1{set:cellbgcolor:#abfc92}
+|0
+|1
+|0
+|1
+|0
+|1
+|0
+|0 {set:cellbgcolor:#72c758}
+|1
+|0
+|1
+|1
+|1
+|0
+|0
+|0 {set:cellbgcolor:#3b7a27}
+|1
+|1
+|1
+|1
+|1
+|1
+|0
+
+|Hex
+{set:cellbgcolor!}
+8+^|0xFA
+8+^|0xAA
+8+^|0x5C
+8+^|0x7E
+
+|
+16+|MSB
+16+>| LSB
+|===
+
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+^|n
+8+^|n + 1
+8+^|n + 2
+8+^|n + 3
+
+
+|DAT_input_output~Bin~
+|0 {set:cellbgcolor:#3b7a27}
+|1
+|1
+|1
+|1
+|1
+|1
+|0
+|0 {set:cellbgcolor:#72c758}
+|1
+|0
+|1
+|1
+|1
+|0
+|0
+|1  {set:cellbgcolor:#abfc92}
+|0
+|1
+|0
+|1
+|0
+|1
+|0
+|1 {set:cellbgcolor:#4db4eb}
+|1{set:cellbgcolor:#f2fc92}
+|1
+|1
+|1
+|0
+|1
+|0
+
+|DAT_input_output~Hex~
+{set:cellbgcolor!}
+8+^|0x7E
+8+^|0x5C
+8+^|0xAA
+8+^|0xFA
+
+
+
+|===

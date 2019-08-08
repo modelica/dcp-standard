@@ -1,0 +1,18 @@
+===== Transition initialize
+
+.State Transition initialize
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave starts to establish a consistent initial state with all other connected DCP slaves.
+
+|Preconditions
+|None.
+
+
+|Trigger
+|+STC_initialize+
+
+|States
+|•	+CONFIGURED -> INITIALIZING+
+|===

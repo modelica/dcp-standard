@@ -1,0 +1,12 @@
+===== Parameters
+Parameters are used to change properties of a DCP slave. They can be set by the DCP master only.
+
+For parameters the variability shall be set to either fixed or tunable.
+
+The values of parameters with variability = “+fixed+” can be set only in state CONFIGURATION (see section 3.2.4.2).
+
+The values of parameters with variability = “+tunable+” can be set at any time. The received value of a tunable parameter shall come into effect during the next computational step of a DCP slave in NRT operating mode. For the operating modes HRT and SRT the values are adopted immediately. Values of several parameters can be grouped together and sent using one Data PDU. Details are given in section 3.4.5.2.
+
+If a value for a parameter is not set at all, it stays at its start value which is contained in the DCP slave description.
+
+ Note: To ensure that multiple parameters coming into effect simultaneously, they must be sent at once.

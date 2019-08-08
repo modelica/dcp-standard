@@ -1,0 +1,8 @@
+==== Native and Non-Native DCP Specification
+This section defines the term native DCP specification. Native DCP means that the mapping of PDUs to the transport protocol preserves the bit sequence. The bit sequence of PDUs is specified in section 3.3.7. All PDUs, especially the Control PDUs, must be transferable via the chosen transport protocol. No additional mechanisms for exchange of information, e.g. for configuration are needed.
+
+ Note: The DCP specification for UDP/IPv4 follows native DCP, for example.
+
+In contrast to the native DCP specification, the non-native DCP specification uses a different mapping to associate the DCP protocol and PDUs to a transport protocol. Available mappings are specified in section 4.
+
+ Note: The DCP specification for CAN bus follows non-native DCP, for example.

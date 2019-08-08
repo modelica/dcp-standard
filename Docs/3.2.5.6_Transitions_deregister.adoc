@@ -1,0 +1,20 @@
+===== Transition deregister
+
+.State Transition deregister
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|A DCP master deregisters a DCP slave to release it from a simulation scenario.
+
+|Preconditions
+|The DCP slave is registered to a DCP master.
+
+
+|Trigger
+|+STC_deregister+
+
+|States
+|•	+CONFIGURATION => ALIVE+ +
+•	+STOPPED => ALIVE+ +
+•	+ERRORRESOLVED => ALIVE+
+|===

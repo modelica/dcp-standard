@@ -1,0 +1,2 @@
+===== 3.1.23.3 Log Category
+A log category is both defined and assigned to a log template in the DCP slave description. One byte shall be reserved to identify a log category. See section 3.3.3.6 for a valid list of ranges.

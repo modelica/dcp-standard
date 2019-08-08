@@ -1,0 +1,17 @@
+===== State SENDING_I
+
+.State SENDING_I
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In this state the DCP slave sends its outputs.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Sending and receiving of Data PDUs +
+•	Report state +
+•	Indicate end of sending
+|===

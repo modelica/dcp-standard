@@ -1,0 +1,10 @@
+==== Communication Step Size
+The communication step size is defined as follows:
+
+image::C:\Users\damianlang\Desktop\Atom\DCP\Adoc\DCP_2.0\formula.png[align="center"]
+
+where numerator divided by +denominator+ represents the resolution and steps represents the integer number of resolution intervals. The minimum value for steps is 1.
+If the communication step size for an output should be fixed, then both the attributes resolution and steps need to be set to fixed in the DCP slave description.
+
+For operating modes HRT and SRT, steps is configured via PDU +CFG_steps+ (see section 3.3.7.15) by the DCP master in state +CONFIGURATION+.
+For the operating mode NRT, steps is given in each PDU +STC_do_step+ (see section 3.3.7.7).
