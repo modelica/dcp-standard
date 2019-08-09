@@ -1,0 +1,42 @@
+== Glossary
+[width="100%", cols="3,3", options="header"]
+|===
+|Term
+|Description
+
+|DCP master
+|A DCP master is defined as a black box, communicating by DCP PDUs over a given transport protocol, controlling at least one DCP slave.
+
+|DCP slave
+|A DCP slave is defined according to this specification, communicating by DCP PDUs over a given transport protocol, being controlled by exactly one DCP master.
+
+|Distributed Co-Simulation Protocol (DCP)
+|Communication protocol which enables distributed co-simulation.
+
+|Distributed Co-Simulation Protocol Description
+|Description of a DCP slave in XML file format with the file extension .dcpx according to this specification.
+
+|Distributed Co-Simulation Protocol File
+|A ZIP file having the extension .dcp designed to hold DCP description files.
+
+|Distributed Co-simulation Scenario (DCS)
+|A DCS is defined as the integration of multiple DCP slaves to perform a common simulation task.
+
+|Error
+|A DCP slave error is a discrepancy between a computed, observed or measured value or condition, and the true, specified or theoretically correct value or condition, that concerns violations of real time requirements or other DCP related functionality.
+
+|Failure
+|Termination of the ability of a DCP slave to perform as intended.
+
+|Hard Real-Time
+|Time-related criteria (deadlines) must be met at all times. Miss of a deadline is assumed to result in a total system failure.
+
+|Non-real time simulation
+|A simulation in which the simulation time is not synchronous to the absolute time.
+
+|Protocol Data Unit (PDU)
+|Information that is exchanged as a unit among DCP slaves.
+
+|Real-time simulation
+|A simulation in which the simulation time is synchronous to the absolute time.
+|===

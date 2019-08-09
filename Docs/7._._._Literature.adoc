@@ -1,0 +1,24 @@
+== Literature
+[1]	“IEEE Standard for Floating-Point Arithmetic,” IEEE Std 754-2008, pp. 1–70, Aug. 2008.
+
+[2]	Unicode Consortium, The Unicode Standard, Version 2.0, no. June. 1996.
+
+[3]	“IEEE Standard for a Precision Clock Synchronization Protocol for Networked Measurement and Control Systems,” IEEE Std 1588-2008, pp. 1–269, Jul. 2008. +
+
+[4]	R. Pattis, “EBNF : A Notation to Describe Syntax,” pp. 1–19, 2013.
+
+[5]	P. J. Leach, R. Salz, and M. H. Mealling, “A Universally Unique IDentifier (UUID) URN Namespace,” no. 4122. RFC Editor, 2005. +
+
+[6]	“ISO/DIS 26262:2016 - Road Vehicles - Functional Safety.” International Organization for Standardization, 2016. +
+
+[7]	WG 802.1 - Higher Layer LAN Protocols Working Group, “IEEE 802-2014 - IEEE Standard for Local and Metropolitan Area Networks: Overview and Architecture.” IEEE Standards Association, 2014. +
+
+[8]	“W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures.” W3C., 2012. +
+
+[9]	“Functional Mock-up Interface for Model Exchange and Co-Simulation, Version 2.0.” Modelisar Consortium and Modelica Association Project “FMI,” 2014. +
+
+[10]	J. Postel, “Internet Protocol,” RFC Editor, Sep. 1981. +
+
+[11]	K. Harrenstien, M. K. Stahl, and E. J. Feinler, “DoD Internet host table specification,” RFC Editor, 1985. +
+
+[12]	P. Mockapetris, “Domain names - implementation and specification,” RFC Editor, Nov. 1987.
