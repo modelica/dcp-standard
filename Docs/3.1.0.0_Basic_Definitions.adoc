@@ -1,0 +1,2 @@
+=== Basic Definitions
+The DCP is a platform-independent protocol which enables communication and data exchange for co-simulation, between a multitude of different computing platforms, operating systems and software. This section defines the data types supported by the DCP and their encodings to enable interoperability between these systems.
