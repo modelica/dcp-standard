@@ -770,7 +770,7 @@ Possible values for the communication are defined in the DCP slave description, 
 ==== Communication Step Size
 The communication step size is defined as follows:
 
-image::C:\Users\damianlang\Desktop\Atom\DCP\Adoc\DCP_2.0\formula.png[align="center"]
+image::Images/formula.png[width=60%, align="center"]
 
 where numerator divided by +denominator+ represents the resolution and steps represents the integer number of resolution intervals. The minimum value for steps is 1.
 If the communication step size for an output should be fixed, then both the attributes resolution and steps need to be set to fixed in the DCP slave description.
