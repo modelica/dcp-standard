@@ -1,0 +1,7132 @@
+== Protocol Specification
+
+=== Basic Definitions
+The DCP is a platform-independent protocol which enables communication and data exchange for co-simulation, between a multitude of different computing platforms, operating systems and software. This section defines the data types supported by the DCP and their encodings to enable interoperability between these systems.
+
+---
+
+==== Keywords
+Unless noted otherwise, the meaning of keywords (must, must not, should, …) as stated in Appendix A of this document applies.
+
+---
+
+==== Version Descriptor
+This DCP specification utilizes the following version descriptor numbering scheme. See also section 5.4.
+
+*	+dcpMajorVersion+: First level version number. Indicates a major specification release that is relevant to compliant implementation.
+*	+dcpMinorVersion+: Second level version number. Indicates a minor specification release that is relevant to compliant implementation.
+*	+dcpMaintenanceVersion+: Third level version number. Indicates a specification release that is not relevant to compliant implementation.
+
+---
+
+==== DCP Slave
+A DCP slave is either a simulation model or a real-time system on a ready-to-run execution platform that is accessible via DCP over a given supported communication medium.
+
+---
+
+==== DCP File
+All static information related to a DCP slave is stored in an accompanying DCP file (file extension: .dcp). This file is a zip file. The compression method used for the zip file must be "+deflate+".
+Any tool exporting or importing such a file must obey the following.
+
+---
+
+===== Exporter for DCP files version 1.0
+Any tool creating DCP files according to this version of the specification. Its internal structure must be as follows.
+
+.Internal structure of DCP file
+[width="100%", cols="3,3", options="header" ]
+|===
+
+|Structure
+|Description
+
+|/
+|Root of the zip file. +
+_Note: It is not allowed to place any other files and folders at the same hierarchy level than the "v1.0" folder._
+
+
+|/v1.0
+|Folder in the root of the zip file. +
+This is mandatory.
+
+|/v1.0/dcpSlaveDescription.dcpx
+|DCP slave description according to this specification. See sec-tion 5 for details. +
+This is mandatory.
+
+
+|/v1.0/documentation
+|Directory containing documentation for the DCP slave. +
+This is optional.
+
+
+|/v1.0/*
+|Other files and folders might be included. +
+This is optional.
+|===
+
+---
+
+===== Importer for DCP files version 1.0
+
+An importing tool must only consider the folder "/v1.0" and its subfolders. Any other files and folders at the same hierarchy level than the "v1.0" folder must be ignored.
+
+  Note: This is reserved for future versions of the DCP.
+
+---
+
+==== Master-Slave Architecture
+Exactly one DCP master may control at least one DCP slave. The DCP master is the only one to send DCP request PDUs within a single scenario. After registration, one DCP slave shall communicate with exactly one DCP master.
+
+This DCP specification is intended for the realization of a DCP slave. It does not explicitly specify how a DCP master must be designed. A DCP master provider needs to ensure that its DCP master is able to correctly operate with at least one DCP slave according to this DCP specification.
+
+---
+
+==== State Machine
+Each DCP slave internally implements a state machine, where a transition refers to a change of a state. Transitions can be triggered by PDUs. Details are given in section 3.2. At any given instant of time a DCP slave is in exactly one state. This assumes that transitions are instantaneous.
+
+---
+
+==== Protocol Data Units
+DCP slaves communicate by using Protocol Data Units, short PDU. In general, a DCP slave must be capable of sending and receiving such PDUs. Available PDUs within DCP are organized in PDU families which are named Request, Response, Notification and Data. The Request PDUs consist of configuration request (CFG), state change request (STC) and information request (INF) PDUs. The Response (RSP) PDUs together with Request PDUs represent the family of Control PDUs.  See also section 3.3.
+
+---
+
+==== Number Represantation
+All numbers given in this DCP specification document must be interpreted as decimal, if no prefix is used. Hexadecimal values are always indicated with the prefix 0x. If a binary number appears outside a table, binary numbers are indicated with the prefix 0b.
+
+---
+
+==== Indices
+All indices and positions start at 0 (“zero”) unless stated otherwise.
+
+---
+
+==== Data Types
+The supported data types of the DCP are defined in Table 2. Each data type is assigned a unique identifier (ID).
+
+.Supported data types of the DCP
+[width="50%", cols="3,3", options="header" float="center" ]
+|===
+|Data type
+|ID~hex~
+
+|uint8
+|0x0
+|uint16
+|0x1
+
+|uint32
+|0x2
+
+|uint64
+|0x3
+
+|int8
+|0x4
+
+|int16
+|0x5
+
+|int32
+|0x6
+
+|int64
+|0x7
+
+|float32
+|0x8
+
+|float64
+|0x9
+
+|string
+|0xA
+
+|binary
+|0xB
+|===
+
+---
+
+==== Byte Order
+The byte order considered for this entire DCP specification document is little endian, unless explicitly noted otherwise.
+
+---
+
+==== Data Type Encoding
+
+===== Integer Numbers
+*	Unsigned integers (+data types uint8, uint16, uint32 and uint64+) are transferred as unsigned binary numbers in little endian byte order. The number of bits used to store the integer is defined by its suffix, e. g. 8 bits for uint8.
+*	Signed integers (+data types int8, int16, int32 and int64+) are transferred as binary numbers in two's complement representation in little endian byte order. The required number of bits in memory for storing the integer is defined by the suffix, e. g. 8 bits for int8.
+*	Table 3 illustrates both the binary and the representation of the sample number i= 89498498 as int32 in PDUs.
+
+.+int32+ representation
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+|Binary
+|1 {set:cellbgcolor:#4db4eb}
+|1 {set:cellbgcolor:#f2fc92}
+|1
+|1
+|1
+|0
+|1
+|0
+|1{set:cellbgcolor:#abfc92}
+|0
+|1
+|0
+|1
+|0
+|1
+|0
+|0 {set:cellbgcolor:#72c758}
+|1
+|0
+|1
+|1
+|1
+|0
+|0
+|0 {set:cellbgcolor:#3b7a27}
+|1
+|1
+|1
+|1
+|1
+|1
+|0
+
+|Hex
+{set:cellbgcolor!}
+8+^|0xFA
+8+^|0xAA
+8+^|0x5C
+8+^|0x7E
+
+|
+16+|MSB
+16+>| LSB
+|===
+
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+^|n
+8+^|n + 1
+8+^|n + 2
+8+^|n + 3
+
+
+|DAT_input_output~Bin~
+|0 {set:cellbgcolor:#3b7a27}
+|1
+|1
+|1
+|1
+|1
+|1
+|0
+|0 {set:cellbgcolor:#72c758}
+|1
+|0
+|1
+|1
+|1
+|0
+|0
+|1  {set:cellbgcolor:#abfc92}
+|0
+|1
+|0
+|1
+|0
+|1
+|0
+|1 {set:cellbgcolor:#4db4eb}
+|1{set:cellbgcolor:#f2fc92}
+|1
+|1
+|1
+|0
+|1
+|0
+
+|DAT_input_output~Hex~
+{set:cellbgcolor!}
+8+^|0x7E
+8+^|0x5C
+8+^|0xAA
+8+^|0xFA
+
+
+
+|===
+
+---
+
+===== Floating Point Numbers
+
+32 bit floating point numbers (data type float32) are transferred in binary32 format, as defined in [1], in little endian byte order:
+
+*	The binary value is built from MSB to LSB by the following: Sign (1 bit), Exponent (8 bit), and Mantissa (23 bit).
+
+64 bit double values (data type float64) are transferred in binary64 format, as defined in [1], in little endian byte order:
+
+*	The binary value is built from MSB to LSB by the following: Sign (1 bit), Exponent (11 bit), and Fraction (53 bit). This binary value is transferred in little endian byte order.
+
+*	Table 4 illustrates both the binary and the representation of the sample number f=7256.2568359375 as float32 in PDUs.
+
+.+float32+ representation
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+
+|Binary
+|0 {set:cellbgcolor:#4db4eb}
+|1 {set:cellbgcolor:#abfc92}
+|0
+|0
+|0
+|1
+|0
+|1
+|1
+|1 {set:cellbgcolor:#c40632}
+|1
+|0
+|0
+|0
+|1
+|0
+|1
+|1
+|0
+|0
+|0
+|0
+|1
+|0
+|0
+|0
+|0
+|0
+|1
+|1
+|1
+|0
+
+|Hex
+{set:cellbgcolor!}
+8+^|45
+8+^|E2
+8+^|C2
+8+^|0E
+
+|
+16+|MSB
+16+>| LSB
+|===
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+^|n
+8+^|n + 1
+8+^|n + 2
+8+^|n + 3
+
+
+|DAT_input_output~Bin~
+|0 {set:cellbgcolor:#c40632}
+|0
+|0
+|0
+|1
+|1
+|1
+|0
+|1
+|1
+|0
+|0
+|0
+|0
+|1
+|0
+|1  {set:cellbgcolor:#abfc92}
+|1{set:cellbgcolor:#c40632}
+|1
+|0
+|0
+|0
+|1
+|0
+|0 {set:cellbgcolor:#4db4eb}
+|1 {set:cellbgcolor:#abfc92}
+|0
+|0
+|0
+|1
+|0
+|1
+
+|DAT_input_output~Hex~
+{set:cellbgcolor!}
+8+^|0E
+8+^|C2
+8+^|E2
+8+^|45
+
+|===
+See Appendix for further examples.
+
+---
+
+===== Binary
+The DCP offers a binary data type (binary) to transmit arbitrary information.  The binary representation consists of an unsigned integer (uint32) that specifies the length in bytes of the actual data, followed by the binary data itself. The data is transmitted as given without changing the order of its bits. Thus, the maximum length of data is limited to 4294967296 bytes.
+
+  Note: This general DCP specification does not define PDU fragmentation or splitting.
+
+The example given in Table 5 and Table 6 shows the encoding of a four byte data sequence in binary data type. The actual data is given in Table 5, whereas in Table 6 the PDU representation of the payload is shown. The total length of the payload is 6 bytes, the first four bytes store an integer value (uint32) indicating the length (4 bytes) of the actual data.
+
+.binary data type example
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+| Data{nbsp}Binary
+|0 {set:cellbgcolor:#fce3e3}
+|0
+|1
+|1
+|1
+|0
+|0
+|1
+|1 {set:cellbgcolor:#f7c9a3}
+|1
+|1
+|0
+|0
+|1
+|1
+|0
+|0  {set:cellbgcolor:#faa764}
+|0
+|1
+|0
+|1
+|0
+|0
+|1
+|1 {set:cellbgcolor:#c45902}
+|1
+|0
+|1
+|0
+|0
+|1
+|0
+
+
+|Data{nbsp}Hex
+{set:cellbgcolor!}
+8+^|39
+8+^|E6
+8+^|29
+8+^|D2
+
+|Byte{nbsp}index
+{set:cellbgcolor!}
+8+^|0
+8+^|1
+8+^|2
+8+^|3
+
+|===
+
+The payload is then encoded as shown in Table 6.
+
+.Binary data type representation.
+[width="100%", cols="5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+<|n
+8+<|n + 1
+8+<|n + 2
+8+<|n + 3
+
+|PDU~Bin~
+|0 {set:cellbgcolor:#3b7a27}
+|0
+|0
+|0
+|0
+|1
+|0
+|0
+|0 {set:cellbgcolor:#72c758}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|0  {set:cellbgcolor:#abfc92}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|0 {set:cellbgcolor:#feffe0}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+
+
+
+
+|PDU~Hex~
+{set:cellbgcolor!}
+8+^|0x04
+8+^|0x00
+8+^|0x00
+8+^|0x00
+|===
+
+
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+<|n + 2
+8+<|n + 3
+8+<|n + 4
+8+<|n + 5
+
+|PDU~Bin~
+|0 {set:cellbgcolor:#fce3e3}
+|0
+|1
+|1
+|1
+|0
+|0
+|1
+|1 {set:cellbgcolor:#f7c9a3}
+|1
+|1
+|0
+|0
+|1
+|1
+|0
+|0  {set:cellbgcolor:#faa764}
+|0
+|1
+|0
+|1
+|0
+|0
+|1
+|1 {set:cellbgcolor:#c45902}
+|1
+|0
+|1
+|0
+|0
+|1
+|0
+
+
+
+
+|PDU~Hex~
+{set:cellbgcolor!}
+8+^|0x39
+8+^|0xE6
+8+^|0x29
+8+^|0xD2
+|===
+
+
+  Note: A maximum length in bytes may be specified in DCP slave description by setting the +maxSize+ attribute.
+
+  Note: Depending on the transport protocol and its +maxPduSize+ attribute in the DCP slave description, the full range of the length cannot be used, e.g. for USB, 1024 bytes can be transmitted. Therefore the maximum size of the binary value is limited to 1016 bytes.
+
+---
+
+===== Strings
+In general, the string data type is encoded in the same way as the binary data type. Strings are of variable length and are not terminated in any way. However, the specified character encoding for strings is UTF-8 [2].
+
+  Note: UTF-8 strings are handled byte-wise.
+
+  Note: A maximum length in bytes may be specified in DCP slave description by setting the maxSize attribute. Also note that the length in bytes does not necessarily match the number of encoded characters in the string.
+
+  Note: Depending on the transport protocol and its maxPduSize attribute in the DCP slave description, the full range of the length cannot be used, e.g. for USB, 1024 bytes can be transmitted. Therefore the maximum size of the binary value is limited to 1016 bytes.
+
+  Note: These definitions apply to protocol data units (PDUs, as defined in section 3.3) only.
+
+The following Table 7 illustrates the encoding of the word “+beef+” (0x62, 0x65, 0x65, and 0x66). The payload is then encoded as shown in Table 8.
+
+.String data type example
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+|Data{nbsp}Binary
+|0 {set:cellbgcolor:#fce3e3}
+|1
+|1
+|0
+|0
+|0
+|1
+|0
+|0 {set:cellbgcolor:#f7c9a3}
+|1
+|1
+|0
+|0
+|1
+|0
+|1
+|0  {set:cellbgcolor:#faa764}
+|1
+|1
+|0
+|0
+|1
+|0
+|1
+|0 {set:cellbgcolor:#c45902}
+|1
+|1
+|0
+|0
+|1
+|1
+|0
+
+|Data{nbsp}Hex,{nbsp}UTF{nbsp}-{nbsp}8
+{set:cellbgcolor!}
+8+^|0x62
+8+^|0x65
+8+^|0x65
+8+^|0x66
+
+|Byte index
+{set:cellbgcolor!}
+8+^|0
+8+^|1
+8+^|2
+8+^|3
+
+|===
+
+
+.String data type representation
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+<|n
+8+<|n + 1
+8+<|n + 2
+8+<|n + 3
+
+|DAT_input_output~Bin~
+|0 {set:cellbgcolor:#3b7a27}
+|0
+|0
+|0
+|0
+|1
+|0
+|0
+|0 {set:cellbgcolor:#72c758}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|0  {set:cellbgcolor:#abfc92}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|0 {set:cellbgcolor:#feffe0}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+
+|DAT_input_output~Hex~
+{set:cellbgcolor!}
+8+^|0x04
+8+^|0x00
+8+^|0x00
+8+^|0x00
+|===
+
+
+[width="100%", cols="2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+<|n + 2
+8+<|n + 3
+8+<|n + 4
+8+<|n + 5
+
+|DAT_input_output~Bin,UTF{nbsp}-{nbsp}8~
+|0 {set:cellbgcolor:#fce3e3}
+|1
+|1
+|0
+|0
+|0
+|1
+|0
+|0 {set:cellbgcolor:#f7c9a3}
+|1
+|1
+|0
+|0
+|1
+|0
+|1
+|0  {set:cellbgcolor:#faa764}
+|1
+|1
+|0
+|0
+|1
+|0
+|1
+|0 {set:cellbgcolor:#c45902}
+|1
+|1
+|0
+|0
+|1
+|1
+|0
+
+
+
+
+|DAT_input_output~Hex,UTF{nbsp}-{nbsp}8~
+{set:cellbgcolor!}
+8+^|0x62
+8+^|0x65
+8+^|0x65
+8+^|0x66
+|===
+
+---
+
+==== Timing
+DCP does not include mechanisms for time synchronization. If such mechanisms are needed, existing mechanism for time synchronization between nodes shall be used. A typical example for such a mechanism can be found in [3].
+
+---
+
+==== Notion of Time
+
+===== Absolute Time
+The absolute time is the newtonian time represented by a UNIX time stamp in UTC format. It is defined in seconds since January 1^st^, 1970, 00:00:00 UTC, minus the number of leap seconds from that date till now.
+
+  Note: This is also referred as epoch.
+
+---
+
+===== Simulation Time
+The simulation time is the time value to which simulation models inside DCP slaves refer to.
+
+---
+
+==== Operating Modes
+
+===== General
+The DCP defines three different operating modes targeting the real-time properties specified in the following sections. A DCP slave must support at least one of them. Table 9 specifies the operating modes enumeration.
+
+.Operating modes enumeration
+[width="50%", cols="3,3", options="header", float="center" ]
+|===
+|Operating mode
+|op_mode~hex~
+
+|HRT
+|0x00
+
+|SRT
+|0x01
+
+|NRT
+|0x02
+|===
+
+The DCP slave is informed by the master about the chosen operating mode (one of HRT, SRT, NRT).
+
+  Note: For native DCP (see section 3.1.21), this is achieved via STC_register PDU (see section 3.3.7.1).
+
+---
+
+===== Hard Real-Time (HRT)
+All deadlines for all outputs must be met. Simulation time is synchronous to absolute time. In case of any deviations, the DCP slave transitions to the error state.
+
+Note: Synchronous means that one unit of elapsed absolute time corresponds to the same unit of simulation time.
+
+---
+
+===== Soft Real-Time (SRT)
+It depends on the application if and how SRT DCP slaves are integrated into scenarios. The DCP slave tries to meet deadlines for all outputs. If deadlines are not met, the DCP slave continues operation. Simulation time should be synchronous to absolute time. It depends on the application, if and when the DCP slave signals an error.
+
+---
+
+===== Non-Real-Time (NRT)
+Simulation time is independent from absolute time. It can be faster or slower. Reception of PDU +STC_do_step+ (see section 3.3.7.7) is required.
+
+---
+
+==== Time Resolution
+One atomic time step, i.e. the resolution, is defined as a fraction of two integer values numerator and denominator. It is set by the DCP master. For native DCP it is rolled out via PDU +CFG_time_res+ in state +CONFIGURATION+ (see section 3.2). The unit of the fraction is seconds.
+Possible values for the communication are defined in the DCP slave description, where either a valid range is specified or a list of valid values is provided.
+
+---
+
+==== Communication Step Size
+The communication step size is defined as follows:
+
+image::Images/formula.png[width=60%, align="center"]
+
+where numerator divided by +denominator+ represents the resolution and steps represents the integer number of resolution intervals. The minimum value for steps is 1.
+If the communication step size for an output should be fixed, then both the attributes resolution and steps need to be set to fixed in the DCP slave description.
+
+For operating modes HRT and SRT, steps is configured via PDU +CFG_steps+ (see section 3.3.7.15) by the DCP master in state +CONFIGURATION+.
+For the operating mode NRT, steps is given in each PDU +STC_do_step+ (see section 3.3.7.7).
+
+---
+
+==== Variables
+All variable values (inputs, outputs, parameters, structural parameters) of a DCP slave are identified with a variable handle called _value reference_ (abbreviated vr). This handle is defined in the DCP slave description file as attribute +valueReference+ in element Variable. See section 5.13.2 for details.
+
+---
+
+===== Variable Naming Convention
+Within the DCP slave description the attribute +variableNamingConvention+ of element +dcpDescription+ defines the convention how the variable names are constructed. This information may then be used by the simulation environment for structuring.
+Possible options are given in Table 10.
+
+  Note: This is based on FMI 2.0.
+
+.Variable naming convention options
+[width="100%", cols="3,3", options="header", float="center" ]
+|===
+|Option
+|Description
+
+|flat
+|name = Unicode-char { Unicode-char } +
+Unicode-char = any Unicode character without carriage return (0x0D), line feed (0x0A) nor tab (0x09)
+
+This definition is identical to +xs:normalizedString+ used in the specification of FMI. +
+The names shall be unique, non-empty strings are not allowed.
+
+|structured
+|Structured names are hierarchically organized and use “.” as a separator between hierarchies. A name consists of “_”, letters and digits or may consist of any characters enclosed in single apostrophes. A name may identify an array element on every hierarchical level using square brackets “[...]” to identify the respective array index.
+
+In the following definitions, an extended Backus-Naur form (EBNF) [4] is used.
+
+The precise syntax is:
+name = identifier {vbar} "der(" identifier ["," unsignedInteger] ")"
+identifier = B-name [ arrayIndices ] {"." B-name [ arrayIndices ] }
+B-name = nondigit{digit{vbar}nondigit}{vbar}Q-name
+nondigit = "_" {vbar} letters "a" to "z" {vbar} letters "A" to "Z"
+digit = "0" {vbar} "1" {vbar} "2" {vbar} "3" {vbar} "4" {vbar} "5" {vbar} "6" {vbar} "7" {vbar} "8" {vbar} "9"
+Q-name = "’" ( Q-char {vbar} escape ) { Q-char {vbar} escape } "’"
+Q-char = nondigit {vbar} digit {vbar} "!" {vbar} "#" {vbar} "$" {vbar} "%" {vbar} "&" {vbar} "(" {vbar} ")" {vbar} "*" {vbar} "+" {vbar} "," {vbar} "-" {vbar} "." {vbar} "/" {vbar} ":" {vbar} ";" {vbar} "<" {vbar} ">" {vbar} "=" {vbar} "?" {vbar} "@" {vbar} "[" {vbar} "]" {vbar} "^" {vbar} "{" {vbar} "}" {vbar} "{vbar}" {vbar} "~" {vbar} " "
+escape = "\’" {vbar} "\"" {vbar} "\?" {vbar} "\\" {vbar} "\a" {vbar} "\b" {vbar}
+"\f" {vbar} "\n" {vbar} "\r" {vbar} "\t" {vbar} "\v"
+arrayIndices = "[" unsignedInteger {"," unsignedInteger} "]"
+unsignedInteger = digit { digit }
+
+Note: This definition is identical to the syntax of an identifier in Modelica version 3.2.
+
+The tree of names must be mapped to an ordered list of structured variable names in depth-first order.
+
+Example:
+vehicle +
+    transmission +
+        ratio +
+        outputSpeed +
+    engine +
+        inputSpeed +
+        temperature
+
+is mapped to the following list of structured variable names:
+
+vehicle.transmission.ratio +
+vehicle.transmission.outputSpeed +
+vehicle.engine.inputSpeed +
+vehicle.engine.temperature
+
+Note: No further restrictions apply (e.g., no alphabetical sort on same hierarchical level)
+
+Variables representing array elements must be given in a consecutive sequence. Elements of multi-dimensional arrays are ordered according to row major order, that is elements of the last index are given in sequence.
+
+For example, elements of the vector “centerOfMass” in body “arm1”  of robot are mapped to the following variables:
+
+robot.arm1.centerOfMass[1] +
+robot.arm1.centerOfMass[2] +
+robot.arm1.centerOfMass[3]
+
+For example, a table T[4,3,2] (first dimension 4 entries, second dimension 3 entries, third dimension 2 entries) is mapped to the following Variables:
+
+T[1,1,1] +
+T[1,1,2] +
+T[1,2,1] +
+T[1,2,2] +
+T[1,3,1] +
+T[1,3,2] +
+T[2,1,1] +
+T[2,1,2] +
+T[2,3,1] +
+…
+
+It might occur that not all elements of an array are present. If they are present, they are given in consecutive order in the DCP slave description.
+
+|===
+
+---
+
+===== Outputs and Inputs
+A DCP slave consumes inputs and provides outputs. Output values of a DCP slave are sent using the payload field of Data PDUs. Values of several outputs can be grouped together and sent using one Data PDU. Details are given in section 3.4.5.1.
+The timing characteristics for communications are defined by the configuration of the outputs. Outputs may be sent at communication steps but must not be sent between communication steps.
+
+Outputs with +variability+ = “+continuous+” must be sent with their respective defined communication step size.
+
+Outputs with +variability+ =”+discrete+”, may be sent at every communication step size, but must be sent if the value has changed.
+
+Discrete outputs may be mapped to continuous inputs, and vice versa.
+
+ Note: If a continuous output is mapped to a discrete input, zero-order-hold is implicitly introduced.
+
+ Note: If a discrete output is mapped to a continuous input, the exact behavior might be determined by extrapolation algorithms used within the receiving DCP slave. Using such configurations, the DCP integrator and master tool should be aware of the actual behavior and subsequent effects.
+
+---
+
+===== Parameters
+Parameters are used to change properties of a DCP slave. They can be set by the DCP master only.
+
+For parameters the variability shall be set to either fixed or tunable.
+
+The values of parameters with variability = “+fixed+” can be set only in state CONFIGURATION (see section 3.2.4.2).
+
+The values of parameters with variability = “+tunable+” can be set at any time. The received value of a tunable parameter shall come into effect during the next computational step of a DCP slave in NRT operating mode. For the operating modes HRT and SRT the values are adopted immediately. Values of several parameters can be grouped together and sent using one Data PDU. Details are given in section 3.4.5.2.
+
+If a value for a parameter is not set at all, it stays at its start value which is contained in the DCP slave description.
+
+  Note: To ensure that multiple parameters coming into effect simultaneously, they must be sent at once.
+
+---
+
+===== Structural Parameters
+Structural parameters may be used to indicate variable dimensions. This is used to define e.g. vectors and matrices. +
+Structural parameters have a start value and may be modified during simulation time.
+
+---
+
+===== Multidimensional Variables
+An array variable is a data structure consisting of a collection of variables, each identified by an array index. A variable may have a constant number of dimensions. Each dimension has a size. A size may either be a constant or a structural parameter. Both may use a serialized start value.
+
+The numbering of dimensions is done from left to right and from top to bottom.
+
+  Note:
+  For a C API: array[dim1][dim2]…[dimN], where N ∈ N. +
+  For XML: document order.
+
+Serialization example
+
+image::C:\Users\damianlang\Desktop\Atom\DCP\Adoc\DCP_2.0\formula2.png[]
+
+---
+
+==== Dependencies
+The outputs of a DCP slave might depend on its inputs and parameters.
+These dependencies can be described in the DCP slave description (see section 5.13.5). Additionally, the kind of dependency can be expressed, to allow for an optimized initialization of the DCP slave.
+
+Note: This information can be utilized to e.g. detect the presence or absence of algebraic loops in the configured scenario.
+
+---
+
+==== Data Type Conversions
+
+A DCP slave shall be able to perform data type conversions for inputs and parameters as specified in Table 11. The character “x” indicates that the given conversion is allowed and feasible.
+For inputs and tunable parameters, an invalid conversion shall be detected in state +CONFIGURATION+. In that case, an error code shall be sent as a response to PDU +CFG_input+ and PDU +CFG_tunable_parameter+.
+
+  Note: Empty cells are considered as invalid conversions.
+
+.Data type conversions
+[width="100%", cols="3,1,1,1,1,1,1,1,1,1,1,1,1", options="header"]
+|===
+|DCP output data types
+12+| DCP input data types
+|
+|uint8
+|uint16
+|uint32
+|uint64
+|int8
+|int16
+|int32
+|int64
+|float32
+|float64
+|binary
+|string
+
+|uint8
+^|x
+^|x
+^|x
+^|x
+|
+^|x
+^|x
+^|x
+^|x
+^|x
+|
+|
+
+
+|uint16
+|
+^|x
+^|x
+^|x
+|
+|
+^|x
+^|x
+^|x
+^|x
+|
+|
+
+|uint32
+|
+|
+^|x
+^|x
+|
+|
+|
+^|x
+|
+^|x
+|
+|
+
+|uint64
+|
+|
+|
+^|x
+|
+|
+|
+|
+|
+|
+|
+|
+
+|int8
+|
+|
+|
+|
+^|x
+^|x
+^|x
+^|x
+^|x
+^|x
+|
+|
+
+|int16
+|
+|
+|
+|
+|
+^|x
+^|x
+^|x
+^|x
+^|x
+|
+|
+
+|int32
+|
+|
+|
+|
+|
+^|
+^|x
+^|x
+^|
+^|x
+|
+|
+
+|int64
+|
+|
+|
+|
+|
+|
+|
+^|x
+|
+|
+|
+|
+
+|float32
+|
+|
+|
+|
+|
+|
+|
+|
+^|x
+^|x
+|
+|
+
+|float64
+|
+|
+|
+|
+|
+|
+|
+|
+|
+^|x
+|
+|
+
+|binary
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+^|x
+|
+
+|string
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+^|x
+|===
+
+---
+
+==== Native and Non-Native DCP Specification
+This section defines the term native DCP specification. Native DCP means that the mapping of PDUs to the transport protocol preserves the bit sequence. The bit sequence of PDUs is specified in section 3.3.7. All PDUs, especially the Control PDUs, must be transferable via the chosen transport protocol. No additional mechanisms for exchange of information, e.g. for configuration are needed.
+
+ Note: The DCP specification for UDP/IPv4 follows native DCP, for example.
+
+In contrast to the native DCP specification, the non-native DCP specification uses a different mapping to associate the DCP protocol and PDUs to a transport protocol. Available mappings are specified in section 4.
+
+  Note: The DCP specification for CAN bus follows non-native DCP, for example.
+
+---
+
+==== Transport Protocol Numbering
+The transport protocols supported by this DCP specification are numbered as follows.
+
+.Transport protocol numbering
+[width="50%", cols="3,3" options="header" float="center"]
+|===
+
+|Transport protocol
+|Number~hex~
+
+|UDP/IPv4
+|0x00
+
+|rfcomm/Bluetooth
+|0x01
+
+|CAN based
+|0x02
+
+|USB (2.0)
+|0x03
+
+|TCP/IPv4
+|0x04
+|===
+
+---
+
+==== Logging
+The DCP supports the transmission of arbitrary log data from a DCP slave to its master. For that, it defines two different approaches, namely log on request (LoR) and log on notification (LoN).
+For LoR, log messages are stored within the DCP slave. They are picked up by the master on request at any time. LoR supports the delivery of multiple log messages at one time.
+For LoN, log messages are not stored within the DCP slave. They are transmitted to the master immediately. LoN supports the delivery of a single log message at one time.
+
+The exact format of a log message is defined in the DCP slave description using log templates. A DCP slave only delivers argument values to fill into this template. The full log message is then generated by the master.
+
+  Note: The length of all PDUs exchanged for logging may be precalculated using the DCP slave description.
+
+---
+
+===== Log Mode
+A log mode for specific log messages is set by the master using the PDU +CFG_logging+. The default value for all log messages is No logging via DCP (0). See section 3.3.3.9 for a list of valid log modes.
+
+---
+
+===== Log Level
+A log level is assigned to a log template in the DCP slave description. See section 3.3.3.7 for a list of valid options.
+
+Note: This corresponds to the status field of FMI.
+
+---
+
+===== 3.1.23.3 Log Category
+A log category is both defined and assigned to a log template in the DCP slave description. One byte shall be reserved to identify a log category. See section 3.3.3.6 for a valid list of ranges.
+
+=== State Machine Definitions
+
+
+==== General
+The state machine defined in this section is intended for use within a DCP slave. Figure 1 shows the DCP slave state machine in UML notation.
+
+Transitions are triggered either by PDUs of the state change family (+STC+) or internal signals.  The PDUs that trigger a transition are indicated with a +STC+ prefix (see section 3.3). Internal signals that trigger a transition are indicated via the SIG prefix. Signals are DCP slave internal only and are therefore not exchanged via DCP PDUs. All transitions are defined in section 3.2.5.
+After a transition has been performed, the slave informs the master about its new state (using the PDU +NTF_state_changed+)
+
+---
+
+==== Description
+The state machine’s entry point is labelled with +entryPoint+, whereas its exit point is labelled with +exitPoint+. If the software component implementing the DCP is not yet loaded, the DCP slave does not exist yet. After unloading the software component implementing the DCP, the DCP slave does not exist anymore.
+
+.DCP slave state machine
+image::C:\Users\damianlang\Desktop\Atom\DCP\state_machine.svg[]
+
+---
+
+==== Superstates
+The following sections describe the general behavior of the defined superstates.
+
+---
+
+===== Normal Operation
+The states +CONFIGURATION, CONFIGURING, PREPARING, PREPARED, CONFIGURED, INITIALIZING, INITIALIZED, SENDING_I, RUNNING, COMPUTING, COMPUTED, SENDING_D, STOPPING+, and +STOPPED+ belong to a super-state called “Normal Operation”. This superstate assumes that the DCP slave operates as intended by the DCP slave provider.
+
+---
+
+===== Error
+The states +ERRORHANDLING+ and +ERRORRESOLVED+ belong to a superstate Error. This superstate is used to handle exceptional conditions that are defined by the DCP slave provider.
+
+---
+
+===== Initialization
+The DCP superstate +Initialization+ is used by a DCP master to align multiple DCP slaves before running a simulation. The states +CONFIGURED, INITIALIZING, INITIALIZED+ and +SENDING_I+ together with their transitions allow the master to apply iterative algorithms to reach a consistent initial state over all slaves within a scenario. Initialization is independent from absolute time and the chosen operating mode.
+
+---
+
+===== Run
+The states +SYNCHRONIZING, SYNCHRONIZED+ and +RUNNING+ belong to superstate Run. In contrast to superstate +Initialization+ simulation time can elapse.
+
+For real-time operating modes SRT and HRT simulation time is running and data is exchanged using the defined step size. For non-real-time operating mode NRT advance of simulation time and data exchange are handled as described in +superstate NonRealTime+.
+
+The two states +SYNCHRONIZING+ and +RUNNING+ allow for distinction a possible initial transient oscillation phase and the actual simulation experiment. By transitioning to state +SYNCHRONIZED+ the slave indicates that it has finished the transient oscillation phase.
+
+  Note: For example, when the control loop between an engine test bench and a simulation model is closed, typically initial transient oscillations occur. The actual simulation experiment should only be started after this initial transient oscillation phase.
+
+  The initial transient oscillation phase takes place in state SYNCHRONIZING. As soon as this phase is finished, the slave transitions to state SYNCHRONIZED. As soon as all slaves are in state SYNCHRONIZED, the master triggers the transition to state RUNNING. This leads to a defined point in time when the actual simulation experiment starts.
+
+For NRT operating mode, from each state of the superstate Run transition to state +COMPUTING+ of +superstate NonRealTime+ is possible. On reentry from state +SENDING_D+ to +superstate+ Run the entry state is the last state from which the superstate Run was left. This is indicated by the History element in the state chart (see Figure 1).
+
+---
+
+===== NonRealTime
+The states +COMPUTING, COMPUTED+, and +SENDING_D+ belong to +superstate NonRealTime+.
+
+The states of +NonRealTime+ are used for triggering calculation, advance of simulation time, and data exchange.
+
+  Note: Consider 1 master and 2 slaves A and B, including slave-to-slave communication.
+  Initially all slaves are in state RUNNING.
+  The master sends PDU STC_do_step to both slaves.
+  Slave A changes to state COMPUTING, calculates fast, moves on to COMPUTED.
+  If no state SENDING_D would exist, he would immediately send its outputs to slave B and changes to state RUNNING.
+  Slave B might receive this data before having received the STC_do_step from the master, due to network delay, latency, etc.
+  Thus, he would calculate with input data not consistent to current simulation time instance. The state SENDING_D prevents this.
+
+---
+
+===== Stoppable
+
+
+==== States
+Table 13 lists the states of the state machine together with their assigned IDs.
+
+.State IDs
+[width="50%", cols="3,2", options="header", float="center"]
+|===
+
+|State name
+|State id~hex~
+
+|ALIVE
+|0x00
+
+|CONFIGURATION
+|0x01
+
+|PREPARING
+|0x02
+
+|PREPARED
+|0x03
+
+|CONFIGURING
+|0x04
+
+|CONFIGURED
+|0x05
+
+|INITIALIZING
+|0x06
+
+|INITIALIZED
+|0x07
+
+|SENDING_I
+|0x08
+
+|SYNCHRONIZING
+|0x09
+
+|SYNCHRONIZED
+|0x0A
+
+|RUNNING
+|0x0B
+
+|COMPUTING
+|0x0C
+
+|COMPUTED
+|0x0D
+
+|SENDING_D
+|0x0E
+
+|STOPPING
+|0x0F
+
+|STOPPED
+|0x10
+
+|ERRORHANDLING
+|0x11
+
+|ERRORRESOLVED
+|0x12
+|===
+
+---
+
+===== State ALIVE
+
+.State ALIVE
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave is connected to communication media and waits for a DCP master to take ownership. While being in this state, the DCP slave is not assigned to a DCP master yet. A DCP master may take control of a DCP slave by sending the PDU +STC_register.+
+
+_Note: A DCP slave in this state cannot be influenced in any way, except a DCP master taking ownership._
+
+|Preconditions
+|The DCP slave is off.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state
+|===
+
+===== State CONFIGURATION
+
+.State CONFIGURATION
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|A DCP master has taken ownership of the DCP slave.
+In this state, the DCP slave shall accept configuration request PDUs (CFG). A configuration received in this state shall be applied before reaching the state CONFIGURED at the latest.
+
+A DCP master may release a DCP slave by sending the PDU +STC_deregister+.
+
+
+|Preconditions
+|Any configurations necessary to load the DCP slave and connect it to a given media are set.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state +
+•	Configure +
+•	Instantiate model or RT system
+|===
+
+---
+
+===== State PREPARING
+
+.State PREPARING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|Slave must prepare the transport protocol to allow to connect and/or to receive data. This needs to be done for every received CFG_source_network_information.
+
+
+|Preconditions
+|All configurations necessary for real-time and non-realtime data exchange are set by the master or in the DCP slave description.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state
+|===
+
+---
+
+===== State PREPARED
+
+.State PREPARED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The slave has prepared the transport protocol and is ready to communicate or establish connections.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state
+|===
+
+---
+
+===== State CONFIGURING
+
+.State CONFIGURING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|For connection oriented transport protocols a connection is established for every CFG_target_network_information. For connectionless transport protocols no specific actions are necessary.
+The DCP slave realizes a start condition depending on parameters, but not on input values.
+
+|Preconditions
+|All configurations necessary for real-time and non-realtime data exchange are set by the master or in the DCP slave description.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state +
+•	Apply configuration settings to model or RT system
+|===
+
+---
+
+===== State CONFIGURED
+
+
+.State CONFIGURED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|At entry to this state coming from +CONFIGURING+, a start condition depending on parameters, but not on input values has been realized by the DCP slave.
+
+The DCP slave is ready to initialize with other DCP slaves.
+
+  Note: If node time synchronization is required (e.g. for HRT operating mode), it must have been done before leaving this state via PDU +STC_run+ because that PDU includes a time value.
+
+
+|Preconditions
+|Start condition is realized.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Report state +
+•	Receiving of Data PDUs +
+•	Maintain initialized condition of model or RT system
+|===
+
+---
+
+===== State INITIALIZING
+
+.State INITIALIZING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In +INITIALIZING+ an internal initial state of the DCP slave, which is consistent to its inputs, shall be established and the outputs shall be computed. The input values from the most recent data PDU are used for internal computation. If no inputs have been received, start values defined in DCP slave description shall be used.
+
+Simulation models: Simulation time stays at start time, simulation models are not computed over time, but at start time.
+
+When the DCP slave finished initializing, it issues +SIG_initialized+ which triggers the transition to leave state +INITIALIZING+.
+
+If the slave fails to keep the consistent internal initial state, it must perform the transition to the superstate +Error+.
+
+ Note: This state refers to the FMI state “initialization mode”.
+
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Receiving Data PDUs +
+•	Report state +
+•	Synchronize model or RT system within scenario +
+•	Indicate end of initializing
+|===
+
+---
+
+===== State INIZIALIZED
+
+.State INITIALIZED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In +INITIALIZED+ an internal initial state of the DCP slave, which is consistent to its inputs, is established and the outputs are available.
+
+In +INITIALIZED+ the slave remains in its consistent internal initial state. If the slave fails to keep the consistent internal initial state, it must perform the transition to the +superstate Error+.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Receiving Data PDUs +
+•	Report state +
+•	Maintain synchronized condition of model or RT system within scenario
+|===
+
+---
+
+===== State SENDING_I
+
+.State SENDING_I
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In this state the DCP slave sends its outputs.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Sending and receiving of Data PDUs +
+•	Report state +
+•	Indicate end of sending
+|===
+
+---
+
+===== State SYNCHRONIZING
+
+.State SYNCHRONIZING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|For real-time operating modes SRT and HRT: The DCP slave is running and inputs/outputs are exchanged. Simulation time is mapped to absolute time.
+
+For non-real-time operating mode (NRT): Simulation time is not advanced but can be increased by transitioning to the NRT-specific state +COMPUTING+. The DCP slave can receive inputs.
+
+This state is used to account for initial transient oscillations.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Sending and receiving of Data PDUs +
+•	Report state +
+•	Indicate end of sending
+|===
+
+===== State SYNCHRONIZED
+
+---
+
+.State SYNCHRONIZED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|For real-time operating modes SRT and HRT: The DCP slave is running and inputs/outputs are exchanged. Simulation time is mapped to absolute time.
+
+For non-real-time operating mode (NRT): Simulation time is not advanced but can be increased by transitioning to the NRT-specific state +COMPUTING+. The DCP slave can receive inputs.
+
+
+|Preconditions
+|The observed initial transient oscillations have faded out.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Sending and receiving of Data PDUs +
+•	Report state +
+•	Indicate end of sending
+|===
+
+---
+
+===== State RUNNING
+
+.State RUNNING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|For real-time operating modes SRT and HRT: The DCP slave is running and inputs/outputs are exchanged. Simulation time is mapped to absolute time.
+
+For non-real-time operating mode (NRT): Simulation time is not advanced but can be increased by transitioning to the NRT-specific state +COMPUTING+. The DCP slave can receive inputs.
+
+The actual simulation experiment is executed in this state.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Receiving of Data PDUs in NRT operating mode +
+•	Receiving and sending Data PDUs in SRT and HRT operating modes +
+•	Report state
+
+|===
+
+---
+
+===== State COMPUTING
+
+.State COMPUTING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In this state one computational step is performed. The values from the most recent Data PDUs are used for internal computation. The virtual simulation time is incremented by the number of steps given in the field +steps+ of the PDU +STC_do_step+ multiplied by resolution.
+
+  Note: This state applies to NRT (non-real-time) operating mode only.
+
+
+|Preconditions
+|The DCP slave is set to NRT operating mode.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Report state +
+•	Indicate end of computational step
+|===
+
+---
+
+===== State COMPUTED
+
+.State COMPUTED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In this state all computations were performed and the DCP slave is ready to send computation results. The DCP slave can receive inputs.
+
+ Note: This state applies to NRT (non-real-time) operating mode only.
+
+
+|Preconditions
+|The DCP slave is set to NRT operating mode.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Receiving of Data PDUs +
+•	Report state
+|===
+
+---
+
+===== State SENDING_D
+
+.State SENDING_D
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In this state the DCP slave sends its outputs.
+
+ Note: This state applies to NRT (non-real-time) operating mode only.
+
+
+
+|Preconditions
+|The DCP slave is set to NRT operating mode.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Sending and receiving of Data PDUs +
+•	Report state +
+•	Indicate end of sending
+|===
+
+---
+
+===== State STOPPING
+
+.State STOPPING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The simulation run has finished and is now being stopped.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+|•	Exchange of DCP Control and Notification PDUs +
+•	Report state +
+•	Indicate halt of model or RT system
+|===
+
+---
+
+===== State STOPPED
+
+.State STOPPED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave waits for further Control PDUs.
+
+|Preconditions
+|The DCP slave has come to a stop.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state +
+•	Maintain condition of model or RT system
+|===
+
+---
+
+===== State ERRORHANDLING
+
+.State ERRORHANDLING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave tries to resolve an error.
+
+|Preconditions
+|A fault is detected.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state +
+•	Resolve occurred error using error handling routines +
+•	Ensure safe condition of model or RT system +
+•	In case of success, transition self-reliantly to state +ERRORRESOLVED+. +
+  Note: For detailed description of the DCP error handling procedure, see section 3.4.10.
+|===
+
+---
+
+===== State ERRORRESOLVED
+
+.State ERRORRESOLVED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave has finished its error handling procedure and successfully mitigated the hazardous condition.
+
+|Preconditions
+|The DCP slave has handled the occurred error and mitigated the hazardous condition.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state +
+•	Maintain safe condition of model or RT system until the DCP master either resets, deregisters or terminates the DCP slave. +
+ Note: For detailed description of the DCP error handling procedure, see section 3.4.10
+|===
+
+---
+
+==== Transitions
+The following subsections describe the valid state transitions of the DCP slave state machine.
+
+---
+
+===== Transition entry
+
+.State Transition entry
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|This transition marks the entry point to the state machine.
+The DCP software is loaded on the execution platform, therefore it transforms into a DCP slave.
+
+
+|Preconditions
+|None
+
+|Trigger
+|Load the DCP software.
+
+|States
+|•	entryPoint => ALIVE
+|===
+
+---
+
+===== Transition exit
+
+.State Transition exit
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|This transition marks the exit point from the state machine.
+The DCP software is unloaded from the execution platform.
+
+In case of an error, the occurred error either (1) could not be handled and the DCP software is unloaded from the execution platform, or (2) another error occurred before resetting the DCP slave.
+
+
+|Preconditions
+|None or unrecoverable error.
+
+|Trigger
+|+SIG_exit+
+
+|States
+|•	+ALIVE+ -> exitPoint +
+•+ERRORHANDLING+ -> exitPoint +
+•+ERRORRESOLVED+ -> exitPoint
+|===
+
+---
+
+===== Transition register
+
+.State Transition register
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|A DCP master shall register a DCP slave to integrate it into a simulation scenario and use it for a simulation task.
+
+|Preconditions
+|The DCP slave is currently deregistered. +
+The DCP slave received a +STC_register+ PDU.
+
+
+|Trigger
+|+STC_register+
+
+|States
+|•	+ALIVE -> CONFIGURATION+
+|===
+
+---
+
+===== Transition prepare
+
+.State Transition prepare
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The transport protocol should be prepared.
+
+|Preconditions
+|All configuration information was received by the DCP slave.
+
+
+|Trigger
+|+STC_prepare+
+
+|States
+|•	+CONFIGURATION -> PREPARING+
+|===
+
+---
+
+===== Transition prepared
+
+.State Transition prepared
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The preparation of the transport protocol has finished.
+
+|Preconditions
+|None.
+
+
+|Trigger
+|+SIG_prepared+
+
+|States
+|•	+PREPARING -> PREPARED+
+|===
+
+---
+
+===== Transition deregister
+
+.State Transition deregister
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|A DCP master deregisters a DCP slave to release it from a simulation scenario.
+
+|Preconditions
+|The DCP slave is registered to a DCP master.
+
+
+|Trigger
+|+STC_deregister+
+
+|States
+|•	+CONFIGURATION => ALIVE+ +
+•	+STOPPED => ALIVE+ +
+•	+ERRORRESOLVED => ALIVE+
+|===
+
+---
+
+===== Transition configure
+
+.State Transition configure
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave has received configuration information and shall start to realize the configuration.
+
+|Preconditions
+|None.
+
+
+|Trigger
+|+STC_configure+
+
+|States
+|•	+PREPARED -> CONFIGURING+
+|===
+
+---
+
+===== Transition configured
+
+.State Transition configured
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave realized a configuration.
+
+|Preconditions
+|None.
+
+
+|Trigger
+|+SIG_configured+
+
+|States
+|•	+CONFIGURING -> CONFIGURED+
+|===
+
+---
+
+===== Transition initialize
+
+.State Transition initialize
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave starts to establish a consistent initial state with all other connected DCP slaves.
+
+|Preconditions
+|None.
+
+
+|Trigger
+|+STC_initialize+
+
+|States
+|•	+CONFIGURED -> INITIALIZING+
+|===
+
+---
+
+===== Transition initialized
+
+.State Transition initialized
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave has established a consistent initial state with other connected DCP slaves.
+
+|Preconditions
+|None.
+
+
+|Trigger
+|+SIG_initialized+
+
+|States
+|•	+INITIALIZING -> INITIALIZED+
+|===
+
+---
+
+===== Transition send_outputs_i
+
+.State Transition send_outputs_i
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave sends its initialization results.
+
+|Preconditions
+|The DCP slave received a +STC_send_outputs+ PDU.
+The DCP slave is either in NRT (non-real-time) operating mode or in Initialization superstate.
+
+
+|Trigger
+|+STC_send_outputs+
+
+|States
+|•	+INITIALIZED -> SENDING_I+
+|===
+
+---
+
+===== Transition run
+
+.State Transition run
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|This transition indicates the start of the simulation run.
+
+|Preconditions
+|The DCP master has determined that simulation shall start either now or at a given time.
+
+|Trigger
+|+STC_run+
+
+|States
+|•	CONFIGURED => RUNNING
+
+  Note: Even if the field time within the PDU STC_run contains a time > now, the DCP slave transitions immediately to state RUNNING. In state RUNNING, it waits for time==now and then starts the simulated time.
+|===
+
+---
+
+===== Transition stop (STC_stop)
+
+.State Transition stop by PDU
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP master tells the DCP slave to halt the simulation or abort the configuration or initialization phase by sending PDU +STC_stop+. The DCP slave proceeds to +STOPPING+.
+
+|Preconditions
+|None.
+
+|Trigger
+|+STC_stop+
+
+|States
+|•	+PREPARING -> STOPPING+ +
+•	+PREPARED -> STOPPING+ +
+•	+CONFIGURING -> STOPPING+ +
+•	+CONFIGURED -> STOPPING+ +
+•	+SYNCHRONIZING -> STOPPING+ +
+•	+SYNCHRONIZED -> STOPPING+ +
+•	+RUNNING -> STOPPING+ +
+•	+INITIALIZING -> STOPPING+ +
+• +INITIALIZED -> STOPPING+ +
+•	+SENDING_I -> STOPPING+ +
+•	+COMPUTING -> STOPPING+ +
+•	+COMPUTED -> STOPPING+ +
+•	+SENDING_D -> STOPPING+ +
+|===
+
+---
+
+===== Transition stop (SIG_stop)
+
+.State Transition stop by SIG
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave wants to stop the simulation.
+
+|Preconditions
+|The DCP slave raised a +SIG_stop+ signal. +
+  Note: A DCP slave may request simulation stop from the DCP master by triggering SIG_stop. The master notices the state change of the DCP slave and reacts accordingly, e.g. may communicate STC_stop to other DCP slaves of the same scenario.
+
+
+|Trigger
+|+SIG_stop+
+
+|States
+|•	+SYNCHRONIZING -> STOPPING+ +
+•	+SYNCHRONIZED -> STOPPING+ +
+•	+RUNNING -> STOPPING+
+|===
+
+---
+
+===== Transition do_step
+
+.State Transition do_step
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave starts one computational step.
+
+|Preconditions
+|The DCP slave is in NRT (non-real-time) operating mode.
+
+|Trigger
+|+STC_do_step+
+
+|States
+|•	+SYNCHRONIZING -> COMPUTING+ +
+•	+SYNCHRONIZED -> COMPUTING+ +
+•	+RUNNING -> COMPUTING+
+|===
+
+---
+
+===== Transition step_done
+
+.State Transition step_done
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave has finished one computational step.
+
+|Preconditions
+|The DCP slave is in NRT (non-real-time) operating mode.
+
+|Trigger
+|+SIG_step_done+
+
+|States
+|•	+COMPUTING -> COMPUTED+
+|===
+
+---
+
+===== Transition send_outputs_d
+
+.State Transition send_outputs
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave sends its computational results.
+
+|Preconditions
+|The DCP slave received a +STC_send_outputs+ PDU. +
+The DCP slave is either in NRT (non-real-time) operating mode or in Initialization superstate.
+
+
+|Trigger
+|+STC_send_outputs+
+
+|States
+|•	+COMPUTED -> SENDING_D+ +
+|===
+
+---
+
+===== Transition send_complete
+
+.State Transition send_complete
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave has finished sending its computational results.
+
+|Preconditions
+|The DCP slave is either in NRT (non-real-time) operating mode or in Initialization superstate.
+
+
+|Trigger
+|+SIG_send_complete+
+
+|States
+|•+SENDING_D -> RUNNING+ +
+• +SENDING_D -> SYNCHRONIZING+ +
+• +SENDING_D -> SYNCHRONIZED+ +
+• +SENDING_I -> CONFIGURED+
+|===
+
+---
+
+===== Transition stopped
+
+.State Transition stopped
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave and its underlying model or real-time system has come to a halt.
+
+|Preconditions
+|None.
+
+|Trigger
+|+SIG_stopped+
+
+|States
+|•	+STOPPING -> STOPPED+
+|===
+
+---
+
+===== Transition synchronize
+
+.State Transition synchronize
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave enters the Run superstate.
+
+|Preconditions
+|None.
+
+|Trigger
+|+STC_run+
+
+|States
+|•	+CONFIGURED -> SYNCHRONIZING+
+|===
+
+---
+
+===== Transition synchronized
+
+.State Transition synchronized
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave indicates that synchronization is finished.
+
+|Preconditions
+|DCP slave internal detection of synchronization.
+
+|Trigger
+|+SIG_synchronized+
+
+|States
+|•	+SYNCHRONIZING -> SYNCHRONIZED+ +
+|===
+
+---
+
+===== Transition reset
+
+.State Transition reset
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave is commanded by the DCP master to go back to state +CONFIGURATION+. All previously configured settings are reset, this also includes shutdown of connections configured by PDUs of the configuration family.
+
+  Note: Transport protocol specific actions might be necessary, e.g. closing connections and ports for TCP/IPv4.
+
+
+|Preconditions
+|None.
+
+|Trigger
+|+STC_reset+
+
+|States
+|•	+STOPPED -> CONFIGURATION+ +
+•	+ERRORRESOLVED -> CONFIGURATION+
+|===
+
+---
+
+===== Transition error
+
+.State Transition error
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|This transition represents the start of an error handling routine.
+
+|Preconditions
+|The DCP slave diagnoses an error.
+
+|Trigger
+|+SIG_error+
+
+|States
+|•	+CONFIGURATION -> ERRORHANDLING+ +
+•	+PREPARING -> ERRORHANDLING+ +
+•	+PREPARED -> ERRORHANDLING+ +
+•	+CONFIGURING -> ERRORHANDLING+ +
+•	+CONFIGURED -> ERRORHANDLING+ +
+•	+INITIALIZING -> ERRORHANDLING+ +
+•	+INITIALIZED -> ERRORHANDLING+ +
+•	+SENDING_I -> ERRORHANDLING+ +
+•	+SYNCHRONIZING -> ERRORHANDLING+ +
+•	+SYNCHRONIZED -> ERRORHANDLING+ +
+•	+RUNNING -> ERRORHANDLING+ +
+•	+COMPUTING -> ERRORHANDLING+ +
+•	+COMPUTED -> ERRORHANDLING+ +
+•	+SENDING_D -> ERRORHANDLING+ +
+•	+STOPPING -> ERRORHANDLING+ +
+•	+STOPPED -> ERRORHANDLING+
+|===
+
+---
+
+===== Transition resolved
+
+.State Transition error
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The occurred error was successfully handled.
+
+|Preconditions
+|The DCP slave received a resolved signal.
+
+|Trigger
+|+SIG_resolved+
+
+|States
+|•	+ERRORHANDLING -> ERRORRESOLVED+
+|===
+
+---
+
+=== PDU Definitions
+
+==== General
+Protocol Data Units (PDUs) are transmitted via abstract channels. In practice, a communication medium must be used. DCP PDUs are categorized in families. Configuration request (CFG), state change request (STC), and information request (INF) PDUs belong to the family of Request PDUs. Together with the family of response (RSP) PDUs they make up the family of Control PDUs. The families of Notification PDUs (NTF) and Data PDUs (DAT) complete the range of available PDU families.
+
+Control PDUs are exchanged between DCP master and DCP slaves. PDUs of the families CFG, STC and INF are only sent from the DCP master to its DCP slaves and are acknowledged by the DCP slaves via RSP PDUs. Data PDUs are not acknowledged.
+If the DCP master sets up a scenario where the master relays Data between DCP slaves, then also a DCP master may send and receive Data PDUs.
+
+  Note: Data PDUs are not acknowledged. To ensure that corruption, loss, reordering, etc. of Data PDUs is avoided, a reliable communication medium must be used. See also section 10-F.
+
+---
+
+==== Structuring
+All PDUs are structured using fields. A field is defined by its name, a DCP compliant data type, and the position of the field within the PDU, given in bytes. Table 57 provides an overview of all specified PDU fields and their corresponding data types. Concrete PDUs are distinguished by their type (field: type_id). For all PDUs, the type_id is available at the beginning at position zero with a length of 1 byte.
+A specific PDU does not contain all remaining fields, but only those required for the specific use, as can be seen in Table 62. The upcoming subsections give detailed information about each PDU.
+
+---
+.Field data types
+[width="100%", cols="2,2", float="center", options="header"]
+|===
+|Field
+|Data type specification
+
+|data_id
+|uint16
+
+|denominator
+|uint32
+
+|error_code
+|uint16
+
+|exp_seq_id
+|uint16
+
+|log_category
+|uint8
+
+|log_level
+|uint8
+
+|log_max_num
+|uint8
+
+|log_mode
+|uint8
+
+|log_template_id
+|uint8
+
+|log_arg_val
+|byte[]
+
+|log_entries
+|byte[]
+
+|major_version
+|uint8
+
+|minor_version
+|uint8
+
+|numerator
+|uint32
+
+|op_mode
+|uint8
+
+|parameter_vr
+|uint64
+
+|param_id
+|uint16
+
+|payload
+|byte[]
+
+|pdu_seq_id
+|uint16
+
+|pos
+|uint16
+
+|receiver
+|uint8
+
+|resp_seq_id
+|uint16
+
+|scope
+|uint8
+
+|sender
+|uint8
+
+|slave_uuid	unsigned
+|byte[16]
+
+|source_data_type
+|uint8
+
+|source_vr
+|uint64
+
+|time
+|int64
+
+|state_id
+|uint8
+
+|steps
+|uint32
+
+|target_vr
+|uint64
+
+|transport_protocol
+|uint8
+
+|type_id
+|uint8
+|===
+
+---
+
+==== PDU Fields
+
+===== Sequence Identifier
+The PDU sequence id (fields: +pdu_seq_id, resp_seq_id, exp_seq_id+). For further information see section 3.4.1.
+
+---
+
+===== Slave Identifier
+
+Each DCP slave within a given simulation scenario identifies itself uniquely by using a DCP slave id. This DCP slave id is assigned by the master. The DCP id zero (“0”) shall be reserved for the master. The two PDU fields sender and receiver use this DCP slave id.
+
+In the sender field, the id of the slave that sends the PDU is given. In the receiver field, the id of the slave that shall receive the PDU is given.
+
+---
+
+===== Data Identifier
+
+The field +data_id+ is the unique identifier of the payload data.
+
+---
+
+===== Denominator
+
+The field denominator holds the integer value for the denominator of the fraction that defines resolution.
+
+---
+
+===== Error Code
+
+The error code is a unique identifier for defined DCP errors.
+
+---
+
+===== Log Category
+
+The log category may be used by a DCP slave vendor to categorize log messages. Table 58 gives the possible options.
+
+.Log categories
+[width="100%", cols="2,5", options:"header"]
+|===
+|Log category
+|Definition
+
+|0
+|Predefined, used to address all available log categories. +
+  Note: +CFG_logging+ with log category “0” will affect the configuration of all categories of a slave. +
+  Note: A DCP slave receiving +INF_log_request+ with log category “0” will consider all categories.
+
+
+|1-255
+|These log categories may be specified in the DCP slave description file. Subsequently they may be used in a log template.
+|===
+
+---
+
+===== Log Level
+
+The log level may be used in a log template in the DCP slave description file.
+
+  Note: This corresponds to the status field of FMI.
+
+.Log level definitions
+[width="100%", cols="1,1,9", options:"header"]
+|===
+|Log level
+|Value
+|Definition
+
+|Fatal
+|0
+|The simulation cannot be continued. The DCP slave will transition to the error superstate. +
+  Note: An example for this log level are several missed heartbeats, exceeding the allowed specified time out limits.
+
+|Error
+|1
+|The current action cannot be continued. +
+  Note: An example for this log level is a wrong UUID in STC_register.
+
+|Warning
+|2
+|The current action can be continued, but simulation results could be affected. +
+  Note: An example for this log level is a value out of bounds.
+
+|Information
+|3
+|This log level reflects the status of a DCP slave. +
+  Note: An example for this log level is initialization for 40% finished.
+
+|Debug
+|4
+|This log level is intended for debug information. +
+  Note: An example for this log level is step size for data identifier 4 set to 100.
+|===
+
+---
+
+===== Log Maximum Number
+This field represents the maximum number of requested log entries.
+
+---
+
+===== Log Modes
+This field defines the mode for log functionality. Table 60 gives the available options.
+
+.Log modes
+[width="50%", cols="2,2", options= header]
+|===
+|Value
+|Definition
+
+|0
+|No logging via DCP
+
+|1
+|Log on request
+
+|2
+|Log on notification
+
+|===
+
+---
+
+===== Log Argument Values
+A byte array containing the argument values as specified in a template of the DCP slave description.
+
+---
+
+===== Log Template Identifier
+An integer value representing the template identifier, referring to a template in the DCP slave description.
+
+---
+
+===== Log Entries
+A byte array containing one or more log entries. See section 3.3.7.30, Table 95 for details.
+
+---
+
+===== Major Version
+The field +major_version gives+ the major version of the DCP to be used (see section 3.1.2).
+
+---
+
+===== Minor Version
+The field +minor_version+ gives the minor version of the DCP to be used (see section 3.1.2).
+
+---
+
+===== Numerator
+The field +numerator+ holds the integer value for the numerator of the fraction that defines the resolution (see section 3.1.16).
+
+---
+
+===== Operating Mode
+The field +op_mode+ holds the operation mode as defined in section 3.1.15 the DCP slave must use.
+
+---
+
+===== Parameter_Value_Reference
+The field +parameter_vr+ gives the value reference of the parameter (see section 3.1.18.3).
+
+---
+
+===== Parameter Identifier
+The field +param_id+ gives the unique identifier of the parameter referred to in the PDU (see section 3.1.18.3).
+
+---
+
+===== Payload
+The field payload is used to hold information that is not fixed in general but must be configured using DCP mechanisms.
+
+---
+
+===== Position
+The field pos gives the position of a data value in the PDU Data payload field in byte (see section 3.4.5).
+
+---
+
+===== Scope
+The field scope gives the scope of validity for a configuration of a specified PDU Data payload field as defined in section 3.4.6.
+
+---
+
+===== Slave UUID
+The field +slave_uuid+ holds the universal unique identifier of a slave. It is defined as an unsigned byte array of length 16. The string representation of +slave_uuid+ is defined according to RFC4122 [5]. It is not required that the content of the field +slave_uuid+ follows RFC4122.
+
+---
+
+===== Source Data Type
+The field +source_data_type+ holds the data type of a value in a PDU Data as defined in section 3.1.10.
+
+---
+
+===== Source Value Reference
+The field +source_vr+ gives the value reference of the output (see section 3.1.18.2).
+
+---
+
+===== State Identifier
+The field +state_id+ gives the current state of the slave as defined in Table 13.
+
+---
+
+===== Steps
+The content of the field steps depends on the chosen operating mode. In PDU +STC_do_step+ it defines the number of computational steps the slave must perform in state +COMPUTING+. In PDU +CFG_steps+ it defines the communication step size of an output for SRT and HRT operating modes (see section 3.1.15).
+
+---
+
+===== Target Value Reference
+The field +target_vr+ gives the value reference of the input (see section 3.1.18.2).
+
+---
+
+===== Transport Protocol
+In the field +transport_protocol+ the unique identifier of the transport protocol is given. Possible options are defined in section 3.1.22.
+
+---
+
+===== Type Identifier
+In the field +type_id+ the unique identifier of the PDU is given. An overview of all assigned type identifiers is given in section 3.3.5, the type identifier range distribution is given in section 3.3.4.
+
+---
+
+===== Time
+The +time+ field represents the absolute time (see section 3.1.14.1) as a 64-bit signed integer value.
+
+---
+
+==== PDU Type Identifier Range Distribution
+The field +type_id+ contains a unique number for each PDU type. For DCP, all PDU +type_ids+ are assigned as stated in section 3.3.5. However, the following numbering scheme applies, dependent on the PDU family (also see sections 3.1.7).
+
+
+.Log level definitions
+[width="100%", cols="1,1,9", options= "header"]
+|===
+|PDU group
+|Start
+|End
+
+|(not in use)
+|0x00
+|0x00
+
+|State change (STC)
+|0x01
+|0x1F
+
+|Configuration (CFG)
+|0x20
+|0x7F
+
+|Information (INF)
+|0x80
+|0xAF
+
+|Response (RSP)
+|0xB0
+|0xDF
+
+|Notification (NTF)
+|0xE0
+|0xEF
+
+|Data (DAT)
+|0xF0
+|0xFF
+
+|===
+
+---
+
+==== Generic PDU Structure
+
+.Generic PDU structure
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+2.2+|
+34+^|[small]#DCP Fields#
+
+|[small]#type_id#
+|[small]#pdu_seq_id#
+|[small]#resp_seq_id#
+|[small]#exp_seq_id#
+|[small]#sender#
+|[small]#receiver#
+|[small]#param_id#
+|[small]#data_id#
+|[small]#pos#
+|[small]#target_vr#
+|[small]#[small]#source_vr#
+|[small]#source_data_type#
+|[small]#transport_protocol#
+|[small]#state_id#
+|[small]#numerator#
+|[small]#denominator#
+|[small]#steps#
+|[small]#op_mode#
+|[small]#error_mode#
+|[small]#log_category#
+|[small]#log_level#
+|[small]#log_mode#
+|[small]#log_max_num#
+|[small]#log_entries#
+|[small]#log_template_id#
+|[small]#log_arg_val#
+|[small]#parameter_vr#
+|[small]#major_version#
+|[small]#minor_version#
+|[small]#payload#
+|[small]#scope#
+|[small]#slave_uuid#
+|[small]#time#
+|[small]#[medium{nbsp}specific]#
+
+1.12+^.^|[small]#Configuration (CFG)#
+|[small]#CFG_time_res#
+^|[small]#0x20#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#CFG_steps#
+^|[small]#0x21#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#CFG_input#
+^|[small]#0x22#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|[small]#y#
+^|[small]#y#
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#CFG_output#
+^|[small]#0x23##
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|[small]#y#
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#CFG_clear#
+^|[small]#0x24#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#CFG_target_network_information#
+^|[small]#0x25#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+
+|[small]#CFG_source_network_information#
+^|[small]#0x26#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+
+|[small]#CFG_parameter#
+^|[small]#0x27#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+
+|[small]#CFG_tunable_parameter#
+^|[small]#0x28#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#CFG_param_network_information#
+^|[small]#0x29#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+
+|[small]#CFG_logging#
+^|[small]#0x2A#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|[small]#y#
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#CFG_scope#
+^|[small]#0x2B#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+
+1.10+^.^|[small]#State{nbsp}change (STC)#
+|[small]#STC_register#
+^|[small]#0x01#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|[small]#y#
+^|
+^|
+^|[small]#y#
+^|
+^|
+
+|[small]#STC_deregister#
+^|[small]#0x02#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#STC_prepare#
+^|[small]#0x03#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#STC_configure#
+^|[small]#0x04#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#STC_initialize#
+^|[small]#0x05#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#STC_run#
+^|[small]#0x06#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+
+|[small]#STC_do_step#
+^|[small]#0x06#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#STC_send_outputs#
+^|[small]#0x08#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#STC_stop#
+^|[small]#0x09#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#STC_reset#
+^|[small]#0x0A#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+1.3+^.^|[small]#Information (INF)#
+|[small]#INF_state#
+^|[small]#0x80#
+^|y
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#INF_error#
+^|[small]#0x81#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#INF_log#
+^|[small]#0x82#
+^|[small]#y#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+1.5+^.^|[small]#Response (RSP)#
+|[small]#RSP_ack#
+^|[small]#0xB0#
+^|
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#RSP_nack#
+^|[small]#0xB1#
+^|
+^|[small]#y#
+^|[small]#y#
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#RSP_state_ack#
+^|[small]#0xB2#
+^|
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#RSP_error_ack#
+|[small]#0xB3#
+^|
+^|[small]#y#
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#RSP_log_ack#
+^|[small]#0xB4#
+^|
+^|
+^|[small]#y#
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|[small]#y#
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+
+1.2+^.^| [small]#Notification (NTF)#
+|[small]#NTF_state_changed#
+^|[small]#0xE0#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+
+|[small]#NTF_log#
+^|[small]#0xE1#
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+
+1.2+^.^|[small]#Data (DAT)#
+|[small]#DAT_input_output#
+^|[small]#0xF0#
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+
+|[small]#DAT_parameter#
+^|[small]#0xF1#
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|
+^|[small]#y#
+^|
+^|
+^|
+^|
+
+|===
+
+---
+
+==== Allowed PDUs per State
+
+Table 63 defines the allowed PDUs per state. If a PDU is not allowed within a certain state, e.g. a +RSP_nack+ PDU including an +error_code+ may be sent. Alternatively, the DCP slave may also go to an +ERROR+ state.
+
+The following table specifies the permissible PDUs to be sent or received for each state.
+
+
+.Allowed PDUs per State
+[width="50%", cols=">,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>,>", options="header" ]
+|===
+
+|[small]#PDUs#
+|[small]#ALIVE#
+|[small]#CONFIGURATION#
+|[small]#PREPARING#
+|[small]#PREPARED#
+|[small]#CONFIGURING#
+|[small]#CONFIGURED#
+|[small]#INITIALIZING#
+|[small]#INITIALIZED#
+|[small]#SENDING_I#
+|[small]#SYNCHRONIZING#
+|[small]#SYNCHRONIZED#
+|[small]#RUNNING#
+|[small]#COMPUTING#
+|[small]#COMPUTED#
+|[small]#SENDING_D#
+|[small]#STOPPING#
+|[small]#STOPPED#
+|[small]#ERRORHANDLING#
+|[small]#ERRORRESOLVED#
+
+
+
+<|[small]#STC_register#
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#STC_deregister#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+^|[small]#R#
+|
+^|[small]#R#
+<|[small]#STC_prepare#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#STC_configure#
+|
+|
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#STC_initialize#
+|
+|
+|
+|
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#STC_run#
+|
+|
+|
+|
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#STC_do_step#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+^|[small]#1#
+|
+|
+|
+|
+|
+|
+|
+<|[small]#STC_send_outputs#
+|
+|
+|
+|
+|
+|
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+^|[small]#1#
+|
+|
+|
+|
+|
+<|[small]#STC_stop#
+|
+|
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+|
+|
+|
+|
+<|[small]#STC_reset#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+^|[small]#R#
+|
+^|[small]#R#
+<|[small]#RSP_ack#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+<|[small]#RSP_nack#
+^|[small]#S#
+|[small]#S#
+^|[small]#S#
+|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+<|[small]#RSP_state_ack#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+<|[small]#RSP_error_ack#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+^|[small]#S#
+^|[small]#S#
+<|[small]#RSP_log_ack#
+|
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+<|[small]#NTF_state_changed#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+<|[small]#NTF_log#
+|
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+^|[small]#S#
+
+<|[small]#INF_state#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+<|[small]#INF_error#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+^|[small]#R#
+^|[small]#R#
+<|[small]#INF_log#
+|
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+<|[small]#CFG_steps#
+^|
+^|[small]#2#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_time_res#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_input#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_output#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_clear#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_target_network_information#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_source_network_information#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_tunable_parameter#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_parameter#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_param_network_information#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_logging#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#CFG_scope#
+|
+^|[small]#R#
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<|[small]#DAT_input_output#
+|
+|
+|
+|
+|
+^|[small]#R#
+^|[small]#3#
+^|[small]#R#
+^|[small]#6#
+^|[small]#6#
+^|[small]#6#
+^|[small]#6#
+^|[small]#6#
+^|[small]#6#
+^|[small]#7#
+^|[small]#4#
+^|[small]#4#
+^|[small]#4#
+^|[small]#4#
+<|[small]#DAT_parameter#
+|
+|
+|
+|
+|
+^|[small]#R#
+^|[small]#R#
+^|[small]#R#
+^|[small]#5#
+^|[small]#5#
+^|[small]#5#
+^|[small]#5#
+^|[small]#5#
+^|[small]#5#
+^|[small]#5#
+^|[small]#4#
+^|[small]#4#
+^|[small]#4#
+^|[small]#4#
+|===
+
+The literals in the previous table have the following meaning:
+
+.Key for allowed PDUs per state
+[width="100%", cols="1,5" options="header"]
+|===
+|Literal
+|Meaning
+
+|S |Sending of this PDU is allowed
+
+|R
+|Receiving of this PDU is allowed
+
+|X
+|Sending and receiving of this PDU is allowed
+
+|1
+|Receiving is only allowed in non-real time operating mode
+
+|2
+|Receiving is only allowed in real time and soft real time operating mode
+
+|3
+|A slave may receive DAT_input_output in this state, but the receiver might not consider them till it changes to INITIALIZING or RUNNING. The values from the most recent data PDU are used for internal computation. As soon as it has finished its internal computation and just before the state is left, the current output values are sent in a DAT_input_output.
+
+|4
+|Receiving of data PDUs is allowed, but the received data is not considered.
+
+  Note: Example: this might happen in case of slave to slave data transfer. The master might have sent STC_stop to a slave which receives DAT_input_output from a slave which is still in state RUNNING.
+
+|5
+|A slave may receive DAT_parameter in this state.
+DAT_parameter must only contain parameters with variability tunable.
+
+•	In NRT mode, the received values must not be considered until the DCP slave changes to COMPUTING. The values from the most recent data PDU are used for internal computation.
+
+•	In SRT or HRT mode the values from the most recent data PDU are used for internal computation.
+
+|6
+|A slave may receive DAT_input_output in this state.
+
+•	In NRT mode, the received values must not be considered until the DCP slave changes to COMPUTING. The values from the most recent data PDU are used for internal computation.
+
+•	In SRT or HRT mode the values from the most recent data PDU are used for internal computation. Sending of DAT_input_output is also allowed.
+
+|7
+|Same as 6, excluding SRT and HRT cases.
+Additionally, sending of DAT_input_output is also allowed.
+|===
+
+==== PDU Definitions
+
+===== PDU STC_register
+This PDU is used by a DCP master to take ownership of a given DCP slave.
+
+The field +slave_uuid+ follows the definition of section 3.3.3.22.
+
+The fields +major_version+ and +minor_version+ follow the version descriptor numbering scheme of section 3.1.2.
+
+In the field receiver the master sets the slave’s +slave id+.
+
+.Log STC_register
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x01
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+|5
+|20
+|byte[16]
+|slave_uuid
+
+|21
+|21
+|uint8
+|op_mode
+
+|22
+|22
+|uint8
+|major_version
+
+|23
+|23
+|uint8
+|minor_version
+
+|===
+
+---
+
+===== PDU STC_deregister
+With the PDU +STC_deregister+, the slave is released from the ownership of the master. It triggers the transition to state +ALIVE+.
+
+.Log STC_deregister
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x02
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+
+|===
+
+---
+
+===== PDU STC_prepare
+This PDU is used to trigger the state transition to +PREPARING+.
+
+.Log STC_prepare
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x03
+
+|1
+|2
+|unit16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+|===
+
+---
+
+=====  PDU STC_configure
+This PDU is used to trigger the state transition to +CONFIGURING+.
+
+.Log STC_configure
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x04
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+|===
+
+---
+
+===== PDU STC_initialize
+This PDU is used to trigger the state transition to +INITIALIZING+.
+
+.Log STC_configure
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x05
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+
+|===
+
+---
+
+===== PDU STC_run
+After receiving +STC_run+, the slave transitions immediately to state +SYNCHRONIZING+ or +RUNNING+, respectively.
+
+The field time is used to schedule the start of a simulation run in HRT or SRT operating modes. It refers to absolute time.
+If time >= current absolute time, a DCP slave must wait until the point in time arrives.
+If time is less than the current absolute time (time < current absolute time) the DCP slave shall respond with +RSP_nack+, including +error_code = INVALID_START_TIME+.
+If the value of time equals zero (“0”), simulation shall start immediately. In case of non-real time operation mode (NRT), time must be ignored, considering that the simulation run is controlled by +STC_do_step+.
+
++CONFIGURED -> SYNCHRONIZING+
+When time is reached, the slave starts to exchange data and the simulation time starts to advance.
+
++SYNCHRONIZING -> RUNNING+
+When time is reached, the actual simulation experiment must start.
+
+.Log STC_run
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x06
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+|5
+|12
+|int64
+|time
+
+
+|===
+
+---
+
+===== PDU STC_do_step
+This PDU triggers the transition to +COMPUTING+. It shall only be sent to DCP slaves in non-real-time (NRT) operating mode.
+
+.Log STC_do_step
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x07
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+|5
+|8
+|uint32
+|steps
+|===
+
+---
+
+===== PDU STC_send_outputs
+This PDU triggers the transition to +SENDING_I+ and +SENDING_D+ and thus the transmission of calculated simulation outputs.
+
+.Log STC_send_outputs
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x08
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+|===
+
+---
+
+===== PDU STC_stop
+This PDU triggers the transition to state +STOPPING+.
+
+.Log STC_stop
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x09
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+|===
+
+---
+
+===== PDU STC_reset
+This PDU triggers the transition to state +CONFIGURATION+. All configuration settings received before by configuration request PDUs (CFG) are deleted.
+
+.Log STC_reset
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x0A
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+|===
+
+---
+
+===== PDU INF_state
+This PDU requests a DCP slave’s current state.
+
+.Log STC_state
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x80
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+
+|===
+
+---
+
+==== PDU INF_error
+This PDU requests a DCP slave’s reported error.
+
+.Log STC_state
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x81
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+
+|===
+
+---
+
+===== PDU INF_log
+This PDU requests the slave to send it’s logging entries of the category +log_category+. The number of returned logging entries is limited to +log_max_num+.
+
+.Log INF_log
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x82
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|log_category
+
+|5
+|5
+|uint8
+|log_max_num
+
+|===
+
+---
+
+===== CFG_time_res
+This PDU requests a DCP slave to set its time resolution.
+
+.Log INF_log
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x20
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|7
+|uint32
+|numerator
+
+|8
+|11
+|uint32
+|denominator
+
+|===
+
+---
+
+===== PDU CFG_steps
+This PDU requests a DCP slave to set its communication step size.
+The number of steps must be larger or equal than 1.
+
+.Log CFG_steps
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x21
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|7
+|uint32
+|steps
+
+|8
+|9
+|uint16
+|data_id
+
+
+|===
+
+---
+
+===== PDU CFG_input
+In order to set up slave-to-slave +DAT_input_output+ PDU communication, the DCP master must inform all DCP slaves that have inputs to be received in which format they may expect +DAT_input_output+ PDUs. For that purpose, +CFG_input+ is used.
+
+.Log CFG_input
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x22
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|data_id
+
+|6
+|7
+|uint16
+|pos
+
+|8
+|15
+|uint64
+|target_vr
+
+|16
+|16
+|uint8
+|source_data_type
+|===
+
+---
+
+===== PDU CFG_output
+In order to set up slave-to-slave +DAT_input_output+ PDU communication, the master must inform all DCP slaves that have outputs to be sent to which input and at which DCP slave the value must be sent. For that purpose, the PDU +CFG_output+ is used.
+
+.Log CFG_output
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x23
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|data_id
+
+|6
+|7
+|uint16
+|pos
+
+|8
+|15
+|uint64
+|source_vr
+
+|===
+
+---
+
+===== PDU CFG_clear
+The DCP slave must reset all configurations set earlier by configuration request PDUs.
+
+  Note: The operating mode and the DCP slave’s +slave_id+ are not reset.
+
+.Log CFG_output
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x23
+
+|0
+|0
+|uint8
+|type_id = 0x24
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|4
+|uint8
+|receiver
+|===
+
+---
+
+===== PDU CGF_target_network_information
+The PDU +CFG_target_network_information+ is used to distribute network information. It is defined by the following general structure. The complete structure depends on the used communication medium.
+
+The character +N+ denotes the total length of one specific +CFG_target_network_information+ in bytes. It depends on the used transport protocol.
+
+.Log CFG_target_network_information
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x25
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|data_id
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|N-1
+2+|See section 4 – transport protocol specific
+|
+|===
+
+---
+
+===== PDU CFG_source_network_information
+The message +CFG_source_network_information+ is used to distribute network information. It is defined by the following general structure. The complete structure depends on the communication medium used.
+
+The character N denotes the total length of one specific +CFG_source_network_information+ in bytes. It depends on the used transport protocol.
+
+.Log CFG_source_network_information
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x26
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|data_id
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|N-1
+2+|See section 4 – transport protocol specific
+|
+|===
+
+---
+
+===== PDU CFG_parameter
+The field name payload refers to the configuration information transmitted by that PDU. The character N denotes the total length of one specific PDU given in bytes. It depends on the used configuration.
+
+.Log CFG_parameter
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x27
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|11
+|uint64
+|parameter_vr
+
+|12
+|12
+|uint8
+|source_data_type
+
+|13
+|N-1
+|byte[N-13]
+|payload
+
+|
+|===
+
+---
+
+===== PDU CFG_tunable_parameter
+
+This PDU is used to inform the DCP slave about the parameter format to expect.
+
+.Log CFG_tunable_parameter
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x28
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|param_id
+
+|6
+|7
+|uint16
+|pos
+
+|8
+|15
+|uint64
+|parameter_vr
+
+|16
+|16
+|uint8
+|source_data_type
+|===
+
+---
+
+===== PDU CFG_param_network_information
+The message +CFG_param_network_information+ is used to distribute network information. It is defined by the following general structure, the complete structure depends on the used transport protocol.
+
+The character +N+ denotes the total length of one specific +CFG_param_network_information+ in bytes, it depends on the used transport protocol.
+
+.Log CFG_param_network_information
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x29
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|param_id
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|N-1
+2+|See section 4 – transport protocol specific
+
+|===
+
+---
+
+===== PDU CFG_logging
+This PDU is used to set up the DCP logging mechanisms. See section 3.1.23 for details.
+
+.Log CFG_logging
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x2A
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|log_category
+
+|5
+|5
+|uint8
+|log_level
+
+|6
+|6
+|uint8
+|log_mode
+|===
+
+---
+
+===== PDU CFG_scope
+This PDU is used to set the scope of the configurations of a Data PDU identified by +data_id+. See section 3.3.3.21 and section 3.4.6 for details.
+
+.Log CFG_scope
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x2B
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|data_id
+
+|6
+|6
+|uint8
+|scope
+
+|===
+
+---
+
+===== PDU RSP_ack
+This PDU is used for general acknowledgment of any requests.
+
+.Log RSP_ack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB0
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|===
+
+---
+
+===== PDU RSP_nack
++RSP_nack+ shall be sent whenever a received Control PDU was not understood correctly, cannot be executed at the time, or contains an unexpected PDU sequence identifier (see section 3.4.1). Furthermore, it contains an +error_code+ field indicating the occurred error.
+
+.Log RSP_nack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB1
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|4
+|5
+|uint16
+|exp_seq_id
+
+|6
+|7
+|uint16
+|error_code
+|===
+
+---
+
+===== PDU RSP_state_ack
+This PDU is used by a DCP master to report the current state in the field +state_id+. The sender field holds the +slave id+ of the slave. In case the slave is in state +ALIVE+ i.e. it has not been registered and thus has not been given a +slave+ id, the slave uses the DCP +slave+ id from the receiver field of PDU +INF_state+ to answer with the sender field of PDU +RSP_state_ack+.
+
+.Log RSP_state_ack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB2
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|4
+|4
+|uint8
+|state_id
+|===
+
+---
+
+===== PDU RSP_error_ack
+This PDU is used by a DCP slave to report the current error.
+
+.Log RSP_error_ack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB3
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|4
+|5
+|uint16
+|error_code
+
+|===
+
+---
+
+===== PDU RSP_log_ack
+The character +N+ denotes the total length of one specific PDU given in bytes. It depends on the used configuration.
+
+.RSP_log_ack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB4
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|4
+|N-1
+|byte[N-4]
+|log_entries
+
+
+|===
+
+The +log_entries+ field of +RSP_log_ack+ contains an array of log entries, where one single log entry has the following structure. The character +M+ denotes the total length of one single log entry given in bytes. It depends on the used configuration.
+
+.Single log entry
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|7
+|int64
+|time
+
+|8
+|8
+|unit8
+|log_template_id
+
+|9
+|M-1
+|byte[M-9]
+|log_arg_val
+
+|===
+
+The +log_arg_val+ field of a single log entry contains an array of variables.
+
+---
+
+===== PDU NTF_state_changed
+This PDU indicates a successful state transition.
+
+.NTF_state_changed
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xE0
+
+|1
+|1
+|uint8
+|sender
+
+|2
+|2
+|uint8
+|state_id
+
+
+|===
+
+---
+
+===== PDU NTF_log
+This PDU is used to send a single log entry. The payload field of +NTF_log+ contains an array of argument values for the given +log_template_id+. The character “N” denotes the total length of one specific PDU given in bytes. It depends on the used configuration.
+
+.NTF_log
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xE1
+
+|1
+|1
+|uint8
+|sender
+
+|2
+|9
+|int64
+|time
+
+|10
+|10
+|uint8
+|log_template_id
+
+|11
+|N-1
+|byte[N-11]
+|log_arg_val
+
+
+
+|===
+
+---
+
+===== PDU DAT_input_output
+The field name payload refers to the payload of that PDU. The character “N” denotes the total length of one specific PDU given in bytes. It depends on the used configuration.
+
+.DAT_input_output
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xF0
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|4
+|uint16
+|data_id
+
+|5
+|N-1
+|byte[N-5]
+|payload
+|===
+
+---
+
+===== PDU DAT_parameter
+The field name payload refers to the payload of that PDU. The character “N” denotes the total length of one specific PDU given in bytes. It depends on the used configuration.
+
+.DAT_parameter
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xF1
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|4
+|uint16
+|param_id
+
+|5
+|N-1
+|Byte[N-5]
+|payload
+|===
+
+---
+
+=== Protocol
+In this section the valid sequence of exchanged PDUs is defined. The following tables contain a sequence number. In this sequence number, digits define a mandatory sequence of actions, whereas letters define exclusive options.
+
+---
+
+==== Sequence Identifier
+
+The sequence identifier is defined as a running counter, identifying PDUs within a certain amount of time. The master must maintain a +pdu_seq_id+ for each slave he is connected to. The master also defines the initial value of the pdu_seq_id by sending STC_register.
+
+  Note: The slave can use the +pdu_seq_id+ after receiving +STC_register+.
+
+  Note: It is not allowed to use one +pdu_seq_id+ multiple times in a row, except at natural data type overflows. The +pdu_seq_id+ must always be incremented by one.
+
+All PDUs of the Request PDU family contain a PDU sequence identifier field. All PDUs of the Response PDU family contain a PDU response sequence identifier field (+resp_seq_id+) which contains the value of the +pdu_seq_id+ of the corresponding Request PDU.
+
+---
+
+===== Control PDU Sequence ID
+To check the sequence identifier of a received Control PDU, the following criterion applies:
+
+pdu_seq_id~last~ ~valid~ + 1 == pdu_seq_id~current~
+
+The field +exp_seq_id+ in +RSP_nack+ shall always contain the last valid received +pdu_seq_id+ + 1.
+If the PDU sequence ID check is violated, the error code +INVALID_SEQUENCE_ID+ applies.
+
+---
+
+===== Data PDU Sequence ID
+The attribute +maxConsecMissedPdu+ defines the number of consecutively missed PDUs a DCP slave can tolerate. A violation of this number will make the DCP slave proceed to the Error superstate. If no value is defined (the field does not exist), the DCP slave does not check on the PDU sequence ID and therefore never proceeds to the Error superstate because of missed PDUs.
+
+Note: It is highly recommended to use reliable transport protocols for parameters and discrete outputs. See also section 10-F.
+
+---
+
+==== Configuration Request Pattern
+The DCP master may request from a DCP slave that it applies certain configuration settings by sending configuration request PDUs (PDU family CFG).
+
+.Configuration request pattern
+[width="100%", cols="2,3", options= "header"]
+|===
+|Sequence Number
+|Action
+
+|1
+|The DCP master requests a configuration setting by sending a configuration request PDU (CFG) to the DCP slave.
+
+|2a
+|The slave responds to the DCP master by sending +RSP_nack+. In that case, the DCP slave did not receive the request properly or will not be able to fulfill the request properly.
+
+|2b
+|The DCP slave responds by sending +RSP_ack+. In that case, the DCP slave will apply the desired configuration setting immediately.
+
+|2c
+|The DCP slave responds with +RSP_nack+, whenever an attempt is made to modify a configuration setting fixed in the DCP slave description. If the request is consistent with the current configuration setting, +RSP_ack+ shall be sent.
+|===
+
+---
+
+==== State Transition Pattern
+
+In order to operate the DCP state machine, the following state transition pattern is introduced. It is valid for the entire state machine, unless noted otherwise.
+
+.State transition pattern procedure
+[width="100%", cols="2,3", options= "header"]
+|===
+|Sequence Number
+|Action
+
+|1
+|The DCP master requests a state transition by sending a state change request PDU to the DCP slave.
+
+|2a
+|The DCP slave responds to the DCP master by sending +PDU RSP_nack+. In that case, the DCP slave did not receive the request properly or will not be able to fulfill the request properly (see Figure 2).
+
+|2b
+|The DCP slave responds by sending PDU +RSP_ack+. In that case, the DCP slave will start the transitioning process immediately.
+
+|3
+|If the transition is successfully finished, the DCP slave informs the DCP master by sending a PDU +NTF_state_changed+ (see Figure 3).
+
+|===
+
+.State transition pattern (NAck)
+image::State_transition_pattern_NAck.png[width="35%", align="center"]
+.State transition pattern (Ack)
+image::State_transition_pattern_Ack.jpg[width=42%, align="center"]
+
+---
+
+==== State reporting
+A DCP slave must communicate its state to its master as soon as it has changed. It does so by sending the PDU +NTF_state_changed+ whenever a DCP slave’s state change is finished.
+
+In addition to that, the PDU +INF_state+ can be sent at any time by the DCP master to query a DCP slave’s state. A DCP slave shall respond with PDU +RSP_state_ack+.
+
+image::State_request.png[width="45%", align="center"]
+
+  Note: The master is free to choose the DCP slave id before registering DCP slaves, to have a unique identifier for a specific DCP slave at the beginning. The slave must an-swer using exactly this DCP slave id.
+
+  Note: A DCP slave may be identified using the pdu_seq_id only, with the risk of hav-ing collisions, depending on the underlying communication medium. Using the DCP slave id as described here, it is possible to uniquely identify a DCP slave.
+
+---
+
+==== Data Exchange
+
+
+===== Inputs and Outputs
+Outputs are communicated to Inputs via the payload field of +PDU DAT_input_output+.
+The values of several outputs of one slave can be grouped in the payload field of one +DAT_input_output+ PDU. Such a group is identified by a unique +data_id+. A payload field must group only values of outputs with the same configuration, i.e. sender, receiver, network configuration, scope and communication step size. The format of the payload field is defined in +CONFIGURATION+ state using the Configuration PDUs +CFG_output+ and +CFG_input+: the PDU +CFG_output+ tells the sending slave the position of the value of an output in the payload field of a +DAT_input_output+. +
+
+The PDU +CFG_input+ tells the receiving slave the position and the data type of the value in the payload field of a +DAT_input_output+ for its input.
+
+The communication protocol relevant information for a +DAT_input_output+ is set in CONFIGURATION state by the PDUs +CFG_set_source_network_information+ and +CFG_set_target_network_information+. For RT mode, the communication step size is set by +CFG_steps+.
+
+An example of the intended sequence for the rollout of the configuration of data exchange via data objects using native DCP (UDP over IPv4) is given in the Appendix, section D.
+
+---
+
+===== Parameters
+Parameters are set via PDU +CFG_parameter+.
+Parameters with variability=”+tunable+” can additionally be set via PDU +DAT_parameter+. In this case the values of several parameters can be grouped in the payload field of one +DAT_parameter+ PDU. Such a group is identified by a unique +param_id+. A payload field must group only values of parameters for the same configuration, i.e. receiver and network configuration. The format of the payload field is defined in +CONFIGURATION+ state using Configuration PDUs +CFG_tunable_parameter+. This PDU tells the slave the position and type of the value of the parameter in the field payload of a +DAT_parameter+ PDU.
+The communication protocol relevant information for a +DAT_parameter+ is set in +CONFIGURATION+ state by the PDUs +CFG_param_network_information+.
+
+---
+
+==== Scope
+Algorithms for computation of a consistent initial state (see section 3.2.3.3) may require exchange of inputs and outputs via the master. In superstates Run and +NonRealTime+ slave-to-slave data exchange is advantageous, to reduce latencies and bandwidth compared to slave-master-slave communication. Therefore, a mechanism is defined which supports both. The PDUs +CFG_scope+ contains the field scope. It defines in which states the respective configuration is active: Either in superstates Run and +NonRealTime+, or in +Initialization+, or both. Table 102 defines the enumeration of the field scope.
+
+.Enumeration of scope
+[width="100%", cols="4,2", options="header"]
+|===
+
+|Superstates
+|scope~hex~
+
+|+Initialization/Run/NonRealTime+
+|0x0
+
+|+Initialization+
+|0x1
+
+|+Run/NonRealTime+
+|0x2
+|===
+
+---
+
+==== PDU Validity
+If a PDU is received by a DCP slave, it shall be checked for validity. Table 104 contains a list of all currently defined error codes which are applicable to the DCP. Table 105 contains a list of all currently defined validity checks, applicable to Control and Data PDUs. Table 106 defines the permissible actions to be taken depending on the result of PDU checking. Table 107 defines the order of error checking for Control PDUs. Table 109 defines the order of error checking for Data PDUs.
+As the PDUs from the family Notification (NTF) are not intended to be received by a DCP slave, they may be dropped silently.
+
+---
+
+===== Error Code Ranges
+The following ranges for error codes are defined.
+
+.Error code ranges
+[width="100%", cols="4,2", options="header"]
+|===
+
+|Range
+|Group
+
+|0x00
+|+NONE+
+
+|0x1001-0x1FFF
+|+PROTOCOL_ERROR_*+
+
+|0x2001-0x2FFF
+|+INVALID_*+
+
+|0x3001-0x3FFF
+|+INCOMPLETE_*+
+
+|0x4001-0x4FFF
+|+NOT_SUPPORTED_*+
+
+|0x5001-0x5FFF
+|+[Transport protocol specific error codes]+
+
+|0x6001-0xFFFF
+|+[Reserved]+
+
+|===
+
+---
+
+===== List of Error Codes
+The following list of error codes applies to the field +error_cod+e of +RSP_nack+ and +RSP_error_ack+.
+
+.List of error codes
+[width="100%", cols="1,3,3", options="header"]
+|===
+|error_code~hex~
+|Mnemonic
+|Description
+
+|0x0000
+|NONE
+|Indicates that no error is currently present.
+
+|0x1001
+|PROTOCOL_ERROR_GENERIC
+|Indicates that an error has occurred which is not specified in this document.
+
+|0x1002
+|PROTOCOL_ERROR_HEARTBEAT_MISSED
+|Indicates that the DCP slave did not receive a PDU INF_state within the maximum periodic interval ti_~max~ defined in the DCP slave description.
+
+|0x1003
+|PROTOCOL_ERROR_
+PDU_NOT_ALLOWED_IN_THIS_STATE
+|Indicates that a received PDU is not allowed in the current state. See section 3.3.6 for details.
+
+|0x1004
+|PROTOCOL_ERROR_PROPERTY_VIOLATED
+|Indicates that one of the following properties specified in the DCP slave description has been violated:
+min, max, preEdge, postEdge, gradient, maxConsecMissedPdus. +
+Note: The detection and notification of a violation of these properties is optional.
+
+|0x1005
+|PROTOCOL_ERROR_
+STATE_TRANSITION_IN_PROGRESS
+|Indicates that a received state change request PDU has already been acknowledged, but the current state still differs from the requested state.
+
+|0x2001
+|INVALID_LENGTH
+|Indicates that the received PDU has a valid type_id, but its length does not match.
+
+|0x2002
+|INVALID_LOG_CATEGORY
+|log_category is not log category of the slave
+
+|0x2003
+|INVALID_LOG_LEVEL
+|log_level is not a valid log level according to section 3.1.23.1
+
+|0x2004
+|INVALID_LOG_MODE
+|log_mode is not valid log mode according to section 3.1.23
+
+|0x2005
+|INVALID_MAJOR_VERSION
+|major_version as set by the master is not allowed according to the major version of the DCP specification defined in the DCP slave description.
+
+|0x2006
+|INVALID_MINOR_VERSION
+|minor_version as set by the master is not allowed according to the minor version of the DCP specification defined in the DCP slave description.
+
+|0x2007
+|INVALID_NETWORK_INFORMATION
+|Indicates that the network information provided through a configuration request PDU is not valid.
+
+|0x2008
+|INVALID_OP_MODE
+|Indicates that the operating mode requested through STC_register is not supported by this DCP slave.
+
+|0x2009
+|INVALID_PAYLOAD
+|Indicates that the length of a string or binary data type is larger than the defined maxSize.
+
+|0x200A
+|INVALID_SCOPE
+|scope is invalid according to section 3.4.6.
+
+|0x200B
+|INVALID_SOURCE_DATA_TYPE
+|source_data_type is not compatible with the inputs data type. For a list of data types see section 3.1.10, and for casting rules see section 3.1.20.
+
+|0x200C
+|INVALID_START_TIME
+|Indicates that the start time provided in STC_run is invalid, e.g. in the past.
+
+|0x200D
+|INVALID_STATE_ID
+|state_id is not equal to the slave’s state.
+
+|0x200E
+|INVALID_STEPS
+|Indicates that the number of steps in CFG_steps or STC_do_step is not supported.
+
+|0x200F
+|INVALID_TIME_RESOLUTION
+|Indicates that the time resolution expressed by numerator and denominator is not valid.
+
+|0x2010
+|INVALID_TRANSPORT_PROTOCOL
+|The given transport_protocol is not supported by the slave
+
+|0x2011
+|INVALID_UUID
+|slave_uuid is not equal to slave’s uuid.
+
+|0x2012
+|INVALID_VALUE_REFERENCE
+|Indicates that the value reference in CFG_input, CFG_output, CFG_parameter, or CFG_tunable_parameter is not available within that DCP slave.
+
+|0x2013
+|INVALID_SEQUENCE_ID
+|Violated PDU sequence ID check. See section 3.4.1.
+
+
+|0x3001
+|INCOMPLETE_CONFIG_GAP_INPUT_POS
+|There are gaps in the configured PDU Data payload field.
+Note: No gap means if pos n is not the last pos, there exists a pos n+1.
+
+|0x3002
+|INCOMPLETE_CONFIG_GAP_OUTPUT_POS
+|There are gaps in the pos of the received CFG_output PDUs.
+
+|0x3003
+|INCOMPLETE_CONFIG_GAP_TUNABLE_POS
+|There are gaps in the pos of the received CFG_tunable_parameter PDUs.
+
+|0x3004
+|INCOMPLETE_CONFIG_NW_INFO_INPUT
+|For the PDU Data payload field identified by data_id no or no valid CFG_source_network_information has been received.
+
+|0x3005
+|INCOMPLETE_CONFIG_NW_INFO_OUTPUT
+|For the PDU Data payload field identified by data_id no or no valid CFG_target_network_information has been received.
+
+|0x3006
+|INCOMPLETE_CONFIG_NW_INFO_TUNABLE
+|Not for each param_id which occurs in the PDUs CFG_tunable_parameter a valid CFG_param_network_information with the same param_id is received.
+
+|0x3007
+|INCOMPLETE_CONFIG_SCOPE
+|At least one data_id is missing the setting of the scope.
+
+|0x3008
+|INCOMPLETE_CONFIG_STEPS
+|For every data_id which occurs in a CFG_output at least one valid CFG_steps with the same data_id must have been received.
+
+|0x3009
+|INCOMPLETE_CONFIG_TIME_RESOLUTION
+|No time resolution is specified. Neither through the DCP slave description, nor through CFG_time_res.
+
+|0x300A
+|INCOMPLETE_CONFIGURATION
+|Indicates that a DCP slave cannot leave CONFIGURATION state due to missing configuration information.
+
+|0x4001
+|NOT_SUPPORTED_LOG_ON_NOTIFICATION	log_mode
+|logOnNotification is not supported by the slave, i.e. in DCP slave description canProvideLogOnNotification = false
+
+|0x4002
+|NOT_SUPPORTED_LOG_ON_REQUEST
+|log_mode logOnRequest is not supported by the slave i.e. in DCP slave description canProvideLogOnRequest = false
+
+|0x4003
+|NOT_SUPPORTED_VARIABLE_STEPS
+|Steps differ from previous ones (if the slave does not support variable step sizes).
+
+|0x4004
+|NOT_SUPPORTED_TRANSPORT_PROTOCOL
+|Indicates that the transport protocol number provided through a configuration request PDU is not supported.
+
+|0x4005
+|NOT_SUPPORTED_PDU
+|Indicates that this type of PDU (identified through field type_id) is defined within this specification but is not supported by this DCP slave.
+Note: This affects the current operating mode as well as DCP slave capabilities.
+
+|0x4006
+|NOT_SUPPORTED_PDU_SIZE
+|A data PDU was configured such that it exceeds the maximum allowed PDU size specified in maxPduSize in the DCP slave description.
+|===
+
+.Applicable PDU validity checks
+[width="100%", cols="1,3", options="header" ]
+|===
+|Check
+|Details
+
+|Type identifier
+|The type_id field of the received PDU is checked. All valid type identifiers are specified in section 3.3.
+
+Note: This affects type_identifiers which are not specified, as well as PDUs which are not intended to be processed by this DCP slave, e.g. RSP_ack.
+
+|Length
+|The PDU length in bytes is checked.
+
+Note: A plausibility check would include checking for PDU length smaller than 4 Bytes, resulting in an immediate drop. Detailed length checks shall be performed as defined in Table 107, Table 108, and Table 109.
+
+
+|Support
+|The received PDU is supported by the DCP slave, e.g. capability flag canSupportReset is set.
+
+|Receiver
+|The receiver field of the received PDU is evaluated against the assigned DCP slave id.
+In state ALIVE, check if receiver is greater than zero.
+
+Note: The DCP slave id zero is reserved for the master. Therefore no slave can be a valid receiver of a PDU which is determined for receiver zero.
+
+|Sequence id
+|The pdu_seq_id field of the received PDU is evaluated and checked for integrity. The maxConsecMissedPdus attribute from DCP slave description may influence the exact behavior.
+
+|data_id/param_id
+|The data_id or param_id field is validated.
+
+|State
+|The type_id field of the received PDU is validated against the current DCP slave state according to Table 63.
+
+|Semantics
+|All fields of the received PDU, that are specified in section 3.3 and are not explicitly covered in this section, shall be checked for validity and integrity.
+|===
+
+.Applicable actions related to PDU validity checks
+[width="100%", cols="1,3", options="header" ]
+|===
+|Activity
+|Details
+
+|Drop PDU
+|The received PDU shall be dropped silently, without any further actions.
+
+|Process PDU
+|The received PDU shall be processed further according to this specification document.
+
+|Handle error
+|The occurred error shall be communicated to the DCP master. Possible actions include transition to an Error state, and responding an error_code by using RSP_nack or RSP_error_ack.
+A list of corresponding error_codes can be found in section 3.4.7.3.
+|===
+
+---
+
+===== Order of Error Checking
+
+The following tables (Table 107, Table 108, Table 109) define the order of the checks for PDUs a DCP slave must perform. If multiple checks fail, the action from the failed check with the lowest order value must be reported first. The error codes apply to the fields +error_code+ of +RSP_nack+ and +RSP_error_ack+.
+
+  Note: This does not necessarily apply to the order of internally performed checks. This order indicates the sequence of error reporting. This is independent of the sequence of actual performed checks.
+
+
+
+
+
+.Order of error checking for request PDUs
+[width="100%", cols="1,3,3", options="header"]
+|===
+
+|Order
+|Check
+|Action/Error code
+
+1.2+^.^|1
+|Type identifier
+1.2+^.^|Drop
+|Receiver
+|2
+|Sequence ID
+|+INVALID_SEQUENCE_ID+
+
+|3
+|Support
+|+NOT_SUPPORTED_PDU+
+
+|4
+|Length
+|+INVALID_LENGTH+
+
+|5
+|State
+|+PDU_NOT_ALLOWED_IN_THIS_STATE+
+
+|6
+|Semantics
+|See section 3.4.7.4
+
+
+
+|===
+
+.Order of error checking for response PDUs
+[width="100%", cols="1,3,3", options="header"]
+|===
+
+|Order
+|Check
+|Action/Error code
+
+|1
+|Type identifier
+|Drop
+|===
+
+
+.Order of error checking for data PDUs
+[width="100%", cols="1,3,3", options="header"]
+|===
+
+|Order
+|Check
+|Action/Error code
+
+1.5+^.^|1
+|Type identifier
+1.5+^.^|Drop
+|data_id/param_id
+|Sequence ID
+|Length
+|State
+|===
+
+---
+
+===== Order of Error Codes
+.Error code order for STC_register
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error code
+
+|1
+|INVALID_STATE_ID
+
+|2
+|INVALID_UUID
+
+|3
+|INVALID_OP_MODE
+
+|4
+|INVALID_MAJOR_VERSION
+
+|5
+|INVALID_MINOR_VERSION
+|===
+
+.Error code order for STC_deregister
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error code
+
+|1
+|INVALID_STATE_ID
+|===
+
+.Error code order for STC_prepare
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_STATE
+
+|2
+|INCOMPLETE_CONFIG_GAP_INPUT_POS
+
+|3
+|INCOMPLETE_CONFIG_GAP_OUTPUT_POS
+
+|4
+|INCOMPLETE_CONFIG_GAP_TUNABLE_POS
+
+|5
+|INCOMPLETE_CONFIG_NW_INFO_INPUT
+
+|6
+|INCOMPLETE_CONFIG_NW_INFO_OUTPUT
+
+|7
+|INCOMPLETE_CONFIG_NW_INFO_TUNABLE
+
+|8
+|INCOMPLETE_CONFIG_STEPS
+
+|9
+|INCOMPLETE_CONFIG_TIME_RESOLUTION
+
+|10
+|INCOMPLETE_CONFIG_SCOPE
+
+|11
+|NOT_SUPPORTED_PDU_SIZE
+|===
+
+.Error code order for STC_configure
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_STATE_ID
+|===
+
+.Error code order for STC_initialize
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_STATE_ID
+|===
+
+.Error code order for STC_run
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_STATE_ID
+
+|1
+|INVALID_START_TIME
+|===
+
+.Error code order for STC_do_step
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_STATE_ID
+
+|2
+|INVALID_STEPS
+
+|3
+|NOT_SUPPORTED_VARIABLE_STEPS
+|===
+
+.Error code order for STC_send_outputs
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_STATE_ID
+|===
+
+.Error code order for STC_stop
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_STATE_ID
+|===
+
+.Error code order for STC_reset
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_STATE_ID
+|===
+
+  Note: A received STC_reset PDU is caught by PDU support check if canHandleReset = false (see Table 107)
+
+
+.Error code order for INF_log
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_LOG_CATEGORY
+|===
+
+Note: A received configuration PDU is caught by Check PDU support if canAcceptConfigPdus = false.
+
+.Error code order for CFG_time_res
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_TIME_RESOLUTION
+|===
+
+.Error code order for CFG_steps
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_STEPS
+|===
+
+.Error code order for CFG_input
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_VALUE_REFERENCE
+
+|2
+|INVALID_SOURCE_DATA_TYPE
+|===
+
+.Error code order for CFG_output
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_VALUE_REFERENCE
+
+|2
+|INVALID_STEPS
+|===
+
+.Error code order for CFG_target_network_information
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_TRANSPORT_PROTOCOL
+
+|2
+|INVALID_NETWORK_INFORMATION
+|===
+
+.PDU Error code order CFG_source_network_information
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_TRANSPORT_PROTOCOL
+
+|2
+|INVALID_NETWORK_INFORMATION
+|===
+
+.Error code order for CFG_parameter
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_VALUE_REFERENCE
+
+|2
+|INVALID_SOURCE_DATA_TYPE
+
+|3
+|INVALID_PAYLOAD
+|===
+
+.PDU Error code order CFG_tunable_parameter
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_VALUE_REFERENCE
+
+|2
+|INVALID_SOURCE_DATA_TYPE
+|===
+
+.Error code order for CFG_param_network_information
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_TRANSPORT_PROTOCOL
+
+|2
+|(Driver specific error handling.)
+|===
+
+  Note: A received CFG_logging is caught by PDU support check if canProvideLogOnRequest = false and canProvideLogOnNotification = false (see Table 107).
+
+
+.Error code order for CFG_logging
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|NOT_SUPPORTED_LOG_ON_REQUEST
+
+|2
+|NOT_SUPPORTED_LOG_ON_NOTIFICATION
+
+|3
+|INVALID_LOG_CATEGORY
+
+|4
+|INVALID_LOG_LEVEL
+
+|5
+|INVALID_LOG_MODE
+|===
+
+.Error code order for CFG_scope
+[width="100%", cols="1,3", options="header"]
+|===
+
+|Order
+|Error Code if condition fails
+
+|1
+|INVALID_SCOPE
+|===
+
+---
+
+===== Error Reporting
+Whenever a DCP slave is in +ERRORHANDLING+ or +ERRORRESOLVED+ states, the DCP master may send +INF_error+ to this DCP slave, to find out about the reason.
+.Error reporting procedure
+[width="100%", cols="1,5", options="header"]
+|===
+
+|Sequence Number
+|Action
+
+|1
+|The DCP master sends INF_error to the DCP slave.
+
+|2a
+|The DCP slave responds by sending RSP_error_ack, which contains an error code.
+
+|2b
+|The DCP slave responds by sending RSP_nack, if he is currently not in the Error superstate.
+
+|===
+
+---
+
+==== Heartbeat
+
+The heartbeat functionality is optional. Its availability is indicated by capability flag +canMonitorHeartbeat+, see section 5.12.
+
+A slave should be able to detect that its master is still active. Therefore, the master shall send a periodic PDU +INF_state+ at a predefined interval ti to each of the connected slaves. This interval is specified by the master. This enables two monitoring functions, defined as follows.
+
+---
+
+===== Slave Monitoring
+The master receives a PDU +RSP_state_ack+ from each slave and determines the response time. If the response time tr exceeds a given time interval tr_~max~, the master should take appropriate action.
+
+---
+
+===== Master Monitoring
+Each slave must respond with a PDU +RSP_state_ack+ immediately. A timeout defined in the DCP slave description determines the maximum waiting time +ti_~max~+ between two PDUs +INF_state+. If the timeout expires, the slave shall go to state +ERRORHANDLING+ and subsequently to state +ERRORRESOLVED+.
+
+.Heartbeat functionality
+image::Heartbeat_functionality.jpg[align="center"]
+
+---
+
+==== Error Handling
+The DCP represents a framework to handle faults and errors to avoid failures of simulation scenarios, when running in SRT or HRT operation mode. Goal is to protect physical equipment (connected real-time systems) as well as human operators from any harm that may be caused during normal operation. The error handling procedures described here are inline with ISO 26262 [6].
+
+---
+
+===== Unavailable communication medium
+This description assumes that the used communication medium has become unavailable unexpectedly. The DCP slave may use mechanisms to detect these network problems, e.g. heartbeat. In case a DCP slave is unable to send or receive PDUs, it transitions to +ERRORHANDLING+ state. In +ERRORHANDLING+ the DCP slave shall e.g. close open connections, or perform the stopping routine. If these procedures are finished, the DCP slave proceeds to +ERRORRESOLVED+.
+
+If the communication medium becomes available again, it may react to e.g. an +STC_reset+. Otherwise, operator intervention is required and the DCP slave must be restarted by other means.
+
+---
+
+===== Available communication medium
+In the following the procedure of error handling is described under the assumption that it is still possible to exchange PDUs.
+
+.Error handling procedure for available communication medium
+[width="100%", cols="1,5", options="header"]
+|===
+|Sequence Number
+|Action
+
+|1
+|A fault (faulty behavior or condition in model or RT system) occurs within a DCP slave (time tf). After the DCP slave detected this fault (time tfd) it transitions self-reliantly to the Error superstate. +
+Note: The transition to +ERRORHANDLING+ is not requested from the master.
+
+|2
+|The DCP slave transitions to the +ERRORHANDLING+ state immediately.
+
+|3
+|Within the +ERRORHANDLING+ state, the DCP slave tries to send an +NTF_state_changed+ to the master. Then it starts suitable error handling routines and tries to resolve the error. +
+Note: Appropriate measures of error resolving are shutdown of subsystems, potential energy dissipation in connected RT systems, etc. This may take some time.
+
+|4a
+|If successful, the DCP slave transitions to +ERRORRESOLVED+ state immediately.
+
+Note: No request to do so from master.
+
+The DCP slave either sends a PDU +NTF_state_changed+ to its master, reporting that the state transition is finished, or reports the state change to the master on request.
+
+Note: As defined in communication pattern.
+
+|4b
+|If not successful, the system experiences an unrecoverable error. The transition to state +ERRORRESOLVED+ is not performed. Signal SIG_exit to shut down in terms of an error handling procedure may be called.
+
+|5
+|In state ERRORRESOLVED, the DCP slave receives a PDU +STC_reset+ (time tr). It acknowledges it by sending a PDU +RSP_ack+ to the DCP master.
+
+|6
+|The transition to state +CONFIGURATION+, of superstate Normal operation is performed. Either a PDU +NTF_state_changed+ is sent to the master or the state change is reported to the master on request.
+|===
+
+.Procedure for error handling
+image::Fault tolerant_time_interval.png[width="90%", align="center"]
+
+---
+
+===== Master Unavailability
+
+If the master becomes unavailable its slaves may detect this (e.g. heartbeat) and proceed to the error superstate, as described in section 3.4.10.2.
+
+The master needs to ensure that the previously used scenario configuration can be reproduced, including the DCP slave ID. This may be ensured by e.g. assignment of DCP slave IDs based on sorted DCP slave UUIDs.
+
+---
+
+===== Unintended Behaviour
+If a DCP slave receives a valid, previously received PDU but with a different +pdu_seq_id+ number, it shall acknowledge and process it as specified.
