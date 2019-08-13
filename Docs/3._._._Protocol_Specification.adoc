@@ -967,7 +967,7 @@ The numbering of dimensions is done from left to right and from top to bottom.
 
 Serialization example
 
-image::C:\Users\damianlang\Desktop\Atom\DCP\Adoc\DCP_2.0\formula2.png[]
+image::Images\formula2.png[]
 
 ---
 
@@ -6258,9 +6258,9 @@ In order to operate the DCP state machine, the following state transition patter
 |===
 
 .State transition pattern (NAck)
-image::State_transition_pattern_NAck.png[width="35%", align="center"]
+image::Images\State_transition_pattern_NAck.png[width="35%", align="center"]
 .State transition pattern (Ack)
-image::State_transition_pattern_Ack.jpg[width=42%, align="center"]
+image::Images\State_transition_pattern_Ack.jpg[width=42%, align="center"]
 
 ---
 
