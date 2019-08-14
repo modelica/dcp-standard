@@ -1,7 +1,0 @@
-=== D. Example: Data Exchange
-The following Figure 35 shows an example of necessary steps for configuration roll-out using na-tive DCP (UDP over IPv4).
-
-.Example configuration roll-out
-image::C:\Users\damianlang\Desktop\Atom\DCP\Adoc\DCP_2.0\example_configuration.png[]
-
-  Note: For better legibility all values are in human readable format. On the communi-cation medium these values are transported as defined in this specification.
