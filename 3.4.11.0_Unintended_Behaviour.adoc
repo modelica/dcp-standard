@@ -1,0 +1,2 @@
+====== Unintended Behaviour
+If a DCP slave receives a valid, previously received PDU but with a different +pdu_seq_id+ number, it shall acknowledge and process it as specified.

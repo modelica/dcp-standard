@@ -1,0 +1,27 @@
+===== PDU RSP_ack
+This PDU is used for general acknowledgment of any requests.
+
+.Log RSP_ack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB0
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|===

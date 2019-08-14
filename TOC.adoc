@@ -1,0 +1,246 @@
+== Contents
+
+
+:toc: left
+:sectnums:
+:sectnumslevels: 8
+
+DISTRIBUTED CO-SIMULATION PROTOCOL (DCP)
+
+==  Overview
+
+== 	Properties and Guiding Ideas
+
+== 	Protocol Specification
+
+===	Basic Definitions
+
+====	Keywords
+
+====	Version Descriptor
+
+====	DCP Slave
+
+====	DCP File
+
+====	Master-Slave Architecture
+
+====	State Machine
+
+====	Protocol Data Units
+
+==== Number Representation
+
+==== Indices
+
+==== Data Types
+
+==== Byte Order
+
+==== Data Type Encoding
+
+==== Timing
+
+====	Notion of Time
+
+====	Operating Modes
+
+====	Time Resolution
+
+====	Communication Step Size
+
+====	Variables
+
+====	Dependencies
+
+====	Data Type Conversions
+
+====	Native and Non-Native DCP Specification
+
+====	Transport Protocol Numbering
+
+====	Loggin
+
+=== State Machine Definitions
+
+==== General
+
+==== Description
+
+==== Superstates
+
+==== States
+
+==== Transition
+
+=== PDU Definitions
+
+==== General
+
+====	Structuring
+
+====	PDU Fields
+
+====	PDU Type Identifier Range Distribution
+
+====	Generic PDU Structure
+
+====	Allowed PDUs per State
+
+====	PDU Definitions
+
+===	Protocol*
+
+====	Sequence Identifier
+
+====	Configuration Request Pattern
+
+====	State Transition Pattern
+
+====	State Reporting
+
+====	Data Exchange
+
+====	Scope
+
+====	PDU Validity
+
+====	Error Reporting
+
+====	Heartbeat
+
+====	Error Handling
+
+====	Unintended Behaviour
+
+== 4	Transport Protocols
+
+===	General
+
+===	Internet Protocol (IPv4) Based Transport Protocols
+
+====	General
+
+====	User Datagram Protocol (UDP/IPv4)
+
+====	Transmission Control Protocol (TCP/IPv4)
+
+===	Bluetooth Radio Frequency Communication (RFCOMM)
+
+====	General
+
+====	Transport Protocol Specific Fields
+
+====	Network Information
+
+====	Port information
+
+====	PDUs in RFCOMM stream
+
+===	Universal Serial Bus (USB)
+
+====	USB Version
+
+====	General
+
+====	Transport Protocol Specific PDU Field
+
+====	Descriptors
+
+====	Network Information
+
+====	DAT_input_output forwarding
+
+===	CAN Bus Communication Systems
+
+====	Procedure
+
+====	DCP over CAN
+
+====	Definition of KMatrix
+
+====	Definition of the Scenario Configuration
+
+== 	DCP Slave Description
+
+===	General
+
+===	Use of Assertions and Constraints
+
+===	Data Type Definitions
+
+===	Definition of dcpSlaveDescription Element
+
+===	Definition of OpMode Element
+
+===	Definition of UnitDefinitions Element
+
+===	Definition of TypeDefinitions Element
+
+====	General
+
+====	Definition of Data Types and Attributes
+
+===	Definition of VendorAnnotations Element
+
+===	Definition of TimeRes Element
+
+===	Definition of Heartbeat Element
+
+===	Definition of TransportProtocols Element
+
+====	General
+
+====	IPv4 Type
+
+====	UDP/IPv4
+
+====	CAN
+
+====	USB
+
+====	Bluetooth
+
+====	TCP/IPv4
+
+===	Definition of CapabilityFlags Element
+
+===	Definition of Variables Element
+
+====	Definition of Variable Element
+
+====	Definition of Variable Element Attributes
+
+====	Definition of Variable Data Types and Attributes
+
+====	Definition of Output Element Attributes
+
+====	Definition of Output Dependencies
+
+====	Definition of Multi-Dimensional Data Types
+
+===	Definition of Log Element
+
+== Abbreviations
+
+== 	Literature
+
+== 	Glossary
+
+== 	Acknowledgments
+
+== 	Appendix
+
+[upperalpha]
+==  Key Words to Indicate Requirement Levels
+
+== B Default DCP Slave Integration
+
+== C.	Example: Encoding of Variables
+
+== D.	Example: Data Exchange
+
+== E.	Recovery Procedure
+
+== F.	General Guideline
+toc::[]

@@ -1,0 +1,4 @@
+===== Data PDU Sequence ID
+The attribute +maxConsecMissedPdu+ defines the number of consecutively missed PDUs a DCP slave can tolerate. A violation of this number will make the DCP slave proceed to the Error superstate. If no value is defined (the field does not exist), the DCP slave does not check on the PDU sequence ID and therefore never proceeds to the Error superstate because of missed PDUs.
+
+NOTE: It is highly recommended to use reliable transport protocols for parameters and discrete outputs. See also section 10-F.

@@ -1,0 +1,13 @@
+===== Host information
+
+If a host is specified inside the Control element (see section 5.11.2) Control PDUs may only be received on this host.
+
+NOTE: If no host is specified, this can be interpreted as follows. The integrator must obtain and set this information in another way, which is not specified in this document.
+
+If a host is specified inside the +DAT_input_output+ element PDUs +DAT_input_output+ may only be received on this host.
+
+NOTE: If no host is specified, this can be interpreted as follows. The integrator must obtain and set this information in another way, which is not specified in this document.
+
+If a host is specified inside the +DAT_parameter+ element PDUs +DAT_parameter+ may only be received on this host.
+
+NOTE: If no host is specified, this can be interpreted as follows. The integrator must obtain and set this information in another way, which is not specified in this document.

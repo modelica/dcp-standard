@@ -1,0 +1,20 @@
+===== State CONFIGURATION
+
+.State CONFIGURATION
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|A DCP master has taken ownership of the DCP slave.
+In this state, the DCP slave shall accept configuration request PDUs (CFG). A configuration received in this state shall be applied before reaching the state +CONFIGURED+ at the latest.
+
+A DCP master may release a DCP slave by sending the PDU +STC_deregister+.
+
+|Preconditions
+|Any configurations necessary to load the DCP slave and connect it to a given media are set.
+
+|Allowed Actions
+a| * Exchange of DCP control and notification PDUs
+* Report state
+* Configure
+* Instantiate model or RT system
+|===

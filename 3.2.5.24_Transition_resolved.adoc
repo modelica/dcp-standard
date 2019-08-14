@@ -1,0 +1,17 @@
+===== Transition resolved
+
+.State Transition error
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The occurred error was successfully handled.
+
+|Preconditions
+|The DCP slave received a resolved signal.
+
+|Trigger
+|+SIG_resolved+
+
+|States
+a| * +ERRORHANDLING+ -> +ERRORRESOLVED+
+|===

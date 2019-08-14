@@ -1,0 +1,14 @@
+=== General
+All static information related to a DCP slave is stored in an accompanying DCP file. The requirements for this file and its internal structure are specified in section 3.1.4. The DCP file must contain at least one DCP slave description file, which is a text file in XML format. It is specified in detail in this section. The provider of a DCP slave shall ensure that the accompanying DCP file reflects the implementation of the delivered DCP slave. The DCP slave file shall be consistent with the delivered DCP slave at all times. The distribution mechanism of the DCP file is arbitrary.
+
+The file extension of a DCP slave description file is “.dcpx”. The structure of this XML file is defined using the schema file dcpSlaveDescription.xsd. This schema file utilizes the following helper schema files:
+
+dcpAnnotation.xsd +
+dcpAttributeGroups.xsd +
+dcpDataTypes.xsd +
+dcpTransportProtocolTypes.xsd +
+dcpType.xsd +
+dcpUnit.xsd +
+dcpVariable.xsd
+
+These XSD schema files comply with the XSD 1.1 specification [8]. In this section these schema files are discussed. The normative definition are the above mentioned schema files . Optional elements are indicated using a dashed box. The required data types (e.g. xs:normalizedString) are defined in the XML-schema standard (see http://www.w3.org/TR/xmlschema-2 for more information).

@@ -1,0 +1,16 @@
+===== State STOPPING
+
+.State STOPPING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The simulation run has finished and is now being stopped.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+a|* Exchange of DCP Control and Notification PDUs
+* Report state
+* Indicate halt of model or RT system
+|===

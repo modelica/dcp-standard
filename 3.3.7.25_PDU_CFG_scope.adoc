@@ -1,0 +1,37 @@
+===== PDU CFG_scope
+This PDU is used to set the scope of the configurations of a Data PDU identified by +data_id+. See section 3.3.3.21 and section 3.4.6 for details.
+
+.Log CFG_scope
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x2B
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|data_id
+
+|6
+|6
+|uint8
+|scope
+
+|===

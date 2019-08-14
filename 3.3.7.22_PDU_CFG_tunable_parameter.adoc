@@ -1,0 +1,47 @@
+===== PDU CFG_tunable_parameter
+
+This PDU is used to inform the DCP slave about the parameter format to expect.
+
+.Log CFG_tunable_parameter
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x28
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|param_id
+
+|6
+|7
+|uint16
+|pos
+
+|8
+|15
+|uint64
+|parameter_vr
+
+|16
+|16
+|uint8
+|source_data_type
+|===

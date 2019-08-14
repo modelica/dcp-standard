@@ -1,0 +1,2 @@
+=== Protocol
+In this section the valid sequence of exchanged PDUs is defined. The following tables contain a sequence number. In this sequence number, digits define a mandatory sequence of actions, whereas letters define exclusive options.

@@ -1,0 +1,2 @@
+===== Steps
+The content of the field steps depends on the chosen operating mode. In PDU +STC_do_step+ it defines the number of computational steps the slave must perform in state +COMPUTING+. In PDU +CFG_steps+ it defines the communication step size of an output for SRT and HRT operating modes (see section 3.1.15).

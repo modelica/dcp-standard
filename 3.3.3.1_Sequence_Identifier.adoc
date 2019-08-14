@@ -1,0 +1,2 @@
+===== Sequence Identifier
+The PDU sequence id (fields: +pdu_seq_id, resp_seq_id, exp_seq_id+). For further information see section 3.4.1.

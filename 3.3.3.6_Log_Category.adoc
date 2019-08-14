@@ -1,0 +1,20 @@
+===== Log Category
+
+The log category may be used by a DCP slave vendor to categorize log messages. Table 58 gives the possible options.
+
+.Log categories
+[width="100%", cols="2,5", options:"header"]
+|===
+|Log category
+|Definition
+
+|0
+a|Predefined, used to address all available log categories.
+
+NOTE: +CFG_logging+ with log category “0” will affect the configuration of all categories of a slave.
+
+NOTE: A DCP slave receiving +INF_log_request+ with log category “0” will consider all categories.
+
+|1-255
+|These log categories may be specified in the DCP slave description file. Subsequently they may be used in a log template.
+|===

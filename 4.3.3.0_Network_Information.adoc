@@ -1,0 +1,87 @@
+==== Network Information
+
+The master distributes the communication information relevant for data exchange using the following two PDUs: +CFG_target_network_information+ is sent to the sending DCP slave. It contains the BD_ADDR and port number of the receiving DCP slave.
+
+NOTE: Implementation hint: If multiple network information with the same data_id is received by a DCP slave, the DAT_input_output PDU is to be sent to all specified targets within the CFG_target_network_information.
+
++CFG_source_network_informatio+ is sent to the receiving DCP slave. It contains a port number. The receiving DCP slave listens on this port number for incoming data.
+
+The following three tables complete the PDU descriptions of sections 3.3.7.19, 3.3.7.20, and 3.3.7.23, respectively, for Bluetooth RFCOMM.
+
+The Bluetooth specific part of +CFG_target_network_information+ is defined by the following structure:
+
+.CFG_target_network_information
+[width="100%", cols="2,2,2,2", options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|7
+|uint8
+|port
+
+|8
+|15
+|uint64
+|bd_addr
+|===
+
+The Bluetooth specific part of the corresponding +CFG_param_network_information+ is defined by the following structure:
+
+.CFG_param_network_information
+[width="100%", cols="2,2,2,2", options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|8
+|uint16
+|port
+
+|9
+|12
+|uint32
+|bd_address
+|===
+
+The Bluetooth specific part of +CFG_source_network_information+ is defined by the following structure:
+
+.CFG_source_network_information
+[width="100%", cols="2,2,2,2", options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|7
+|uint8
+|port
+
+|8
+|15
+|uint64
+|bd_addr
+|===

@@ -1,0 +1,2 @@
+==== Protocol Data Units
+DCP slaves communicate by using Protocol Data Units, short PDU. In general, a DCP slave must be capable of sending and receiving such PDUs. Available PDUs within DCP are organized in PDU families which are named Request, Response, Notification and Data. The Request PDUs consist of configuration request (CFG), state change request (STC) and information request (INF) PDUs. The Response (RSP) PDUs together with Request PDUs represent the family of Control PDUs.  See also section 3.3.

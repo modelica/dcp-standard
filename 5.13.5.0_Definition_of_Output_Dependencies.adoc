@@ -1,0 +1,65 @@
+==== Definition of Output Dependencies
+The sub-elements and attributes of the Dependencies element are shown in Figure 30.
+
+.Dependencies element definition
+image::img/Dependencies_elements.jpg[align="center"]
+
+The semantics specified in Table 177 is associated with the sub-elements and attributes of the Dependencies element.
+
+.Dependency semantics
+[width=100%, cols="2,2,3", options="header"]
+|===
+|Element
+|Condition
+|Semantics
+
+|Dependencies
+|Element exists
+|Dependency information shall be expressed.
+
+|Dependencies
+|Element does not exist
+|No dependency information is expressed.
+
+|Initialization
+|Element exists
+|In Initialization superstate, dependencies are specified. This output depends on the inputs and parameters referenced by a Dependency element.
+
+If the Initialization element has no childs, no dependencies between this output and all inputs and parameters exist.
+
+|Initialization
+|Element does not exist
+|In Initialization superstate, no dependencies are specified.
+Note: In that case this output may depend on all inputs and parameters.
+
+|Run
+|Element exists
+|In Run superstate, dependencies are specified.
+This output depends on the inputs and parameters referenced by a Dependency element.
+
+If the Run element has no childs, no dependencies between this output and all inputs and parameters exist.
+
+|Run
+|Element does not exist
+|In Run superstate, no dependencies are specified.
+
+Note: In that case this output may depend on all inputs and parameters.
+
+|Dependency
+|vr and dependencyKind given
+|The described dependency between this output and the specified input or parameter vr exists with the specified dependencyKind.
+|===
+
+.Dependency element attributes
+[width=100%, cols="3,5", options="header"]
+|===
+|Attribute
+|Description
+
+|vr
+|This is an unsigned integer data type attribute and refers to a variable, identified through its value reference.
+
+|dependencyKind
+|This is an enumerated string data type attribute. Possible options are linear and dependent.
+
+|===

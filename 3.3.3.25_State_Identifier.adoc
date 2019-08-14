@@ -1,0 +1,2 @@
+===== State Identifier
+The field +state_id+ gives the current state of the slave as defined in Table 13.

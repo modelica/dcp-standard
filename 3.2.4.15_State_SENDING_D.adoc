@@ -1,0 +1,21 @@
+===== State SENDING_D
+
+.State SENDING_D
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In this state the DCP slave sends its outputs.
+
+ Note: This state applies to NRT (non-real-time) operating mode only.
+
+
+
+|Preconditions
+|The DCP slave is set to NRT operating mode.
+
+|Allowed Actions
+a|*	Exchange of DCP Control and Notification PDUs
+* Sending and receiving of Data PDUs
+* Report state
+* Indicate end of sending
+|===

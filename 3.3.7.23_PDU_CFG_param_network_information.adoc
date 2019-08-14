@@ -1,0 +1,43 @@
+===== PDU CFG_param_network_information
+The message +CFG_param_network_information+ is used to distribute network information. It is defined by the following general structure, the complete structure depends on the used transport protocol.
+
+The character +N+ denotes the total length of one specific +CFG_param_network_information+ in bytes, it depends on the used transport protocol.
+
+.Log CFG_param_network_information
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x29
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|param_id
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|N-1
+2+|See section 4 – transport protocol specific
+
+|===

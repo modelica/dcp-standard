@@ -1,0 +1,27 @@
+=== E. Recovery Procedure
+The procedure of Table 194 can be used to reach the ALIVE state, from any other state.
+
+.Recovery procedure
+[width="100%", cols="2,4", options="header"]
+|===
+|Sequence number
+|Action
+
+|1
+|Query state using +INF_state+.
+
+|2a
+|If the resulting state is within the +superstate+ Stoppable, +
+1) the DCP master sends +STC_stop+ +
+2) waits for the DCP slave to be in state +STOPPED+ +
+3) the DCP master sends +STC_deregister+.
+
+|2b
+|If the resulting state is +CONFIGURATION+, +
+1) the DCP master sends +STC_deregister+.
+
+|2c
+|If the resulting state is within the +superstate+ Error, +
+1) the DCP master waits for the DCP slave to be in state ERRORRESOLVED, +
+2) and sends +STC_deregister+.
+|===

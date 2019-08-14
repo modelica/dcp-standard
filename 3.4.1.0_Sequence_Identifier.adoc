@@ -1,0 +1,9 @@
+==== Sequence Identifier
+
+The sequence identifier is defined as a running counter, identifying PDUs within a certain amount of time. The master must maintain a +pdu_seq_id+ for each slave he is connected to. The master also defines the initial value of the pdu_seq_id by sending STC_register.
+
+NOTE: The slave can use the pdu_seq_id after receiving STC_register.
+
+NOTE: It is not allowed to use one pdu_seq_id multiple times in a row, except at natural data type overflows. The +pdu_seq_id+ must always be incremented by one.
+
+All PDUs of the Request PDU family contain a PDU sequence identifier field. All PDUs of the Response PDU family contain a PDU response sequence identifier field (+resp_seq_id+) which contains the value of the +pdu_seq_id+ of the corresponding Request PDU.

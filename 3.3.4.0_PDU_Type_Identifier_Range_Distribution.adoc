@@ -1,0 +1,40 @@
+==== PDU Type Identifier Range Distribution
+The field +type_id+ contains a unique number for each PDU type. For DCP, all PDU +type_ids+ are assigned as stated in section 3.3.5. However, the following numbering scheme applies, dependent on the PDU family (also see sections 3.1.7).
+
+
+.Log level definitions
+[width="100%", cols="1,1,9", options= "header"]
+|===
+|PDU group
+|Start
+|End
+
+|(not in use)
+|0x00
+|0x00
+
+|State change (STC)
+|0x01
+|0x1F
+
+|Configuration (CFG)
+|0x20
+|0x7F
+
+|Information (INF)
+|0x80
+|0xAF
+
+|Response (RSP)
+|0xB0
+|0xDF
+
+|Notification (NTF)
+|0xE0
+|0xEF
+
+|Data (DAT)
+|0xF0
+|0xFF
+
+|===

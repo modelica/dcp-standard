@@ -1,0 +1,5 @@
+==== General
+The state machine defined in this section is intended for use within a DCP slave. Figure 1 shows the DCP slave state machine in UML notation.
+
+Transitions are triggered either by PDUs of the state change family (+STC+) or internal signals.  The PDUs that trigger a transition are indicated with a +STC+ prefix (see section 3.3). Internal signals that trigger a transition are indicated via the SIG prefix. Signals are DCP slave internal only and are therefore not exchanged via DCP PDUs. All transitions are defined in section 3.2.5.
+After a transition has been performed, the slave informs the master about its new state (using the PDU +NTF_state_changed+)

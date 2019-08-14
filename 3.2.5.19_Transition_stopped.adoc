@@ -1,0 +1,17 @@
+===== Transition stopped
+
+.State Transition stopped
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave and its underlying model or real-time system has come to a halt.
+
+|Preconditions
+|None.
+
+|Trigger
+|+SIG_stopped+
+
+|States
+a| * +STOPPING+ -> +STOPPED+
+|===

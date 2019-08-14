@@ -1,0 +1,17 @@
+===== State ALIVE
+
+.State ALIVE
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+a|The DCP slave is connected to communication media and waits for a DCP master to take ownership. While being in this state, the DCP slave is not assigned to a DCP master yet. A DCP master may take control of a DCP slave by sending the PDU +STC_register+.
+
+NOTE: A DCP slave in this state cannot be influenced in any way, except a DCP master taking ownership.
+
+|Preconditions
+|The DCP slave is off.
+
+|Allowed Actions
+|•	Exchange of DCP control and notification PDUs +
+•	Report state
+|===

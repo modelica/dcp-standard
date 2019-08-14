@@ -1,0 +1,2 @@
+==== Descriptors
+The following sections describe the applied USB Descriptors used for the DCP USB class. The device and configuration descriptor are vendor specific. There must be at least one Interface descriptor for the DCP containing a DCP Descriptor, as well as the endpoint descriptors used for the DCP slave.

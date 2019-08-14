@@ -1,0 +1,2 @@
+===== Slave UUID
+The field +slave_uuid+ holds the universal unique identifier of a slave. It is defined as an unsigned byte array of length 16. The string representation of +slave_uuid+ is defined according to RFC4122 [5]. It is not required that the content of the field +slave_uuid+ follows RFC4122.

@@ -1,0 +1,2 @@
+===== Source Data Type
+The field +source_data_type+ holds the data type of a value in a PDU Data as defined in section 3.1.10.

@@ -1,0 +1,76 @@
+===== Order of Error Checking
+
+The following tables (Table 107, Table 108, Table 109) define the order of the checks for PDUs a DCP slave must perform. If multiple checks fail, the action from the failed check with the lowest order value must be reported first. The error codes apply to the fields +error_code+ of +RSP_nack+ and +RSP_error_ack+.
+
+NOTE: This does not necessarily apply to the order of internally performed checks. This order indicates the sequence of error reporting. This is independent of the sequence of actual performed checks.
+
+
+
+
+
+.Order of error checking for request PDUs
+[width="100%", cols="1,3,3", options="header"]
+|===
+
+|Order
+|Check
+|Action/Error code
+
+1.2+^.^|1
+|Type identifier
+1.2+^.^|Drop
+|Receiver
+|2
+|Sequence ID
+|+INVALID_SEQUENCE_ID+
+
+|3
+|Support
+|+NOT_SUPPORTED_PDU+
+
+|4
+|Length
+|+INVALID_LENGTH+
+
+|5
+|State
+|+PDU_NOT_ALLOWED_IN_THIS_STATE+
+
+|6
+|Semantics
+|See section 3.4.7.4
+
+
+
+|===
+
+.Order of error checking for response PDUs
+[width="100%", cols="1,3,3", options="header"]
+|===
+
+|Order
+|Check
+|Action/Error code
+
+|1
+|Type identifier
+|Drop
+|===
+
+
+.Order of error checking for data PDUs
+[width="100%", cols="1,3,3", options="header"]
+|===
+
+|Order
+|Check
+|Action/Error code
+
+1.5+^.^|1
+|Type identifier
+1.5+^.^|Drop
+|data_id/param_id
+|Sequence ID
+|Length
+|State
+|===

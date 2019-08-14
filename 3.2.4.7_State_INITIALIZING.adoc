@@ -1,0 +1,27 @@
+===== State INITIALIZING
+
+.State INITIALIZING
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In +INITIALIZING+ an internal initial state of the DCP slave, which is consistent to its inputs, shall be established and the outputs shall be computed. The input values from the most recent data PDU are used for internal computation. If no inputs have been received, start values defined in DCP slave description shall be used.
+
+Simulation models: Simulation time stays at start time, simulation models are not computed over time, but at start time.
+
+When the DCP slave finished initializing, it issues +SIG_initialized+ which triggers the transition to leave state +INITIALIZING+.
+
+If the slave fails to keep the consistent internal initial state, it must perform the transition to the superstate +Error+.
+
+ Note: This state refers to the FMI state “initialization mode”.
+
+
+|Preconditions
+|None.
+
+|Allowed Actions
+a|*	Exchange of DCP Control and Notification PDUs
+* Receiving Data PDUs
+* Report state
+* Synchronize model or RT system within scenario
+* Indicate end of initializing
+|===

@@ -1,0 +1,2 @@
+==== Error Handling
+The DCP represents a framework to handle faults and errors to avoid failures of simulation scenarios, when running in SRT or HRT operation mode. Goal is to protect physical equipment (connected real-time systems) as well as human operators from any harm that may be caused during normal operation. The error handling procedures described here are inline with ISO 26262 [6].

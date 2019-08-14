@@ -1,0 +1,3 @@
+==== PDU Validity
+If a PDU is received by a DCP slave, it shall be checked for validity. Table 104 contains a list of all currently defined error codes which are applicable to the DCP. Table 105 contains a list of all currently defined validity checks, applicable to Control and Data PDUs. Table 106 defines the permissible actions to be taken depending on the result of PDU checking. Table 107 defines the order of error checking for Control PDUs. Table 109 defines the order of error checking for Data PDUs.
+As the PDUs from the family Notification (NTF) are not intended to be received by a DCP slave, they may be dropped silently.

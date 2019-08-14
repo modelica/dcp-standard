@@ -1,0 +1,6 @@
+==== General
+A DCP slave using Bluetooth is accessible through an address (BD_ADDR) and a port number. This information is defined within the DCP slave description. For communication with a DCP master, the DCP slave replies to the address and port where the initial +STC_register+ is coming from.
+
+NOTE: A DCP master could be implemented as a Bluetooth client, whereas a DCP slave could be implemented as a Bluetooth server.
+
+The BD_ADDR is a unique and permanent 48-bit address number created in accordance with section 8.2 ("Universal addresses") of the IEEE 802-2014 [7].

@@ -1,0 +1,2 @@
+==== Procedure
+The intended procedure is to use the XSD schema to create a configuration in XML file format. An XSL style sheet is then applied to this XML file, generating a valid KCD file.

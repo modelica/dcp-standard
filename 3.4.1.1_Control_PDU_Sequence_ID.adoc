@@ -1,0 +1,7 @@
+===== Control PDU Sequence ID
+To check the sequence identifier of a received Control PDU, the following criterion applies:
+
+pdu_seq_id~last~ ~valid~ + 1 == pdu_seq_id~current~
+
+The field +exp_seq_id+ in +RSP_nack+ shall always contain the last valid received +pdu_seq_id+ + 1.
+If the PDU sequence ID check is violated, the error code +INVALID_SEQUENCE_ID+ applies.

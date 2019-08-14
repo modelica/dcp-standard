@@ -1,0 +1,2 @@
+===== Parameter Identifier
+The field +param_id+ gives the unique identifier of the parameter referred to in the PDU (see section 3.1.18.3).

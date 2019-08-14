@@ -1,0 +1,13 @@
+=== CAN Bus Communication Systems
+This specification supports CAN bus communication systems. Due to the facts that
+
+*	the CAN payload is limited to 8 bytes,
+*	CAN does not support fragmentation,
+*	CAN uses its own addressing schema (arbitration)
+* and thus not all Control PDUs can be sent via CAN as defined in native DCP specification
+the DCP specification for CAN bus is non-native. This specification of DCP over CAN supports the KCD file formatfootnote:[https://github.com/dschanoeh/Kayak]
+
+In order to map the DCP onto the CAN bus, two additional resources are provided together with this specification:
+
+*	DCP over CAN XSD schema description (DCP_over_CAN.xsd)
+*	DCP over CAN XSL style sheet (DCP_over_CAN_to_KCD.xsl)

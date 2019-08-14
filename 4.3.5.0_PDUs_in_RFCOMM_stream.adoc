@@ -1,0 +1,2 @@
+==== PDUs in RFCOMM stream
+For RFCOMM, length-prefix-framing is applied: Each PDU in the RFCOMM stream must be preceded by an uint32 indicating its length.

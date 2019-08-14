@@ -1,0 +1,3 @@
+===== Error Code
+
+The error code is a unique identifier for defined DCP errors.

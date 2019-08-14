@@ -1,0 +1,8 @@
+=== Use of Assertions and Constraints
+The schema files contain assertions and constraints to support formal verification of properties and dependencies as stated in this specification document. XSD 1.0 compliant schema files may be created by transformation using the provided XSLT file (Extensible Stylesheet Language Transformation):
+
+dcpx_xsd11_to_xsd10.xslt
+
+NOTE: This XSLT file is provided together with the XSD schema files to ensure correct transformation. It is intended to remove the assertions.
+
+NOTE: The defined assertions and constraints were removed from this section’s figures to facilitate better legibility.

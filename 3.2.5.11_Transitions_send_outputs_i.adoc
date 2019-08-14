@@ -1,0 +1,19 @@
+===== Transition send_outputs_i
+
+.State Transition send_outputs_i
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave sends its initialization results.
+
+|Preconditions
+|The DCP slave received a +STC_send_outputs+ PDU.
+The DCP slave is either in NRT (non-real-time) operating mode or in Initialization superstate.
+
+
+|Trigger
+|+STC_send_outputs+
+
+|States
+a| * +INITIALIZED+ -> +SENDING_I+
+|===

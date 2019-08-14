@@ -1,0 +1,59 @@
+==== Definition of Variable Element Attributes
+.Variable element attributes
+The attributes of the +dcpVariable+ type are defined as follows.
+[width="100%", cols="3,3", options="header"]
+|===
+|Attribute
+|Description
+
+|name
+|The full name of the variable. +
+This attribute is mandatory.
+
+|valueReference
+|A unique handle per DCP slave of the variable, to efficiently identify the variable value in the DCP. +
+Its data type is Uint64. +
+This attribute is required.
+
+|description
+|An optional string describing the variable.
+
+|variability
+a|Enumeration that defines the time dependency of the variable. It determines the time instants a variable is allowed to change its value.
+
+Allowed values:
+
+* fixed: This setting applies to parameters only. The value of the variable may only be set in state +CONFIGURATION+. See Table 63, +CFG_parameter+.
+* tunable: This setting applies to parameters only. The value of the variable may be set during simulation. See Table 63, +DAT_parameter+ PDU.
+* discrete: This setting applies to Inputs and Outputs only. The value of the variable must at least be communicated on a change, but at periodic communication intervals.
+* continuous: This setting applies to Inputs and Outputs only. The value of the variable must be communicated at periodic communication intervals.
+
+|preEdge
+|The preEdge attribute defines the negative maximum deviation from the expected PDU arrival time. Its data type is float64 and its value is given in seconds. +
+This attribute is optional.
+
+|postEdge
+|The postEdge attribute defines the positive maximum deviation from the expected PDU arrival time. Its data type is float64 and its value is given in seconds. +
+This attribute is optional.
+
+|maxConsecMissedPdus
+|This attribute defines the maximum allowed number of consecutively missed PDUs for the given variable. Its data type is uint32.
+
+|declaredType
+a|Identifies the name of type defined with TypeDefinitions/SimpleType providing defaults. This attribute is optional.
+
+A variable takes values from declaredType for its attributes if they are not defined.
+
+[NOTE]
+====
+Example +
+
+Assume a declared type:
+name="TestType", +Uint8+, min = 4, max = 6.
+
+If a variable defines
+declaredType="TestType", +Uint8+, max = 8,
+then the variable would be a +Uint8+ with a range from 4 and 8.
+====
+
+|===

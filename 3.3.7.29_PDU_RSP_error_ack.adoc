@@ -1,0 +1,33 @@
+===== PDU RSP_error_ack
+This PDU is used by a DCP slave to report the current error.
+
+.Log RSP_error_ack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB3
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|4
+|5
+|uint16
+|error_code
+
+|===

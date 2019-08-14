@@ -1,0 +1,19 @@
+===== State INIZIALIZED
+
+.State INITIALIZED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In +INITIALIZED+ an internal initial state of the DCP slave, which is consistent to its inputs, is established and the outputs are available.
+
+In +INITIALIZED+ the slave remains in its consistent internal initial state. If the slave fails to keep the consistent internal initial state, it must perform the transition to the +superstate Error+.
+
+|Preconditions
+|None.
+
+|Allowed Actions
+a|*	Exchange of DCP Control and Notification PDUs
+* Receiving Data PDUs
+* Report state
+* Maintain synchronized condition of model or RT system within scenario
+|===

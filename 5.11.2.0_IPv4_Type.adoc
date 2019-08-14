@@ -1,0 +1,39 @@
+==== IPv4 Type
+An element type for Internet Protocol Version 4 is defined. It is used to describe UDP and TCP transport protocols. Its sub-elements and attributes are shown in Figure 24.
+
+.IPv4 type definition
+
+image::img/IPv4 type.png[]
+
+Figure 24: IPv4 type definition
+The UDP via IPv4 transport protocol allows separate configurations for different PDU families.
+
+*	The optional Control element defines the host and port attributes intended for receiving PDUs of the Control PDU family.
+*	The optional DAT_input_output element defines a host attribute, as well as an optional list of either port ranges, indicated by from and to attributes, or single ports, indicated by the port attribute. This is intended for receiving DAT_input_output PDUs.
+*	The optional DAT_parameter element defines a host attribute, as well as an optional list of either port ranges, indicated by from and to attributes, or single ports, indicated by the port attribute. This is intended for receiving DAT_parameter PDUs.
+
+These recurring attributes are specified in Table 167.
+
+.Element attributes of the IPv4 type
+[width="100%", cols="1,3", options="header"]
+|===
+|Attribute name
+|Description
+
+|host
+a|Optional attribute of normalizedString data type.
+
+This attribute may contain one of the following:
+* An IP according to RFC 791 [10]
+* A hostname according to RFC 952 [11]
+* A fully qualified domain name according to RFC 1035 [12]
+
+|port
+|Attribute of unsigned short data type.
+
+|from
+|Attribute of unsigned short data type.
+
+|to
+|Attribute of unsigned short data type.
+|===

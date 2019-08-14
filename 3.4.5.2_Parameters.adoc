@@ -1,0 +1,4 @@
+===== Parameters
+Parameters are set via PDU +CFG_parameter+.
+Parameters with variability=”+tunable+” can additionally be set via PDU +DAT_parameter+. In this case the values of several parameters can be grouped in the payload field of one +DAT_parameter+ PDU. Such a group is identified by a unique +param_id+. A payload field must group only values of parameters for the same configuration, i.e. receiver and network configuration. The format of the payload field is defined in +CONFIGURATION+ state using Configuration PDUs +CFG_tunable_parameter+. This PDU tells the slave the position and type of the value of the parameter in the field payload of a +DAT_parameter+ PDU.
+The communication protocol relevant information for a +DAT_parameter+ is set in +CONFIGURATION+ state by the PDUs +CFG_param_network_information+.

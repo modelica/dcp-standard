@@ -1,0 +1,33 @@
+===== PDU CFG_clear
+The DCP slave must reset all configurations set earlier by configuration request PDUs.
+
+NOTE: The operating mode and the DCP slave’s +slave_id+ are not reset.
+
+.Log CFG_output
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x23
+
+|0
+|0
+|uint8
+|type_id = 0x24
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|4
+|uint8
+|receiver
+|===

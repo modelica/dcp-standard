@@ -1,0 +1,49 @@
+===== PDU STC_run
+After receiving +STC_run+, the slave transitions immediately to state +SYNCHRONIZING+ or +RUNNING+, respectively.
+
+The field time is used to schedule the start of a simulation run in HRT or SRT operating modes. It refers to absolute time.
+If time >= current absolute time, a DCP slave must wait until the point in time arrives.
+If time is less than the current absolute time (time < current absolute time) the DCP slave shall respond with +RSP_nack+, including +error_code = INVALID_START_TIME+.
+If the value of time equals zero (“0”), simulation shall start immediately. In case of non-real time operation mode (NRT), time must be ignored, considering that the simulation run is controlled by +STC_do_step+.
+
++CONFIGURED+ -> +SYNCHRONIZING+
+When time is reached, the slave starts to exchange data and the simulation time starts to advance.
+
++SYNCHRONIZING+ -> +RUNNING+
+When time is reached, the actual simulation experiment must start.
+
+.Log STC_run
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x06
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+|5
+|12
+|int64
+|time
+
+
+|===

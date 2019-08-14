@@ -1,0 +1,36 @@
+===== PDU RSP_nack
++RSP_nack+ shall be sent whenever a received Control PDU was not understood correctly, cannot be executed at the time, or contains an unexpected PDU sequence identifier (see section 3.4.1). Furthermore, it contains an +error_code+ field indicating the occurred error.
+
+.Log RSP_nack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB1
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|4
+|5
+|uint16
+|exp_seq_id
+
+|6
+|7
+|uint16
+|error_code
+|===

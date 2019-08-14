@@ -1,0 +1,43 @@
+===== PDU CFG_parameter
+The field name payload refers to the configuration information transmitted by that PDU. The character N denotes the total length of one specific PDU given in bytes. It depends on the used configuration.
+
+.Log CFG_parameter
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x27
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|11
+|uint64
+|parameter_vr
+
+|12
+|12
+|uint8
+|source_data_type
+
+|13
+|N-1
+|byte[N-13]
+|payload
+
+|
+|===

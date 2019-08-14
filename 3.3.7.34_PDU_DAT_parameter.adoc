@@ -1,0 +1,32 @@
+===== PDU DAT_parameter
+The field name payload refers to the payload of that PDU. The character “N” denotes the total length of one specific PDU given in bytes. It depends on the used configuration.
+
+.DAT_parameter
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xF1
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|4
+|uint16
+|param_id
+
+|5
+|N-1
+|Byte[N-5]
+|payload
+|===

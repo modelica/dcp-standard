@@ -1,0 +1,19 @@
+===== Log Modes
+This field defines the mode for log functionality. Table 60 gives the available options.
+
+.Log modes
+[width="50%", cols="2,2", options= header]
+|===
+|Value
+|Definition
+
+|0
+|No logging via DCP
+
+|1
+|Log on request
+
+|2
+|Log on notification
+
+|===

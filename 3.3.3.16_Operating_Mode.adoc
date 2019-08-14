@@ -1,0 +1,2 @@
+===== Operating Mode
+The field +op_mode+ holds the operation mode as defined in section 3.1.15 the DCP slave must use.

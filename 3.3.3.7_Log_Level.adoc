@@ -1,0 +1,43 @@
+===== Log Level
+
+The log level may be used in a log template in the DCP slave description file.
+
+NOTE: This corresponds to the status field of FMI.
+
+.Log level definitions
+[width="100%", cols="1,1,9", options:"header"]
+|===
+|Log level
+|Value
+|Definition
+
+|Fatal
+|0
+a|The simulation cannot be continued. The DCP slave will transition to the error superstate.
+
+NOTE: An example for this log level are several missed heartbeats, exceeding the allowed specified time out limits.
+
+|Error
+|1
+a|The current action cannot be continued.
+
+NOTE: An example for this log level is a wrong UUID in STC_register.
+
+|Warning
+|2
+a|The current action can be continued, but simulation results could be affected.
+
+NOTE: An example for this log level is a value out of bounds.
+
+|Information
+|3
+a|This log level reflects the status of a DCP slave.
+
+NOTE: An example for this log level is initialization for 40% finished.
+
+|Debug
+|4
+a|This log level is intended for debug information.
+
+NOTE: An example for this log level is step size for data identifier 4 set to 100.
+|===

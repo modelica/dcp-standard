@@ -1,0 +1,17 @@
+===== Transition synchronized
+
+.State Transition synchronized
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave indicates that synchronization is finished.
+
+|Preconditions
+|DCP slave internal detection of synchronization.
+
+|Trigger
+|+SIG_synchronized+
+
+|States
+a| * +SYNCHRONIZING+ -> +SYNCHRONIZED+
+|===

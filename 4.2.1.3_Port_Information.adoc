@@ -1,0 +1,19 @@
+===== Port information
+
+If a port is specified inside the Control element (see section 5.11.2), Control PDUs may only be received over this port.
+
+NOTE: If no such port is specified, the integrator must obtain and set this information in another way, which is not specified in this document. The DCP slave provider might be consulted for clarification.
+
+If a port or port range is specified inside the +DAT_input_output+ (see section 5.11.2) element, PDUs +DAT_input_output+ may only be received over these ports.
+
+NOTE: If no port or port range is specified inside the DAT_input_output element, the integrator must obtain and set this information in another way, which is not specified in this document. The DCP slave provider might be consulted for clarification.
+
+If a port or port range is specified inside the +DAT_parameter+ element, PDUs +DAT_parameter+ may only be received over these ports.
+
+NOTE: If no port or port range is specified inside the DAT_parameter element, the integrator must obtain and set this information in another way, which is not specified in this document. The DCP slave provider might be consulted for clarification.
+
+Some port numbers might already be used or reserved for dedicated services.
+
+NOTE: Implementation hint: If the master is free to choose a IPv4 port, he should use the free user ports specified by IANA organization. Otherwise it is possible that the chosen port collides with one of the ports reserved by IANA.
+
+https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml

@@ -1,0 +1,5 @@
+===== Importer for DCP files version 1.0
+
+An importing tool must only consider the folder "/v1.0" and its subfolders. Any other files and folders at the same hierarchy level than the "v1.0" folder must be ignored.
+
+NOTE: This is reserved for future versions of the DCP.

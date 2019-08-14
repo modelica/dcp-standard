@@ -1,0 +1,89 @@
+===== Network Information
+
+The master distributes the communication information relevant for data exchange using the following two PDUs: +CFG_target_network_information+ is sent to the sending DCP slave. It contains IP address and port number of the receiving DCP slave.
+
+NOTE: If multiple network information with the same data_id is received by a DCP slave, the DAT_input_output PDU is to be sent to all specified targets within the CFG_target_network_information.
+
++CFG_source_network_information+ is sent to the receiving DCP slave. It contains a port number. The receiving DCP slave waits for incoming data on this port number.
+
+NOTE: The sending port may be chosen randomly by the IP stack implementation. It is never checked in any way on the receiver side.
+
+The following three tables complete the PDU descriptions of sections 3.3.7.19, 3.3.7.20, and 3.3.7.23, respectively, for IPv4-based transport protocols.
+
+The IPv4-based transport protocol specific part of +CFG_target_network_information+ is defined by the following structure:
+
+.CFG_target_network_information
+[width="100%", cols="2,2,2,2" options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|8
+|uint16
+|port
+
+|9
+|12
+|uint32
+|ip_address
+|===
+
+The IPv4-based transport protocol specific part of the corresponding +CFG_param_network_information+ is defined by the following structure:
+
+.CFG_param_network_information
+[width="100%", cols="2,2,2,2" options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|8
+|uint16
+|port
+
+|9
+|12
+|uint32
+|ip_address
+|===
+
+The IPv4-based transport protocol specific part of +CFG_source_network_information+ is defined by the following structure:
+
+.CFG_source_network_information
+[width="100%", cols="2,2,2,2" options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|6
+|6
+|uint8
+|transport_protocol
+
+|7
+|8
+|uint16
+|port
+
+|9
+|12
+|uint32
+|ip_address
+|===

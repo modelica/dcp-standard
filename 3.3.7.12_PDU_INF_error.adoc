@@ -1,0 +1,28 @@
+===== PDU INF_error
+This PDU requests a DCP slave’s reported error.
+
+.Log STC_state
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x81
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+
+|===

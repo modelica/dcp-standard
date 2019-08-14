@@ -1,0 +1,33 @@
+===== Exporter for DCP files version 1.0
+Any tool creating DCP files according to this version of the specification. Its internal structure must be as follows.
+
+.Internal structure of DCP file
+[width="100%", cols="3,3", options="header" ]
+|===
+
+|Structure
+|Description
+
+|/
+|Root of the zip file. +
+_Note: It is not allowed to place any other files and folders at the same hierarchy level than the "v1.0" folder._
+
+
+|/v1.0
+|Folder in the root of the zip file. +
+This is mandatory.
+
+|/v1.0/dcpSlaveDescription.dcpx
+|DCP slave description according to this specification. See sec-tion 5 for details. +
+This is mandatory.
+
+
+|/v1.0/documentation
+|Directory containing documentation for the DCP slave. +
+This is optional.
+
+
+|/v1.0/*
+|Other files and folders might be included. +
+This is optional.
+|===

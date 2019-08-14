@@ -1,0 +1,21 @@
+==== Configuration Request Pattern
+The DCP master may request from a DCP slave that it applies certain configuration settings by sending configuration request PDUs (PDU family CFG).
+
+.Configuration request pattern
+[width="100%", cols="2,3", options= "header"]
+|===
+|Sequence Number
+|Action
+
+|1
+|The DCP master requests a configuration setting by sending a configuration request PDU (CFG) to the DCP slave.
+
+|2a
+|The slave responds to the DCP master by sending +RSP_nack+. In that case, the DCP slave did not receive the request properly or will not be able to fulfill the request properly.
+
+|2b
+|The DCP slave responds by sending +RSP_ack+. In that case, the DCP slave will apply the desired configuration setting immediately.
+
+|2c
+|The DCP slave responds with +RSP_nack+, whenever an attempt is made to modify a configuration setting fixed in the DCP slave description. If the request is consistent with the current configuration setting, +RSP_ack+ shall be sent.
+|===

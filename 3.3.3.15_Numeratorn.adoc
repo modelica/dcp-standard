@@ -1,0 +1,2 @@
+===== Numerator
+The field +numerator+ holds the integer value for the numerator of the fraction that defines the resolution (see section 3.1.16).

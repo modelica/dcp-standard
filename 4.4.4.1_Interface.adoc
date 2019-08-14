@@ -1,0 +1,94 @@
+===== Interface
+.Interface descriptor
+[width="100%", cols="2,2,2,3,3" options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data-type
+|Field Name
+|Value
+
+|0
+|0
+|uint8
+|bLength
+|9
+
+|1
+|1
+|uint8
+|bDescriptorType
+|4
+
+|2
+|2
+|uint8
+|bInterfaceNumber
+|Vendor Specific
+
+|3
+|3
+|uint8
+|bAlternateSetting
+|Vendor Specific
+
+|4
+|4
+|uint8
+|bNumEndpoints
+|Vendor Specific
+
+|5
+|5
+|uint8
+|bInterfaceClass
+|255^2^ footnote:[Implementation Hint: Because an official USB class for DCP does not exist at the moment, the vendor specific class is used. Therefore 205 is selected as an arbitrary number to define the subclass and protocol.]
+
+
+|6
+|6
+|uint8
+|bInterfaceSubClass
+|205^2^
+
+|7
+|7
+|uint8
+|bInterfaceProtocol
+|205^2^
+
+|8
+|8
+|uint8
+|iInterface
+|Vendor Specific
+|===
+
+
+.DCP descriptor
+[width="100%", cols="2,2,2,3,3" options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data-type
+|Field Name
+|Value
+
+|0
+|0
+|uint8
+|bLength
+|9
+
+|1
+|1
+|uint8
+|bDescriptorType
+|4
+
+|2
+|18
+|byte[]
+|slave_uuid
+|Vendor Specific
+|===

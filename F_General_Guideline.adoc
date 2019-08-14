@@ -1,0 +1,27 @@
+=== F.General Guideline
+Regarding the use of transport protocols related to Control PDUs:
+It is recommended to use reliable transport protocols for Control PDUs.
+
+Regarding the use of transport protocols related to continuous DAT_input_output PDUs:
+
+  Reliable transport protocols are considered beneficial if the time needed to transmit a PDU, including time for retransmission, is in general lower than the specified DCP communication step size.
+
+  Unreliable transport protocols are considered beneficial if e.g. higher network throughput is required, or the target platform is only capable of supporting unreliable transport protocols.
+
+Regarding the use of transport protocols related to discrete DAT_input_output PDUs:
+
+  It is recommended to use reliable transport protocols for transmission of discrete Da-ta PDUs.
+
+Regarding the use of transport protocols related to DAT_parameter PDUs:
+  It is recommended to use reliable transport protocols for transmission of DAT_parameter PDUs.
+
+Regarding master implementations:
+
+  Implement the suggested procedure to transition slaves to a defined state.
+  Define behaviour after unexpected shutdown of DCP master.
+
+Regarding master implementations based on unreliable transport protocols:
+
+  Retransmit Request PDUs if no acknowledgement is received. 
+  Query states of slaves at regular intervals (use heartbeat mechanism).
+  Use DCP slaves implementing the maxConsecMissedPdu attribute, whenever possible.

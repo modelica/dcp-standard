@@ -1,0 +1,5 @@
+==== Heartbeat
+
+The heartbeat functionality is optional. Its availability is indicated by capability flag +canMonitorHeartbeat+, see section 5.12.
+
+A slave should be able to detect that its master is still active. Therefore, the master shall send a periodic PDU +INF_state+ at a predefined interval ti to each of the connected slaves. This interval is specified by the master. This enables two monitoring functions, defined as follows.

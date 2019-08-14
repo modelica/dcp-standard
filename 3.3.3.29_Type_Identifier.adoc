@@ -1,0 +1,2 @@
+===== Type Identifier
+In the field +type_id+ the unique identifier of the PDU is given. An overview of all assigned type identifiers is given in section 3.3.5, the type identifier range distribution is given in section 3.3.4.

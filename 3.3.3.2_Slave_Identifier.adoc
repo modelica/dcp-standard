@@ -1,0 +1,5 @@
+===== Slave Identifier
+
+Each DCP slave within a given simulation scenario identifies itself uniquely by using a DCP slave id. This DCP slave id is assigned by the master. The DCP id zero (“0”) shall be reserved for the master. The two PDU fields sender and receiver use this DCP slave id.
+
+In the sender field, the id of the slave that sends the PDU is given. In the receiver field, the id of the slave that shall receive the PDU is given.

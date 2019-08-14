@@ -1,0 +1,11 @@
+.Document Status:
+ Modelica Association Standard
+
+.Document Type:
+ Specification Document
+
+.Version:
+ 1.0.0
+
+.Date:
+ March 4, 2019

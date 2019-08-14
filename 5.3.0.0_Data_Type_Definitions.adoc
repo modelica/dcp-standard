@@ -1,0 +1,76 @@
+=== Data Type Definitions
+The data types used in the DCP schema files are as follows:
+
+.DCP slave description data types
+[width=100%, cols="2,1,3", options="header"]
+|===
+|XML
+|DCP equivalent
+|Description
+
+|xs:unsignedByte
+|uint8
+|unsignedByte is derived from unsignedShort by setting the value of maxInclusive to be 255. The base type of unsignedByte is unsignedShort.
+
+|xs:unsignedShort
+|uint16
+|unsignedShort is derived from unsignedInt by setting the value of maxInclusive to be 65535. The base type of unsignedShort is unsignedInt.
+
+|xs:unsignedInt
+|uint32
+|unsignedInt is derived from unsignedLong by setting the value of maxInclusive to be 4294967295. The base type of unsignedInt is unsignedLong.
+
+|xs:unsignedLong
+|uint64
+|unsignedLong is derived from nonNegativeInteger by setting the value of maxInclusive to be 18446744073709551615. The base type of unsignedLong is nonNegativeInteger.
+
+|xs:byte
+|int8
+|int is derived from long by setting the value of maxInclusive to be 2147483647 and minInclusive to be
+-2147483648. The base type of int is long.
+
+|xs:short
+|int16
+|short is derived from int by setting the value of maxInclusive to be 32767 and minInclusive to be -32768. The base type of short is int.
+
+|xs:int
+|int32
+|int is derived from long by setting the value of maxInclusive to be 2147483647 and minInclusive to be
+-2147483648. The base type of int is long.
+
+|xs:long
+|int64
+|long is derived from integer by setting the value of maxInclusive to be 9223372036854775807 and minInclusive to be
+-9223372036854775808. The base type of long is integer.
+
+|xs:float
+|float32
+|float is patterned after the IEEE single-precision 32-bit floating point type (see IEEE 754-1985)
+
+|xs:double
+|float64
+|The double datatype is patterned after the IEEE double-precision 64-bit floating point type (see IEEE 754-1985)
+
+|xs:normalizedString
+|string
+|String without carriage return, line feed, and tab characters.
+
+|xs:dateTime
+|Implementation specific
+|Date, time and time zone
+Example: 2002-10-23T12:00:00Z
+(noon on October 23, 2002, Greenwich Mean Time)
+|===
+The first line of the DCP slave description must contain its encoding scheme. It is required that the encoding scheme is always UTF-8:
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+The DCP schema files (*.xsd) are also stored in UTF-8.
+
+NOTE: The definition of an encoding scheme is a prerequisite, in order for the XML file to contain letters outside of the 7 bit ANSI ASCII character set, such as German umlauts, or Asian characters.
+
+The special values NAN, +INF, -INF for variables values are not allowed in the DCP XML files.
+
+NOTE: Child elements, defined by sequence of elements in the DCP slave description, are ordered lists according to document order, whereas attribute information items are unordered sets (see http://www.w3.org/TR/XML-infoset/#infoitem.element).
+
+The DCP slave description schema is based on ordered lists in a sequence and therefore parsing must preserve this order.

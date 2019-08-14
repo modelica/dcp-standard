@@ -1,0 +1,27 @@
+== Abbreviations
+
+CAN – Controller area network +
+CFG – Prefix for Configuration PDUs +
+DAT – Prefix for Data PDUs +
+DCP – Distributed co-simulation protocol +
+DCPS – Distributed co-simulation protocol scenario +
+DCPX – Distributed co-simulation protocol XML +
+FMI – Functional mock-up interface +
+FPGA – Field programmable gate array +
+HRT – Hard real-time +
+IEEE - Institute of electrical and electronics engineers +
+INF – Prefix for Information request PDUs +
+LoN – Log on notification +
+LoR – Log on request +
+LSB – Least significant byte +
+MSB – Most significant byte +
+MTU – Maximum transmission unit +
+NRT – Non real-time +
+NTF – Prefix for Notification PDUs +
+PDU – Protocol data unit +
+RSP – Prefix for Response PDUs +
+SRT – Soft real-time +
+STC – Prefix for state change PDUs +
+UDP – User datagram protocol +
+USB – Universal serial bus +
+UTF-8 – Unicode transformation format

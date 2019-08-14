@@ -1,0 +1,2 @@
+===== Slave Monitoring
+The master receives a PDU +RSP_state_ack+ from each slave and determines the response time. If the response time tr exceeds a given time interval tr_~max~, the master should take appropriate action.

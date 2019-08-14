@@ -1,0 +1,2 @@
+==== DAT_input_output forwarding
+According to the USB standard communication is only possible between USB host and USB device. The USB host driver must forward the +DAT_input_output+ PDU to the corresponding USB device for slave-to-slave communication.

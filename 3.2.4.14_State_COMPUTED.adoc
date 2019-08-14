@@ -1,0 +1,19 @@
+===== State COMPUTED
+
+.State COMPUTED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|In this state all computations were performed and the DCP slave is ready to send computation results. The DCP slave can receive inputs.
+
+ Note: This state applies to NRT (non-real-time) operating mode only.
+
+
+|Preconditions
+|The DCP slave is set to NRT operating mode.
+
+|Allowed Actions
+a|*	Exchange of DCP Control and Notification PDUs
+* Receiving of Data PDUs
+* Report state
+|===

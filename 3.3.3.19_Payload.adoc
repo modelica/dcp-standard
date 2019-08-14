@@ -1,0 +1,2 @@
+===== Payload
+The field payload is used to hold information that is not fixed in general but must be configured using DCP mechanisms.

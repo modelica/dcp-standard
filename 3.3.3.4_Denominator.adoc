@@ -1,0 +1,3 @@
+===== Denominator
+
+The field denominator holds the integer value for the denominator of the fraction that defines resolution.

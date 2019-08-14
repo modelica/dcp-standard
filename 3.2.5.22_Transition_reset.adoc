@@ -1,0 +1,21 @@
+===== Transition reset
+
+.State Transition reset
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave is commanded by the DCP master to go back to state +CONFIGURATION+. All previously configured settings are reset, this also includes shutdown of connections configured by PDUs of the configuration family.
+
+  Note: Transport protocol specific actions might be necessary, e.g. closing connections and ports for TCP/IPv4.
+
+
+|Preconditions
+|None.
+
+|Trigger
+|+STC_reset+
+
+|States
+a| * +STOPPED+ -> +CONFIGURATION+
+ * +ERRORRESOLVED+ -> +CONFIGURATION+
+|===

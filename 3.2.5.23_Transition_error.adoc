@@ -1,0 +1,32 @@
+===== Transition error
+
+.State Transition error
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|This transition represents the start of an error handling routine.
+
+|Preconditions
+|The DCP slave diagnoses an error.
+
+|Trigger
+|+SIG_error+
+
+|States
+a| * +CONFIGURATION+ -> +ERRORHANDLING+
+* +PREPARING+ -> +ERRORHANDLING+
+* +PREPARED+ -> +ERRORHANDLING+
+* +CONFIGURING+ -> +ERRORHANDLING+
+* +CONFIGURED+ -> +ERRORHANDLING+
+* +INITIALIZING+ -> +ERRORHANDLING+
+* +INITIALIZED+ -> +ERRORHANDLING+
+* +SENDING_I+ -> +ERRORHANDLING+
+* +SYNCHRONIZING+ -> +ERRORHANDLING+
+* +SYNCHRONIZED+ -> +ERRORHANDLING+
+* +RUNNING+ -> +ERRORHANDLING+
+* +COMPUTING+ -> +ERRORHANDLING+
+* +COMPUTED+ -> +ERRORHANDLING+
+* +SENDING_D+ -> +ERRORHANDLING+
+* +STOPPING+ -> +ERRORHANDLING+
+* +STOPPED+ -> +ERRORHANDLING+
+|===

@@ -1,0 +1,2 @@
+===== Log Argument Values
+A byte array containing the argument values as specified in a template of the DCP slave description.

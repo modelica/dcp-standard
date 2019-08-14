@@ -1,0 +1,9 @@
+===== Inputs and Outputs
+Outputs are communicated to Inputs via the payload field of +PDU DAT_input_output+.
+The values of several outputs of one slave can be grouped in the payload field of one +DAT_input_output+ PDU. Such a group is identified by a unique +data_id+. A payload field must group only values of outputs with the same configuration, i.e. sender, receiver, network configuration, scope and communication step size. The format of the payload field is defined in +CONFIGURATION+ state using the Configuration PDUs +CFG_output+ and +CFG_input+: the PDU +CFG_output+ tells the sending slave the position of the value of an output in the payload field of a +DAT_input_output+. +
+
+The PDU +CFG_input+ tells the receiving slave the position and the data type of the value in the payload field of a +DAT_input_output+ for its input.
+
+The communication protocol relevant information for a +DAT_input_output+ is set in CONFIGURATION state by the PDUs +CFG_set_source_network_information+ and +CFG_set_target_network_information+. For RT mode, the communication step size is set by +CFG_steps+.
+
+An example of the intended sequence for the rollout of the configuration of data exchange via data objects using native DCP (UDP over IPv4) is given in the Appendix, section D.

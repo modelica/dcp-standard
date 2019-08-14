@@ -1,0 +1,2 @@
+==== USB Version
+The target USB version is 2.0. For simplicity the term USB is used for USB 2.0

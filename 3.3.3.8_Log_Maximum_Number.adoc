@@ -1,0 +1,2 @@
+===== Log Maximum Number
+This field represents the maximum number of requested log entries.

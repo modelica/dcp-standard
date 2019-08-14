@@ -1,0 +1,237 @@
+===== List of Error Codes
+The following list of error codes applies to the field +error_cod+e of +RSP_nack+ and +RSP_error_ack+.
+
+.List of error codes
+[width="100%", cols="1,3,3", options="header"]
+|===
+|error_code~hex~
+|Mnemonic
+|Description
+
+|0x0000
+|NONE
+|Indicates that no error is currently present.
+
+|0x1001
+|PROTOCOL_ERROR_GENERIC
+|Indicates that an error has occurred which is not specified in this document.
+
+|0x1002
+|PROTOCOL_ERROR_HEARTBEAT_MISSED
+|Indicates that the DCP slave did not receive a PDU INF_state within the maximum periodic interval ti_~max~ defined in the DCP slave description.
+
+|0x1003
+|PROTOCOL_ERROR_
+PDU_NOT_ALLOWED_IN_THIS_STATE
+|Indicates that a received PDU is not allowed in the current state. See section 3.3.6 for details.
+
+|0x1004
+|PROTOCOL_ERROR_PROPERTY_VIOLATED
+|Indicates that one of the following properties specified in the DCP slave description has been violated:
+min, max, preEdge, postEdge, gradient, maxConsecMissedPdus. +
+Note: The detection and notification of a violation of these properties is optional.
+
+|0x1005
+|PROTOCOL_ERROR_
+STATE_TRANSITION_IN_PROGRESS
+|Indicates that a received state change request PDU has already been acknowledged, but the current state still differs from the requested state.
+
+|0x2001
+|INVALID_LENGTH
+|Indicates that the received PDU has a valid type_id, but its length does not match.
+
+|0x2002
+|INVALID_LOG_CATEGORY
+|log_category is not log category of the slave
+
+|0x2003
+|INVALID_LOG_LEVEL
+|log_level is not a valid log level according to section 3.1.23.1
+
+|0x2004
+|INVALID_LOG_MODE
+|log_mode is not valid log mode according to section 3.1.23
+
+|0x2005
+|INVALID_MAJOR_VERSION
+|major_version as set by the master is not allowed according to the major version of the DCP specification defined in the DCP slave description.
+
+|0x2006
+|INVALID_MINOR_VERSION
+|minor_version as set by the master is not allowed according to the minor version of the DCP specification defined in the DCP slave description.
+
+|0x2007
+|INVALID_NETWORK_INFORMATION
+|Indicates that the network information provided through a configuration request PDU is not valid.
+
+|0x2008
+|INVALID_OP_MODE
+|Indicates that the operating mode requested through STC_register is not supported by this DCP slave.
+
+|0x2009
+|INVALID_PAYLOAD
+|Indicates that the length of a string or binary data type is larger than the defined maxSize.
+
+|0x200A
+|INVALID_SCOPE
+|scope is invalid according to section 3.4.6.
+
+|0x200B
+|INVALID_SOURCE_DATA_TYPE
+|source_data_type is not compatible with the inputs data type. For a list of data types see section 3.1.10, and for casting rules see section 3.1.20.
+
+|0x200C
+|INVALID_START_TIME
+|Indicates that the start time provided in STC_run is invalid, e.g. in the past.
+
+|0x200D
+|INVALID_STATE_ID
+|state_id is not equal to the slave’s state.
+
+|0x200E
+|INVALID_STEPS
+|Indicates that the number of steps in CFG_steps or STC_do_step is not supported.
+
+|0x200F
+|INVALID_TIME_RESOLUTION
+|Indicates that the time resolution expressed by numerator and denominator is not valid.
+
+|0x2010
+|INVALID_TRANSPORT_PROTOCOL
+|The given transport_protocol is not supported by the slave
+
+|0x2011
+|INVALID_UUID
+|slave_uuid is not equal to slave’s uuid.
+
+|0x2012
+|INVALID_VALUE_REFERENCE
+|Indicates that the value reference in CFG_input, CFG_output, CFG_parameter, or CFG_tunable_parameter is not available within that DCP slave.
+
+|0x2013
+|INVALID_SEQUENCE_ID
+|Violated PDU sequence ID check. See section 3.4.1.
+
+
+|0x3001
+|INCOMPLETE_CONFIG_GAP_INPUT_POS
+|There are gaps in the configured PDU Data payload field.
+Note: No gap means if pos n is not the last pos, there exists a pos n+1.
+
+|0x3002
+|INCOMPLETE_CONFIG_GAP_OUTPUT_POS
+|There are gaps in the pos of the received CFG_output PDUs.
+
+|0x3003
+|INCOMPLETE_CONFIG_GAP_TUNABLE_POS
+|There are gaps in the pos of the received CFG_tunable_parameter PDUs.
+
+|0x3004
+|INCOMPLETE_CONFIG_NW_INFO_INPUT
+|For the PDU Data payload field identified by data_id no or no valid CFG_source_network_information has been received.
+
+|0x3005
+|INCOMPLETE_CONFIG_NW_INFO_OUTPUT
+|For the PDU Data payload field identified by data_id no or no valid CFG_target_network_information has been received.
+
+|0x3006
+|INCOMPLETE_CONFIG_NW_INFO_TUNABLE
+|Not for each param_id which occurs in the PDUs CFG_tunable_parameter a valid CFG_param_network_information with the same param_id is received.
+
+|0x3007
+|INCOMPLETE_CONFIG_SCOPE
+|At least one data_id is missing the setting of the scope.
+
+|0x3008
+|INCOMPLETE_CONFIG_STEPS
+|For every data_id which occurs in a CFG_output at least one valid CFG_steps with the same data_id must have been received.
+
+|0x3009
+|INCOMPLETE_CONFIG_TIME_RESOLUTION
+|No time resolution is specified. Neither through the DCP slave description, nor through CFG_time_res.
+
+|0x300A
+|INCOMPLETE_CONFIGURATION
+|Indicates that a DCP slave cannot leave CONFIGURATION state due to missing configuration information.
+
+|0x4001
+|NOT_SUPPORTED_LOG_ON_NOTIFICATION	log_mode
+|logOnNotification is not supported by the slave, i.e. in DCP slave description canProvideLogOnNotification = false
+
+|0x4002
+|NOT_SUPPORTED_LOG_ON_REQUEST
+|log_mode logOnRequest is not supported by the slave i.e. in DCP slave description canProvideLogOnRequest = false
+
+|0x4003
+|NOT_SUPPORTED_VARIABLE_STEPS
+|Steps differ from previous ones (if the slave does not support variable step sizes).
+
+|0x4004
+|NOT_SUPPORTED_TRANSPORT_PROTOCOL
+|Indicates that the transport protocol number provided through a configuration request PDU is not supported.
+
+|0x4005
+|NOT_SUPPORTED_PDU
+|Indicates that this type of PDU (identified through field type_id) is defined within this specification but is not supported by this DCP slave.
+Note: This affects the current operating mode as well as DCP slave capabilities.
+
+|0x4006
+|NOT_SUPPORTED_PDU_SIZE
+|A data PDU was configured such that it exceeds the maximum allowed PDU size specified in maxPduSize in the DCP slave description.
+|===
+
+.Applicable PDU validity checks
+[width="100%", cols="1,3", options="header" ]
+|===
+|Check
+|Details
+
+|Type identifier
+|The type_id field of the received PDU is checked. All valid type identifiers are specified in section 3.3.
+
+Note: This affects type_identifiers which are not specified, as well as PDUs which are not intended to be processed by this DCP slave, e.g. RSP_ack.
+
+|Length
+|The PDU length in bytes is checked.
+
+Note: A plausibility check would include checking for PDU length smaller than 4 Bytes, resulting in an immediate drop. Detailed length checks shall be performed as defined in Table 107, Table 108, and Table 109.
+
+
+|Support
+|The received PDU is supported by the DCP slave, e.g. capability flag canSupportReset is set.
+
+|Receiver
+|The receiver field of the received PDU is evaluated against the assigned DCP slave id.
+In state ALIVE, check if receiver is greater than zero.
+
+Note: The DCP slave id zero is reserved for the master. Therefore no slave can be a valid receiver of a PDU which is determined for receiver zero.
+
+|Sequence id
+|The pdu_seq_id field of the received PDU is evaluated and checked for integrity. The maxConsecMissedPdus attribute from DCP slave description may influence the exact behavior.
+
+|data_id/param_id
+|The data_id or param_id field is validated.
+
+|State
+|The type_id field of the received PDU is validated against the current DCP slave state according to Table 63.
+
+|Semantics
+|All fields of the received PDU, that are specified in section 3.3 and are not explicitly covered in this section, shall be checked for validity and integrity.
+|===
+
+.Applicable actions related to PDU validity checks
+[width="100%", cols="1,3", options="header" ]
+|===
+|Activity
+|Details
+
+|Drop PDU
+|The received PDU shall be dropped silently, without any further actions.
+
+|Process PDU
+|The received PDU shall be processed further according to this specification document.
+
+|Handle error
+|The occurred error shall be communicated to the DCP master. Possible actions include transition to an Error state, and responding an error_code by using RSP_nack or RSP_error_ack.
+A list of corresponding error_codes can be found in section 3.4.7.3.
+|===

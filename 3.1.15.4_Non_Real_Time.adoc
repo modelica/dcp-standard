@@ -1,0 +1,2 @@
+===== Non-Real-Time (NRT)
+Simulation time is independent from absolute time. It can be faster or slower. Reception of PDU +STC_do_step+ (see section 3.3.7.7) is required.

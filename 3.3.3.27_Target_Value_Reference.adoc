@@ -1,0 +1,2 @@
+===== Target Value Reference
+The field +target_vr+ gives the value reference of the input (see section 3.1.18.2).

@@ -1,0 +1,2 @@
+==== CAN
+The DCP specification for CAN bus is defined in a non-native way. No entries are needed here.

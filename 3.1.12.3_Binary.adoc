@@ -1,0 +1,179 @@
+===== Binary
+The DCP offers a binary data type (binary) to transmit arbitrary information.  The binary representation consists of an unsigned integer (uint32) that specifies the length in bytes of the actual data, followed by the binary data itself. The data is transmitted as given without changing the order of its bits. Thus, the maximum length of data is limited to 4294967296 bytes.
+
+NOTE: This general DCP specification does not define PDU fragmentation or splitting.
+
+The example given in Table 5 and Table 6 shows the encoding of a four byte data sequence in binary data type. The actual data is given in Table 5, whereas in Table 6 the PDU representation of the payload is shown. The total length of the payload is 6 bytes, the first four bytes store an integer value (uint32) indicating the length (4 bytes) of the actual data.
+
+.binary data type example
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+| Data{nbsp}Binary
+|0 {set:cellbgcolor:#fce3e3}
+|0
+|1
+|1
+|1
+|0
+|0
+|1
+|1 {set:cellbgcolor:#f7c9a3}
+|1
+|1
+|0
+|0
+|1
+|1
+|0
+|0  {set:cellbgcolor:#faa764}
+|0
+|1
+|0
+|1
+|0
+|0
+|1
+|1 {set:cellbgcolor:#c45902}
+|1
+|0
+|1
+|0
+|0
+|1
+|0
+
+
+|Data{nbsp}Hex
+{set:cellbgcolor!}
+8+^|39
+8+^|E6
+8+^|29
+8+^|D2
+
+|Byte{nbsp}index
+{set:cellbgcolor!}
+8+^|0
+8+^|1
+8+^|2
+8+^|3
+
+|===
+
+The payload is then encoded as shown in Table 6.
+
+.Binary data type representation.
+[width="100%", cols="5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+<|n
+8+<|n + 1
+8+<|n + 2
+8+<|n + 3
+
+|PDU~Bin~
+|0 {set:cellbgcolor:#3b7a27}
+|0
+|0
+|0
+|0
+|1
+|0
+|0
+|0 {set:cellbgcolor:#72c758}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|0  {set:cellbgcolor:#abfc92}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|0 {set:cellbgcolor:#feffe0}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+
+
+
+
+|PDU~Hex~
+{set:cellbgcolor!}
+8+^|0x04
+8+^|0x00
+8+^|0x00
+8+^|0x00
+|===
+
+
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+<|n + 2
+8+<|n + 3
+8+<|n + 4
+8+<|n + 5
+
+|PDU~Bin~
+|0 {set:cellbgcolor:#fce3e3}
+|0
+|1
+|1
+|1
+|0
+|0
+|1
+|1 {set:cellbgcolor:#f7c9a3}
+|1
+|1
+|0
+|0
+|1
+|1
+|0
+|0  {set:cellbgcolor:#faa764}
+|0
+|1
+|0
+|1
+|0
+|0
+|1
+|1 {set:cellbgcolor:#c45902}
+|1
+|0
+|1
+|0
+|0
+|1
+|0
+
+
+
+
+|PDU~Hex~
+{set:cellbgcolor!}
+8+^|0x39
+8+^|0xE6
+8+^|0x29
+8+^|0xD2
+|===
+
+
+NOTE: A maximum length in bytes may be specified in DCP slave description by setting the +maxSize+ attribute.
+
+NOTE: Depending on the transport protocol and its maxPduSize attribute in the DCP slave description, the full range of the length cannot be used, e.g. for USB, 1024 bytes can be transmitted. Therefore the maximum size of the binary value is limited to 1016 bytes.

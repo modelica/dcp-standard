@@ -1,0 +1,4 @@
+===== Unavailable communication medium
+This description assumes that the used communication medium has become unavailable unexpectedly. The DCP slave may use mechanisms to detect these network problems, e.g. heartbeat. In case a DCP slave is unable to send or receive PDUs, it transitions to +ERRORHANDLING+ state. In +ERRORHANDLING+ the DCP slave shall e.g. close open connections, or perform the stopping routine. If these procedures are finished, the DCP slave proceeds to +ERRORRESOLVED+.
+
+If the communication medium becomes available again, it may react to e.g. an +STC_reset+. Otherwise, operator intervention is required and the DCP slave must be restarted by other means.

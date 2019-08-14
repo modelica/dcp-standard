@@ -1,0 +1,19 @@
+===== State ERRORRESOLVED
+
+.State ERRORRESOLVED
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave has finished its error handling procedure and successfully mitigated the hazardous condition.
+
+|Preconditions
+|The DCP slave has handled the occurred error and mitigated the hazardous condition.
+
+|Allowed Actions
+a|* Exchange of DCP control and notification PDUs
+* Report state
+* Maintain safe condition of model or RT system until the DCP master either resets, deregisters or terminates the DCP slave. +
+
+NOTE: For detailed description of the DCP error handling procedure, see section 3.4.10
+
+|===

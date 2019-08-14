@@ -1,0 +1,2 @@
+===== Log Template Identifier
+An integer value representing the template identifier, referring to a template in the DCP slave description.

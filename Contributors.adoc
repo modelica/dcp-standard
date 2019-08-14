@@ -1,0 +1,42 @@
+== Contributors
+
+*Specification document editor* +
+Martin Krammer, Kompetenzzentrum - Das Virtuelle Fahrzeug Forschungsgesellschaft mbH
+
+*The “DCP Specification 1.0-Release Candidate 2” document* was created in scope of the +ITEA3+ project +ACOSAR+ from 09/2015 to 08/2018. Essential parts thereof were contributed by the +ACOSAR+ Core Team. This development group was headed by Martin Krammer (Kompetenzzent-rum - Das Virtuelle Fahrzeug Forschungsgesellschaft mbH). Its members in alphabetical order were:
+
+Khaled Alekeish, ESI-ITI Gmbh +
+Nicolas Amringer, dSPACE GmbH +
+Martin Benedikt, Kompetenzzentrum - Das Virtuelle Fahrzeug Forschungsgesellschaft mbH +
+Torsten Blochwitz, ESI-ITI GmbH +
+Isidro Corral, Robert Bosch GmbH +
+Micha Damm-Norwig, KS.MicroNova GmbH +
+Christian Kater, Leibniz Universität Hannover +
+Serge Klein, RWTH Aachen University +
+Martin Krammer, Kompetenzzentrum - Das Virtuelle Fahrzeug Forschungsgesellschaft mbH +
+Stefan Materne, TWT GmbH +
+Natarajan Nagarajan, ETAS GmbH +
+Roberto Ruvalcaba, TWT GmbH +
+Viktor Schreiber, University of Ilmenau +
+Klaus Schuch, AVL List GmbH +
+Tommy Sparber, Spath Micro Electronic Design GmbH +
+Andreas Thuy, ETAS GmbH
+
+*The “DCP Specification 1.0-Release Candidate 4” document* was developed after the ACOSAR project, from 09/2018 to 02/2019. Essential parts thereof were contributed by the following people, in alphabetical order:
+
+Khaled Alekeish, ESI-ITI GmbH +
+Torsten Blochwitz, ESI-ITI GmbH +
+Isidro Corral, Robert Bosch GmbH +
+Micha Damm-Norwig, KS.MicroNova GmbH +
+Christian Kater, Leibniz Universität Hannover +
+Martin Krammer, Kompetenzzentrum - Das Virtuelle Fahrzeug Forschungsgesellschaft mbH +
+Stefan Materne, TWT GmbH +
+Klaus Schuch, AVL List GmbH +
+Stefan Walter, dSPACE GmbH
+
+*The following people contributed through reviews and comments*, in alphabetical order:
+
+Leo Gall, LTX Simulation GmbH +
+Andreas Junghanns, QTronic GmbH +
+Pierre Mai, PMSF IT Consulting +
+ 

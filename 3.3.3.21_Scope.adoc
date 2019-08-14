@@ -1,0 +1,2 @@
+===== Scope
+The field scope gives the scope of validity for a configuration of a specified PDU Data payload field as defined in section 3.4.6.

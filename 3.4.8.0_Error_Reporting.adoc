@@ -1,0 +1,19 @@
+==== Error Reporting
+Whenever a DCP slave is in +ERRORHANDLING+ or +ERRORRESOLVED+ states, the DCP master may send +INF_error+ to this DCP slave, to find out about the reason.
+.Error reporting procedure
+[width="100%", cols="1,5", options="header"]
+|===
+
+|Sequence Number
+|Action
+
+|1
+|The DCP master sends INF_error to the DCP slave.
+
+|2a
+|The DCP slave responds by sending RSP_error_ack, which contains an error code.
+
+|2b
+|The DCP slave responds by sending RSP_nack, if he is currently not in the Error superstate.
+
+|===

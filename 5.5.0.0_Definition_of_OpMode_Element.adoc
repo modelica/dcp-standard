@@ -1,0 +1,37 @@
+=== Definition of OpMode Element
+.Operating modes
+[width=100%, cols="3,5", options="header"]
+|===
+|Element name
+|Description
+
+|HardRealTime
+|If present, the DCP slave is capable of operating in hard real time mode.
+
+|SoftRealTime
+|If present, the DCP slave is capable of operating in soft real time mode.
+
+|NonRealTime
+|If present, the DCP slave is capable of operating in non real time mode.
+|===
+
+At least one of the available operating modes must be implemented. The attributes for the non-real-time operating mode are specified in Table 159.
+
+.Non-real-time operating mode attributes.
+[width=100%, cols="3,5", options="header"]
+|===
+|Attribute
+|Description
+
+|defaultSteps
+|The default number of steps. This is an optional attribute, its default value equals to 1.
+
+|fixedSteps
+|Indicate that the given number of steps is fixed. This is an optional boolean attribute, its default value is true.
+
+|minSteps
+|The minimum permissible number of steps. This is an optional attribute.
+
+|maxSteps
+|The maximum permissible number of steps. This is an optional attribute.
+|===

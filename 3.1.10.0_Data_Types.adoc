@@ -1,0 +1,44 @@
+==== Data Types
+The supported data types of the DCP are defined in Table 2. Each data type is assigned a unique identifier (ID).
+
+.Supported data types of the DCP
+[width="50%", cols="3,3", options="header" float="center" ]
+|===
+|Data type
+|ID~hex~
+
+|uint8
+|0x0
+|uint16
+|0x1
+
+|uint32
+|0x2
+
+|uint64
+|0x3
+
+|int8
+|0x4
+
+|int16
+|0x5
+
+|int32
+|0x6
+
+|int64
+|0x7
+
+|float32
+|0x8
+
+|float64
+|0x9
+
+|string
+|0xA
+
+|binary
+|0xB
+|===

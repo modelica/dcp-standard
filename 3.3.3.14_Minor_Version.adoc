@@ -1,0 +1,2 @@
+===== Minor Version
+The field +minor_version+ gives the minor version of the DCP to be used (see section 3.1.2).

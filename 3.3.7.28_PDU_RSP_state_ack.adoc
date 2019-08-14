@@ -1,0 +1,32 @@
+===== PDU RSP_state_ack
+This PDU is used by a DCP master to report the current state in the field +state_id+. The sender field holds the +slave id+ of the slave. In case the slave is in state +ALIVE+ i.e. it has not been registered and thus has not been given a +slave+ id, the slave uses the DCP +slave+ id from the receiver field of PDU +INF_state+ to answer with the sender field of PDU +RSP_state_ack+.
+
+.Log RSP_state_ack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB2
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|4
+|4
+|uint8
+|state_id
+|===

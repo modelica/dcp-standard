@@ -1,0 +1,46 @@
+===== PDU CFG_input
+In order to set up slave-to-slave +DAT_input_output+ PDU communication, the DCP master must inform all DCP slaves that have inputs to be received in which format they may expect +DAT_input_output+ PDUs. For that purpose, +CFG_input+ is used.
+
+.Log CFG_input
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x22
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|data_id
+
+|6
+|7
+|uint16
+|pos
+
+|8
+|15
+|uint64
+|target_vr
+
+|16
+|16
+|uint8
+|source_data_type
+|===

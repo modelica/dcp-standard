@@ -1,0 +1,82 @@
+==== Definition of Data Types and Attributes
+All unsigned integer (data type id 0 to 3), integer (data type id 4 to 7) float (data type id 8 and 9), string (data type id 10) and binary (data type id 11) data types have subsets of different attributes. For data type definitions see section 3.1.10.
+.Attributes of all defined variables.
+[width=100%, cols="2,3", options="header"]
+|===
+|Attribute
+|Description
+
+|declaredType
+|The declared type of the variable.
+
+|displayUnit
+|The default display unit. The conversion to the “unit” is defined with the element “<dcpSlaveDescription><UnitDefinitions>”. If the corresponding “displayUnit” is not defined under “<UnitDefinitions><Unit><DisplayUnit>”, then displayUnit is ignored.
+
+This attribute is optional.
+
+This attribute is defined for Float32 and Float64 data types.
+
+|gradient
+|The gradient attribute indicates that the DCP slave variable is designed to change at a maximum permissible rate. Its unit is 1/s, and the data type corresponds to the variable data type.
+
+This attribute is optional.
+
+This attribute is defined for all integer and float data types.
+
+|max
+|The max attribute indicates that the DCP slave variable is designed to operate at or below an upper bound value (Variable value >= max).
+
+The data type of this attribute corresponds to the parent element.
+
+This attribute is optional.
+
+This attribute is defined for all integer and float data types.
+
+|maxSize
+|This defines the maximum size of the data type in bytes. Its data type is unsigned integer.
+
+This attribute is optional.
+
+This attribute is defined for String and Binary data types.
+
+|mimeType
+|The MIME type of the data type.
+
+This attribute is optional.
+
+This attribute is defined for String data type.
+
+|min
+|The min attribute indicates that the DCP slave variable is designed to operate at or above a lower bound value (Variable value >= min).
+
+The data type of this attribute corresponds to the parent element.
+
+This attribute is optional.
+
+This attribute is defined for all integer and float data types.
+
+|nominal
+a|Nominal value of variable. If not defined and no other information about the nominal value is available, then nominal = 1 is assumed.
+
+NOTE: The nominal value of a variable can be, for example used to determine the absolute tolerance for this variable as needed by numerical algorithms: absoluteTolerance = nominal * tolerance *0.01 where tolerance is, e.g., the relative tolerance.
+
+This attribute is optional.
+
+This attribute is defined for Float32 and Float64 data types.
+
+|quantity
+|Physical quantity of the variable, for example “Angle”, or “Energy”. The quantity names are not standardized.
+
+This attribute is optional.
+
+This attribute is defined for Float32 and Float64 data types.
+
+|unit
+|Unit of the variable defined with UnitDefinitions.Unit.name that is used for the model equations.
+
+For example “N.m”: in this case a Unit.name = "N.m" must be present under UnitDefinitions.
+
+This attribute is optional.
+
+This attribute is defined for Float32 and Float64 data types.
+|===

@@ -1,0 +1,29 @@
+===== PDU NTF_state_changed
+This PDU indicates a successful state transition.
+
+.NTF_state_changed
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xE0
+
+|1
+|1
+|uint8
+|sender
+
+|2
+|2
+|uint8
+|state_id
+
+
+|===

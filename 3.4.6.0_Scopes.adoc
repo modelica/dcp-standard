@@ -1,0 +1,19 @@
+==== Scope
+Algorithms for computation of a consistent initial state (see section 3.2.3.3) may require exchange of inputs and outputs via the master. In superstates Run and +NonRealTime+ slave-to-slave data exchange is advantageous, to reduce latencies and bandwidth compared to slave-master-slave communication. Therefore, a mechanism is defined which supports both. The PDUs +CFG_scope+ contains the field scope. It defines in which states the respective configuration is active: Either in superstates Run and +NonRealTime+, or in +Initialization+, or both. Table 102 defines the enumeration of the field scope.
+
+.Enumeration of scope
+[width="100%", cols="4,2", options="header"]
+|===
+
+|Superstates
+|scope~hex~
+
+|+Initialization/Run/NonRealTime+
+|0x0
+
+|+Initialization+
+|0x1
+
+|+Run/NonRealTime+
+|0x2
+|===

@@ -1,0 +1,32 @@
+===== Error Code Ranges
+The following ranges for error codes are defined.
+
+.Error code ranges
+[width="100%", cols="4,2", options="header"]
+|===
+
+|Range
+|Group
+
+|0x00
+|+NONE+
+
+|0x1001-0x1FFF
+|+PROTOCOL_ERROR_*+
+
+|0x2001-0x2FFF
+|+INVALID_*+
+
+|0x3001-0x3FFF
+|+INCOMPLETE_*+
+
+|0x4001-0x4FFF
+|+NOT_SUPPORTED_*+
+
+|0x5001-0x5FFF
+|+[Transport protocol specific error codes]+
+
+|0x6001-0xFFFF
+|+[Reserved]+
+
+|===

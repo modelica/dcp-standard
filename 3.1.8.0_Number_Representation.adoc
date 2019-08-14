@@ -1,0 +1,2 @@
+==== Number Representation
+All numbers given in this DCP specification document must be interpreted as decimal, if no prefix is used. Hexadecimal values are always indicated with the prefix 0x. If a binary number appears outside a table, binary numbers are indicated with the prefix 0b.

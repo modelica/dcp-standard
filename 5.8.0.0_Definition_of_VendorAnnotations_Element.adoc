@@ -1,0 +1,7 @@
+=== Definition of VendorAnnotations Element
+The element VendorAnnotations is of type dcpAnnotation, which is defined as shown in Figure 20.
+
+.Annotations Type
+image::img/Annotations_type.png[align="center"]
+
++VendorAnnotations+ therefore consists of an ordered set of annotations that are identified by the name of the tool that can interpret additional information stored in place of the any element. The any element may be an arbitrary XML data structure. Attribute name must be unique with respect to all other elements of the +VendorAnnotations+ list.

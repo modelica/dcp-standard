@@ -1,0 +1,42 @@
+===== PDU CFG_output
+In order to set up slave-to-slave +DAT_input_output+ PDU communication, the master must inform all DCP slaves that have outputs to be sent to which input and at which DCP slave the value must be sent. For that purpose, the PDU +CFG_output+ is used.
+
+.Log CFG_output
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x23
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|5
+|uint16
+|data_id
+
+|6
+|7
+|uint16
+|pos
+
+|8
+|15
+|uint64
+|source_vr
+
+|===

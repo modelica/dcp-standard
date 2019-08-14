@@ -1,0 +1,39 @@
+===== 3.3.7.15 PDU CFG_steps
+This PDU requests a DCP slave to set its communication step size.
+The number of steps must be larger or equal than 1.
+
+.Log CFG_steps
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x21
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|7
+|uint32
+|steps
+
+|8
+|9
+|uint16
+|data_id
+
+
+|===

@@ -1,0 +1,10 @@
+==== General
+A DCP slave using IPv4-based transport protocols is accessible through an IP address and a port number. This information is defined within the DCP slave description. For communication with a DCP master, the DCP slave replies to the IP address and port where the initial +STC_register+ is coming from.
+
+NOTE: A DCP master could be implemented as a IPv4-based client, whereas a DCP slave could be implemented as a IPv4-based server.
+
+As soon as +STC_register+ is received and positively acknowledged (+RSP_ack+ sent by DCP slave and received by DCP master) the IP address and port for communication with the master are fixed for this simulation run.
+
+The port information at the slave side is cleared, as soon as +STC_deregister+ is received.
+
+NOTE: The DCP slave sender port may differ from the DCP slave receiving port.

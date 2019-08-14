@@ -1,0 +1,2 @@
+===== Endpoint Address
+The field +endpoint_address+ is used to specify an endpoint address.

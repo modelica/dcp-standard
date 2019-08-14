@@ -1,0 +1,7 @@
+==== General
+Protocol Data Units (PDUs) are transmitted via abstract channels. In practice, a communication medium must be used. DCP PDUs are categorized in families. Configuration request (CFG), state change request (STC), and information request (INF) PDUs belong to the family of Request PDUs. Together with the family of response (RSP) PDUs they make up the family of Control PDUs. The families of Notification PDUs (NTF) and Data PDUs (DAT) complete the range of available PDU families.
+
+Control PDUs are exchanged between DCP master and DCP slaves. PDUs of the families CFG, STC and INF are only sent from the DCP master to its DCP slaves and are acknowledged by the DCP slaves via RSP PDUs. Data PDUs are not acknowledged.
+If the DCP master sets up a scenario where the master relays Data between DCP slaves, then also a DCP master may send and receive Data PDUs.
+
+NOTE: Data PDUs are not acknowledged. To ensure that corruption, loss, reordering, etc. of Data PDUs is avoided, a reliable communication medium must be used. See also section 10-F.

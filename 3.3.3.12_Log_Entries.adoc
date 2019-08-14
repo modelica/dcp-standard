@@ -1,0 +1,2 @@
+===== Log Entries
+A byte array containing one or more log entries. See section 3.3.7.30, Table 95 for details.

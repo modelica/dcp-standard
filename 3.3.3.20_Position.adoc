@@ -1,0 +1,2 @@
+===== Position
+The field pos gives the position of a data value in the PDU Data payload field in byte (see section 3.4.5).

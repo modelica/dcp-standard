@@ -1,0 +1,190 @@
+===== Endpoint
+.Request pipe
+[width="100%", cols="2,2,2,3,3" options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data-type
+|Field Name
+|Value
+
+|0
+|0
+|uint8
+|bLength
+|7
+
+|1
+|1
+|uint8
+|bDescriptorType
+|5
+
+|2
+|2
+|uint8
+|bEndpointAddress
+|16 (00010000~Bin~)
+
+|3
+|3
+|uint8
+|bmAttributes
+|3 (00000011~Bin~)
+
+|4
+|5
+|uint16
+|wMaxPacketSize
+|1024
+
+|6
+|6
+|uint8
+|bInterval
+|16
+
+|===
+
+
+.Response-notification pipe
+[width="100%", cols="2,2,2,3,3" options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data-type
+|Field Name
+|Value
+
+|0
+|0
+|uint8
+|bLength
+|7
+
+|1
+|1
+|uint8
+|bDescriptorType
+|5
+
+|2
+|2
+|uint8
+|bEndpointAddress
+|16 (00010000~Bin~)
+
+|3
+|3
+|uint8
+|bmAttributes
+|3 (00000011~Bin~)
+
+|4
+|5
+|uint16
+|wMaxPacketSize
+|1024
+
+|6
+|6
+|uint8
+|bInterval
+|16
+
+|===
+
+.Data-out pipe
+[width="100%", cols="2,2,2,3,3" options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data-type
+|Field Name
+|Value
+
+|0
+|0
+|uint8
+|bLength
+|7
+
+|1
+|1
+|uint8
+|bDescriptorType
+|5
+
+|2
+|2
+|uint8
+|bEndpointAddress
+|Vendor Specific ^3^footnote:[Must be constructed according to the USB standard. The endpoint number must be greater than 2. The direction must be 0 (Out).]
+
+|3
+|3
+|uint8
+|bmAttributes
+|Vendor Specific ^4^footnote:[Must be constructed according to the USB standard. The transfer type must be Isochronous or Interrupt. ]
+
+|4
+|5
+|uint16
+|wMaxPacketSize
+|1024
+
+|6
+|6
+|uint8
+|bInterval
+|Vendor Specific
+|===
+
+
+
+
+.Data-in pipe
+[width="100%", cols="2,2,2,3,3" options="header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data-type
+|Field Name
+|Value
+
+|0
+|0
+|uint8
+|bLength
+|7
+
+|1
+|1
+|uint8
+|bDescriptorType
+|5
+
+|2
+|2
+|uint8
+|bEndpointAddress
+|Vendor Specific ^5^ footnote:[Must be constructed according to the USB standard. The endpoint number must be greater than 2. The direction must be 1 (In).]
+
+|3
+|3
+|uint8
+|bmAttributes
+|Vendor Specific ^6^ footnote:[Must be constructed according to the USB standard. The transfer type must be Isochronous or Interrupt.]
+
+|4
+|5
+|uint16
+|wMaxPacketSize
+|1024
+
+|6
+|6
+|uint8
+|bInterval
+|Vendor Specific
+|===

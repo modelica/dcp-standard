@@ -1,0 +1,24 @@
+
+== Executive Summary
+This document defines the Distributed Co-Simulation Protocol (DCP), version 1.0. The DCP is a platform and communication medium independent standard for the integration of models or real-time systems into simulation environments. DCP development was driven by the idea to make simulation based work flows more efficient, reduce integration effort and simplify related processes, and improve the integration of real-time systems. This standard is supported by OEMs, suppliers, tool providers, universities and research organizations.
+
+== Standardization
+This specification is developed and maintained by the newly founded Modelica Association Project (MAP) Distributed Co-Simulation Protocol (DCP). For further information see:
+
+https://www.dcp-standard.org +
+https://www.modelica.org
+
+To get in touch with MAP DCP, contact us at contact@dcp-standard.org.
+
+== History
+
+[width="100%", cols="1,1,4", options="header"]
+|===
+|Version
+|Date
+|Remarks
+
+|1.0
+|2019-03-04
+|First version of the Distributed Co-Simulation Protocol.
+|===

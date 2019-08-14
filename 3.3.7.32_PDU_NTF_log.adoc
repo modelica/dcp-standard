@@ -1,0 +1,40 @@
+===== PDU NTF_log
+This PDU is used to send a single log entry. The payload field of +NTF_log+ contains an array of argument values for the given +log_template_id+. The character “N” denotes the total length of one specific PDU given in bytes. It depends on the used configuration.
+
+.NTF_log
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xE1
+
+|1
+|1
+|uint8
+|sender
+
+|2
+|9
+|int64
+|time
+
+|10
+|10
+|uint8
+|log_template_id
+
+|11
+|N-1
+|byte[N-11]
+|log_arg_val
+
+
+
+|===

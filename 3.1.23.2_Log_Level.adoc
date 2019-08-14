@@ -1,0 +1,4 @@
+===== Log Level
+A log level is assigned to a log template in the DCP slave description. See section 3.3.3.7 for a list of valid options.
+
+NOTE: This corresponds to the status field of FMI.

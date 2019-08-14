@@ -1,0 +1,18 @@
+===== Transition initialized
+
+.State Transition initialized
+[width="100%", cols="2,5", float="center"]
+|===
+|General
+|The DCP slave has established a consistent initial state with other connected DCP slaves.
+
+|Preconditions
+|None.
+
+
+|Trigger
+|+SIG_initialized+
+
+|States
+a| * +INITIALIZING+ -> +INITIALIZED+
+|===

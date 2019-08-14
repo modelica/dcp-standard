@@ -1,0 +1,23 @@
+==== Definition of Output Element Attributes
+.Exclusive output variable attributes
+[width="100%", cols="3,3", options="header"]
+|===
+|Attribute
+|Description
+
+|defaultSteps
+|This optional attribute specifies the default number of steps of an output. Its data type is unsigned integer. Its default value is 1.
+
+|fixedSteps
+|This optional boolean data type attribute indicates that the number of steps is fixed and cannot be modified. Its default value is true.
+
+|minSteps
+|This optional unsigned integer data type attribute specifies the minimum number of steps.
+
+|maxSteps
+|This optional unsigned integer data type attribute specifies the maximum number of steps.
+
+|initialization
+|This optional boolean data type attribute specifies that the Output value will not change after leaving the Initialization superstate. +
+If true, no dependency information during Run superstate must be specified.
+|===

@@ -1,0 +1,65 @@
+===== PDU RSP_log_ack
+The character +N+ denotes the total length of one specific PDU given in bytes. It depends on the used configuration.
+
+.RSP_log_ack
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0xB4
+
+|1
+|2
+|uint16
+|resp_seq_id
+
+|3
+|3
+|uint8
+|sender
+
+|4
+|N-1
+|byte[N-4]
+|log_entries
+
+
+|===
+
+The +log_entries+ field of +RSP_log_ack+ contains an array of log entries, where one single log entry has the following structure. The character +M+ denotes the total length of one single log entry given in bytes. It depends on the used configuration.
+
+.Single log entry
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|7
+|int64
+|time
+
+|8
+|8
+|unit8
+|log_template_id
+
+|9
+|M-1
+|byte[M-9]
+|log_arg_val
+
+|===
+
+The +log_arg_val+ field of a single log entry contains an array of variables.
+

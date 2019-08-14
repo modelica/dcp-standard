@@ -1,0 +1,9 @@
+===== NonRealTime
+The states +COMPUTING, COMPUTED+, and +SENDING_D+ belong to +superstate NonRealTime+.
+
+The states of +NonRealTime+ are used for triggering calculation, advance of simulation time, and data exchange.
+
+[Note]
+====
+Consider 1 master and 2 slaves A and B, including slave-to-slave communication. Initially all slaves are in state +RUNNING+. The master sends PDU +STC_do_step+ to both slaves. Slave A changes to state +COMPUTING+, calculates fast, moves on to +COMPUTED+. If no state +SENDING_D+ would exist, he would immediately send its outputs to slave B and changes to state +RUNNING+. Slave B might receive this data before having received the +STC_do_step+ from the master, due to network delay, latency, etc. Thus, he would calculate with input data not consistent to current simulation time instance. The state +SENDING_D+ prevents this.
+====

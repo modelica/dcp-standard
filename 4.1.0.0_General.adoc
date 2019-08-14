@@ -1,0 +1,2 @@
+=== General
+This section specifies the underlying transport protocols for DCP. Furthermore, this section assumes the default DCP slave integration as given in Figure 34. Therefore, the DCP integrator must know transport protocol specific information to connect the provided DCP slaves to a communication medium. For this step, the DCP slave description file may be helpful.

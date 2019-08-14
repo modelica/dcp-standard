@@ -1,0 +1,58 @@
+===== PDU STC_register
+This PDU is used by a DCP master to take ownership of a given DCP slave.
+
+The field +slave_uuid+ follows the definition of section 3.3.3.22.
+
+The fields +major_version+ and +minor_version+ follow the version descriptor numbering scheme of section 3.1.2.
+
+In the field receiver the master sets the slave’s +slave id+.
+
+.Log STC_register
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x01
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+|5
+|20
+|byte[16]
+|slave_uuid
+
+|21
+|21
+|uint8
+|op_mode
+
+|22
+|22
+|uint8
+|major_version
+
+|23
+|23
+|uint8
+|minor_version
+
+|===

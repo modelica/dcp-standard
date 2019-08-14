@@ -1,0 +1,175 @@
+===== Strings
+In general, the string data type is encoded in the same way as the binary data type. Strings are of variable length and are not terminated in any way. However, the specified character encoding for strings is UTF-8 [2].
+
+NOTE: UTF-8 strings are handled byte-wise.
+
+NOTE: A maximum length in bytes may be specified in DCP slave description by setting the maxSize attribute. Also note that the length in bytes does not necessarily match the number of encoded characters in the string.
+
+NOTE: Depending on the transport protocol and its maxPduSize attribute in the DCP slave description, the full range of the length cannot be used, e.g. for USB, 1024 bytes can be transmitted. Therefore the maximum size of the binary value is limited to 1016 bytes.
+
+NOTE: These definitions apply to protocol data units (PDUs, as defined in section 3.3) only.
+
+The following Table 7 illustrates the encoding of the word “+beef+” (0x62, 0x65, 0x65, and 0x66). The payload is then encoded as shown in Table 8.
+
+.String data type example
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+|Data{nbsp}Binary
+|0 {set:cellbgcolor:#fce3e3}
+|1
+|1
+|0
+|0
+|0
+|1
+|0
+|0 {set:cellbgcolor:#f7c9a3}
+|1
+|1
+|0
+|0
+|1
+|0
+|1
+|0  {set:cellbgcolor:#faa764}
+|1
+|1
+|0
+|0
+|1
+|0
+|1
+|0 {set:cellbgcolor:#c45902}
+|1
+|1
+|0
+|0
+|1
+|1
+|0
+
+|Data{nbsp}Hex,{nbsp}UTF{nbsp}-8
+{set:cellbgcolor!}
+8+^|0x62
+8+^|0x65
+8+^|0x65
+8+^|0x66
+
+|Byte index
+{set:cellbgcolor!}
+8+^|0
+8+^|1
+8+^|2
+8+^|3
+
+|===
+
+
+.String data type representation
+[width="100%", cols="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+<|n
+8+<|n + 1
+8+<|n + 2
+8+<|n + 3
+
+|DAT_input_output~Bin~
+|0 {set:cellbgcolor:#3b7a27}
+|0
+|0
+|0
+|0
+|1
+|0
+|0
+|0 {set:cellbgcolor:#72c758}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|0  {set:cellbgcolor:#abfc92}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+|0 {set:cellbgcolor:#feffe0}
+|0
+|0
+|0
+|0
+|0
+|0
+|0
+
+|DAT_input_output~Hex~
+{set:cellbgcolor!}
+8+^|0x04
+8+^|0x00
+8+^|0x00
+8+^|0x00
+|===
+
+
+[width="100%", cols="2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
+|===
+
+|Position
+{set:cellbgcolor!}
+8+<|n + 2
+8+<|n + 3
+8+<|n + 4
+8+<|n + 5
+
+|DAT_input_output~Bin,UTF{nbsp}-8~
+|0 {set:cellbgcolor:#fce3e3}
+|1
+|1
+|0
+|0
+|0
+|1
+|0
+|0 {set:cellbgcolor:#f7c9a3}
+|1
+|1
+|0
+|0
+|1
+|0
+|1
+|0  {set:cellbgcolor:#faa764}
+|1
+|1
+|0
+|0
+|1
+|0
+|1
+|0 {set:cellbgcolor:#c45902}
+|1
+|1
+|0
+|0
+|1
+|1
+|0
+
+
+
+
+|DAT_input_output~Hex,UTF{nbsp}-8~
+{set:cellbgcolor!}
+8+^|0x62
+8+^|0x65
+8+^|0x65
+8+^|0x66
+|===

@@ -1,0 +1,15 @@
+==== Port information
+4.3.4	Port information
+If a port is specified inside the Control element (see section 5.11.2), Control PDUs may only be received over this port.
+
+NOTE: If no such port is specified, this can be interpreted in two different ways. First, the integrator must obtain and set this information in another way, which is not specified in this document. Second, the DCP slave is not meant to be controlled via Bluetooth. The DCP slave provider might be consulted for clarification.
+
+If a port or port range is specified inside the DAT_input_output (see section 5.11.2) element, PDUs DAT_input_output may only be received over these ports.
+
+NOTE: If no port or port range is specified inside the DAT_input_output element, this can be interpreted in three different ways. First, the integrator must obtain and set this information in another way, which is not specified in this document. Second, the DCP master is free to choose the port numbers. The DCP slave may reject the use of requested ports using PDU RSP_nack and the corresponding error code. Third, the DCP slave is not meant to exchange PDUs DAT_input_output using Bluetooth RFCOMM. The DCP slave provider might be consulted for clarification.
+
+If a port or port range is specified inside the DAT_parameter element, PDUs DAT_parameter may only be received over these ports.
+
+NOTE: If no port or port range is specified inside the DAT_parameter element, this can be interpreted in three different ways. First, the integrator must obtain and set this information in another way, which is not specified in this document. Second, the DCP master is free to choose the port numbers. The DCP slave may reject the use of requested ports using PDU RSP_nack PDU and the corresponding error code. Third, the DCP slave is not meant to exchange PDUs DAT_parameter using Bluetooth RFCOMM. The DCP slave provider might be consulted for clarification.
+
+Some port numbers might already be used or reserved for dedicated services.

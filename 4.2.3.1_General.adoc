@@ -1,0 +1,2 @@
+===== General
+For TCP over IPv4 transport protocol, all specifications of section 4.2.1 apply. Furthermore, the following is required.

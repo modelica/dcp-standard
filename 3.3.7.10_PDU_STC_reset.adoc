@@ -1,0 +1,32 @@
+===== PDU STC_reset
+This PDU triggers the transition to state +CONFIGURATION+. All configuration settings received before by configuration request PDUs (CFG) are deleted.
+
+.Log STC_reset
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|0
+|0
+|uint8
+|type_id = 0x0A
+
+|1
+|2
+|uint16
+|pdu_seq_id
+
+|3
+|3
+|uint8
+|receiver
+
+|4
+|4
+|uint8
+|state_id
+
+|===

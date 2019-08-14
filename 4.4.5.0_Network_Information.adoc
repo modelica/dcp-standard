@@ -1,0 +1,67 @@
+==== Network Information
+
+.CFG_target_network_information
+The USB specific part of +CFG_target_network_information+ is defined by the following structure:
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|6
+|6
+|uint8
+|transport_protocol = 0x5
+
+|7
+|7
+|uint8
+|endpoint_address
+
+|8
+|23
+|byte[16]
+|slave_uuid
+|===
+The USB specific part of +CFG_source_network_information+ is defined by the following structure:
+
+.CFG_source_network_information
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|6
+|6
+|uint8
+|transport_protocol = 0x5
+
+|7
+|7
+|uint8
+|endpoint_address
+|===
+
+The USB specific part of +CFG_param_network_information+ is defined by the following structure:
+ 
+.CFG_param_network_information
+[width="100%", cols="2,2,2,2", options= "header"]
+|===
+|First Position [Byte]
+|Last Position [Byte]
+|Data type
+|Field
+
+|6
+|6
+|uint8
+|transport_protocol = 0x5
+
+|7
+|7
+|uint8
+|endpoint_address
+|===

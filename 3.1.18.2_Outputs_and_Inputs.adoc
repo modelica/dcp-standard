@@ -1,0 +1,13 @@
+===== Outputs and Inputs
+A DCP slave consumes inputs and provides outputs. Output values of a DCP slave are sent using the payload field of Data PDUs. Values of several outputs can be grouped together and sent using one Data PDU. Details are given in section 3.4.5.1.
+The timing characteristics for communications are defined by the configuration of the outputs. Outputs may be sent at communication steps but must not be sent between communication steps.
+
+Outputs with +variability+ = “+continuous+” must be sent with their respective defined communication step size.
+
+Outputs with +variability+ =”+discrete+”, may be sent at every communication step size, but must be sent if the value has changed.
+
+Discrete outputs may be mapped to continuous inputs, and vice versa.
+
+NOTE: If a continuous output is mapped to a discrete input, zero-order-hold is implicitly introduced.
+
+NOTE: If a discrete output is mapped to a continuous input, the exact behavior might be determined by extrapolation algorithms used within the receiving DCP slave. Using such configurations, the DCP integrator and master tool should be aware of the actual behavior and subsequent effects.
