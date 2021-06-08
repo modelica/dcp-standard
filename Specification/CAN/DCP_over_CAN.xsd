@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="Position" final="restriction">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="H"/>
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DcpOverCan">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="KMatrix">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:sequence minOccurs="0">
+								<xs:element name="STC_register" minOccurs="1" maxOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="3"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+										<xs:attribute name="f_op_mode" type="Position" fixed="2"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="STC_deregister" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="2"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="STC_prepare" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="2"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="STC_configure" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="2"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="STC_initialize" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="2"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="STC_run" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="2"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="STC_dostep" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="3"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+										<xs:attribute name="f_steps" type="Position" fixed="2"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="STC_send_outputs" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="2"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="STC_stop" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="2"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="STC_reset" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="2"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+										<xs:attribute name="f_state_id" type="Position" fixed="1"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="INF_state_request" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="1"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="INF_error_request" minOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="length" type="xs:unsignedByte" fixed="1"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_receiver" type="Position" fixed="0"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:sequence minOccurs="1" maxOccurs="254">
+									<xs:element name="NTF_state_changed" minOccurs="1">
+										<xs:complexType>
+											<xs:attribute name="canId" type="xs:unsignedShort"
+												use="required"/>
+											<xs:attribute name="senderRef" type="xs:unsignedByte"
+												use="required"/>
+											<xs:attribute name="length" type="xs:unsignedByte"
+												fixed="1"/>
+											<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+											<xs:attribute name="f_sender" type="Position" fixed="H"/>
+											<xs:attribute name="f_state_id" type="Position"
+												fixed="0"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:sequence minOccurs="1" maxOccurs="254">
+									<xs:element name="RSP_ack" minOccurs="1">
+										<xs:complexType>
+											<xs:attribute name="canId" type="xs:unsignedShort"
+												use="required"/>
+											<xs:attribute name="senderRef" type="xs:unsignedByte"
+												use="required"/>
+											<xs:attribute name="length" type="xs:unsignedByte"
+												fixed="0"/>
+											<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+											<xs:attribute name="f_sender" type="Position" fixed="H"
+											/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:sequence minOccurs="1" maxOccurs="254">
+									<xs:element name="RSP_nack" minOccurs="1">
+										<xs:complexType>
+											<xs:attribute name="canId" type="xs:unsignedShort"
+												use="required"/>
+											<xs:attribute name="senderRef" type="xs:unsignedByte"
+												use="required"/>
+											<xs:attribute name="length" type="xs:unsignedByte"
+												fixed="1"/>
+											<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+											<xs:attribute name="f_sender" type="Position" fixed="H"/>
+											<xs:attribute name="f_error_code" type="Position"
+												fixed="0"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:sequence minOccurs="1" maxOccurs="254">
+									<xs:element name="RSP_state_ack" minOccurs="1">
+										<xs:complexType>
+											<xs:attribute name="canId" type="xs:unsignedShort"
+												use="required"/>
+											<xs:attribute name="senderRef" type="xs:unsignedByte"
+												use="required"/>
+											<xs:attribute name="length" type="xs:unsignedByte"
+												fixed="1"/>
+											<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+											<xs:attribute name="f_sender" type="Position" fixed="H"/>
+											<xs:attribute name="f_state_id" type="Position"
+												fixed="0"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:sequence minOccurs="1" maxOccurs="254">
+									<xs:element name="RSP_error_ack" minOccurs="1">
+										<xs:complexType>
+											<xs:attribute name="canId" type="xs:unsignedShort"
+												use="required"/>
+											<xs:attribute name="senderRef" type="xs:unsignedByte"
+												use="required"/>
+											<xs:attribute name="length" type="xs:unsignedByte"
+												fixed="1"/>
+											<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+											<xs:attribute name="f_sender" type="Position" fixed="H"/>
+											<xs:attribute name="f_error_code" type="Position"
+												fixed="0"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:sequence>
+							<xs:sequence minOccurs="0" maxOccurs="65536">
+								<xs:element name="DAT_input_output">
+									<xs:complexType>
+										<xs:sequence maxOccurs="1">
+											<xs:sequence maxOccurs="8">
+												<xs:element ref="Payload"/>
+											</xs:sequence>
+											<xs:sequence maxOccurs="254">
+												<xs:element name="Receiver">
+												<xs:complexType>
+												<xs:attribute name="dcpId" type="xs:unsignedByte"
+												use="required"/>
+												</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:sequence>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											use="required"/>
+										<xs:attribute name="dataId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="length" type="xs:unsignedByte"
+											use="required"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_data_id" type="Position" fixed="H"/>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+							<xs:sequence minOccurs="0" maxOccurs="65536">
+								<xs:element name="DAT_parameter">
+									<xs:complexType>
+										<xs:sequence maxOccurs="8">
+											<xs:sequence maxOccurs="8">
+												<xs:element ref="Payload"/>
+											</xs:sequence>
+											<xs:sequence maxOccurs="254">
+												<xs:element name="Receiver">
+												<xs:complexType>
+												<xs:attribute name="dcpId" type="xs:unsignedByte"
+												use="required"/>
+												</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:sequence>
+										<xs:attribute name="canId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="senderRef" type="xs:unsignedByte"
+											fixed="0"/>
+										<xs:attribute name="paramId" type="xs:unsignedShort"
+											use="required"/>
+										<xs:attribute name="length" type="xs:unsignedByte"
+											use="required"/>
+										<xs:attribute name="f_type_id" type="Position" fixed="H"/>
+										<xs:attribute name="f_param_id" type="Position" fixed="H"/>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:sequence>
+						<xs:attribute name="f_type_id_data_type" type="xs:unsignedByte" fixed="0"/>
+						<xs:attribute name="f_type_id_endianess" type="xs:string" fixed="little"/>
+						<xs:attribute name="f_receiver_data_type" type="xs:unsignedByte" fixed="0"/>
+						<xs:attribute name="f_receiver_endianess" type="xs:string" fixed="little"/>
+						<xs:attribute name="f_state_id_data_type" type="xs:unsignedByte" fixed="0"/>
+						<xs:attribute name="f_state_id_endianess" type="xs:string" fixed="little"/>
+						<xs:attribute name="f_op_mode_data_type" type="xs:unsignedByte" fixed="0"/>
+						<xs:attribute name="f_op_mode_endianess" type="xs:string" fixed="little"/>
+						<xs:attribute name="f_steps_data_type" type="xs:unsignedByte" fixed="2"/>
+						<xs:attribute name="f_steps_endianess" type="xs:string" fixed="little"/>
+						<xs:attribute name="f_error_code_data_type" type="xs:unsignedByte" fixed="0"/>
+						<xs:attribute name="f_error_code_endianess" type="xs:string" fixed="little"
+						/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ScenarioConfiguration">
+					<xs:complexType>
+						<xs:sequence maxOccurs="254">
+							<xs:element name="DcpSlave">
+								<xs:complexType>
+									<xs:sequence minOccurs="0">
+										<xs:element name="CFG_time_res" minOccurs="0" maxOccurs="1">
+											<xs:complexType>
+												<xs:attribute name="numerator" type="xs:unsignedInt"
+												use="required"/>
+												<xs:attribute name="denominator"
+												type="xs:unsignedInt" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:sequence minOccurs="0" maxOccurs="unbounded">
+											<xs:element name="CFG_steps">
+												<xs:complexType>
+												<xs:attribute name="data_id"
+												type="xs:unsignedShort" use="required"/>
+												<xs:attribute name="steps" type="xs:unsignedInt"
+												use="required"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:sequence minOccurs="0" maxOccurs="unbounded">
+											<xs:element name="CFG_input">
+												<xs:complexType>
+												<xs:attribute name="data_id"
+												type="xs:unsignedShort" use="required"/>
+												<xs:attribute name="pos" type="xs:unsignedShort"
+												use="required"/>
+												<xs:attribute name="target_vr"
+												type="xs:unsignedLong" use="required"/>
+												<xs:attribute name="source_data_type"
+												type="xs:unsignedByte" use="required"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:sequence minOccurs="0" maxOccurs="unbounded">
+											<xs:element name="CFG_output">
+												<xs:complexType>
+												<xs:attribute name="data_id"
+												type="xs:unsignedShort" use="required"/>
+												<xs:attribute name="pos" type="xs:unsignedShort"
+												use="required"/>
+												<xs:attribute name="source_vr"
+												type="xs:unsignedLong" use="required"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:sequence minOccurs="0" maxOccurs="unbounded">
+											<xs:element name="CFG_target_network_information">
+												<xs:complexType>
+												<xs:choice>
+												<xs:element name="UDP_IPv4">
+												<xs:complexType>
+												<xs:attribute name="port" type="xs:unsignedShort"
+												use="required"/>
+												<xs:attribute name="ip_address"
+												type="xs:unsignedInt" use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="CAN"/>
+												<xs:element name="Bluetooth">
+												<xs:complexType>
+												<xs:attribute name="address"
+												type="xs:unsignedLong" use="required"/>
+												<xs:attribute name="port" type="xs:unsignedShort"
+												use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="USB">
+												<xs:complexType>
+												<xs:attribute name="endpoint_address"
+												type="xs:unsignedByte" use="required"/>
+												<xs:attribute name="slave_uuid" use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="TCP_IPv4">
+												<xs:complexType>
+												<xs:attribute name="port" type="xs:unsignedShort"
+												use="required"/>
+												<xs:attribute name="ip_address"
+												type="xs:unsignedInt" use="required"/>
+												</xs:complexType>
+												</xs:element>
+												</xs:choice>
+												<xs:attribute name="data_id"
+												type="xs:unsignedShort" use="required"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:sequence minOccurs="0" maxOccurs="unbounded">
+											<xs:element name="CFG_source_network_information">
+												<xs:complexType>
+												<xs:choice>
+												<xs:element name="UDP_IPv4">
+												<xs:complexType>
+												<xs:attribute name="port" type="xs:unsignedShort"
+												use="required"/>
+												<xs:attribute name="ip_address"
+												type="xs:unsignedInt" use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="CAN"/>
+												<xs:element name="Bluetooth">
+												<xs:complexType>
+												<xs:attribute name="port" type="xs:unsignedShort"
+												use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="USB">
+												<xs:complexType>
+												<xs:attribute name="endpoint_address"
+												type="xs:unsignedByte" use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="TCP_IPv4">
+												<xs:complexType>
+												<xs:attribute name="port" type="xs:unsignedShort"
+												use="required"/>
+												<xs:attribute name="ip_address"
+												type="xs:unsignedInt" use="required"/>
+												</xs:complexType>
+												</xs:element>
+												</xs:choice>
+												<xs:attribute name="data_id"
+												type="xs:unsignedShort" use="required"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:sequence minOccurs="0" maxOccurs="unbounded">
+											<xs:element name="CFG_parameter">
+												<xs:complexType>
+												<xs:choice>
+												<xs:element name="Int8">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:byte"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Int16">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:short"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Int32">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:int"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Int64">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:long"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Uint8">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:unsignedByte"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Uint16">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:unsignedShort"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Uint32">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:unsignedInt"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Uint64">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:unsignedLong"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Float32">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:float"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Float64">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:double"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="String">
+												<xs:complexType>
+												<xs:attribute name="value" use="required">
+												<xs:simpleType>
+												<xs:list itemType="xs:string"/>
+												</xs:simpleType>
+												</xs:attribute>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Binary">
+												<xs:complexType>
+												<xs:attribute name="value" type="xs:hexBinary"
+												use="required"/>
+												</xs:complexType>
+												</xs:element>
+												</xs:choice>
+												<xs:attribute name="target_vr"
+												type="xs:unsignedLong"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:sequence minOccurs="0" maxOccurs="unbounded">
+											<xs:element name="CFG_tunable_parameter">
+												<xs:complexType>
+												<xs:attribute name="param_id"
+												type="xs:unsignedShort"/>
+												<xs:attribute name="pos" type="xs:unsignedShort"
+												use="required"/>
+												<xs:attribute name="target_vr"
+												type="xs:unsignedLong" use="required"/>
+												<xs:attribute name="source_data_type"
+												type="xs:unsignedByte" use="required"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:sequence minOccurs="0" maxOccurs="unbounded">
+											<xs:element name="CFG_param_network_information">
+												<xs:complexType>
+												<xs:choice>
+												<xs:element name="UDP_IPv4">
+												<xs:complexType>
+												<xs:attribute name="port" type="xs:unsignedShort"
+												use="required"/>
+												<xs:attribute name="ip_address"
+												type="xs:unsignedInt" use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="CAN"/>
+												<xs:element name="Bluetooth">
+												<xs:complexType>
+												<xs:attribute name="port" type="xs:unsignedShort"
+												use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="USB">
+												<xs:complexType>
+												<xs:attribute name="endpoint_address"
+												type="xs:unsignedByte" use="required"/>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="TCP_IPv4">
+												<xs:complexType>
+												<xs:attribute name="port" type="xs:unsignedShort"
+												use="required"/>
+												<xs:attribute name="ip_address"
+												type="xs:unsignedInt" use="required"/>
+												</xs:complexType>
+												</xs:element>
+												</xs:choice>
+												<xs:attribute name="param_id"
+												type="xs:unsignedShort"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:sequence minOccurs="0" maxOccurs="unbounded">
+											<xs:element name="CFG_scope">
+												<xs:complexType>
+												<xs:attribute name="data_id"
+												type="xs:unsignedShort" use="required"/>
+												<xs:attribute name="scope" type="xs:unsignedByte"
+												use="required"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:sequence>
+									<xs:attribute name="name" type="xs:string" use="optional"/>
+									<xs:attribute name="uuid" type="xs:string" use="required"/>
+									<xs:attribute name="dcpId" type="xs:unsignedByte" use="required"
+									/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Payload">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="Int8">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:byte" use="optional"/>
+						<xs:attribute name="max" type="xs:byte" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Int16">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:short" use="optional"/>
+						<xs:attribute name="max" type="xs:short" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Int32">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:int" use="optional"/>
+						<xs:attribute name="max" type="xs:int" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Int64">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:long" use="optional"/>
+						<xs:attribute name="max" type="xs:long" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Uint8">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:unsignedByte" use="optional"/>
+						<xs:attribute name="max" type="xs:unsignedByte" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Uint16">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:unsignedShort" use="optional"/>
+						<xs:attribute name="max" type="xs:unsignedShort" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Uint32">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:unsignedInt" use="optional"/>
+						<xs:attribute name="max" type="xs:unsignedInt" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Uint64">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:unsignedLong" use="optional"/>
+						<xs:attribute name="max" type="xs:unsignedLong" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Float32">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:float" use="optional"/>
+						<xs:attribute name="max" type="xs:float" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Float64">
+					<xs:complexType>
+						<xs:attribute name="min" type="xs:double" use="optional"/>
+						<xs:attribute name="max" type="xs:double" use="optional"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="little"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="String">
+					<xs:complexType>
+						<xs:attribute name="length" type="xs:byte" use="required"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="big"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Binary">
+					<xs:complexType>
+						<xs:attribute name="length" type="xs:byte" use="required"/>
+						<xs:attribute name="endianess" type="xs:string" fixed="big"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="offset" type="xs:unsignedByte" use="required"/>
+			<xs:attribute name="unit" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

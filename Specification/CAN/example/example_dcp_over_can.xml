@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DcpOverCan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../DCP_over_CAN.xsd">
+    <KMatrix>
+        <STC_register canId="101"/>
+        <STC_deregister canId="102"/>
+        <STC_prepare canId="103"/>
+        <STC_configure canId="104"/>
+        <STC_initialize canId="105"/>
+        <STC_run canId="106"/>
+        <STC_dostep canId="107"/>
+        <STC_send_outputs canId="0"/>
+        <STC_stop canId="109"/>
+        <STC_reset canId="110"/>
+        <INF_state_request canId="111"/>
+        <INF_error_request canId="112"/>
+        <NTF_state_changed canId="113" senderRef="1"/>
+        <NTF_state_changed canId="114" senderRef="3"/>
+        <NTF_state_changed canId="115" senderRef="3"/>
+        <RSP_ack canId="116" senderRef="1"/>
+        <RSP_ack canId="117" senderRef="3"/>
+        <RSP_ack canId="118" senderRef="4"/>
+        <RSP_nack canId="119" senderRef="1"/>
+        <RSP_nack canId="120" senderRef="3"/>
+        <RSP_nack canId="121" senderRef="4"/>
+        <RSP_state_ack canId="122" senderRef="1"/>
+        <RSP_state_ack canId="123" senderRef="3"/>
+        <RSP_state_ack canId="124" senderRef="4"/>
+        <RSP_error_ack canId="125" senderRef="1"/>
+        <RSP_error_ack canId="126" senderRef="3"/>
+        <RSP_error_ack canId="127" senderRef="4"/>
+        <DAT_input_output canId="10" senderRef="1" dataId="1" length="8">
+            <Payload offset="0" name="y1">
+                <Float64/>
+            </Payload>
+            <Receiver dcpId="3"/>
+        </DAT_input_output>
+        <DAT_input_output canId="11" senderRef="1" dataId="2" length="8">
+            <Payload offset="0" name="y2">
+                <Float64/>
+            </Payload>
+            <Receiver dcpId="3"/>
+        </DAT_input_output>
+        <DAT_input_output canId="12" senderRef="1" dataId="3" length="2">
+            <Payload offset="0" name="y3">
+                <Int16/>
+            </Payload>
+            <Receiver dcpId="3"/>
+            <Receiver dcpId="4"/>
+        </DAT_input_output>
+    </KMatrix>
+    <ScenarioConfiguration>
+        <DcpSlave uuid="62754A24-6686-F09E-5B13-7F032C7835B7" dcpId="1">
+            <CFG_time_res numerator="1" denominator="100"/>
+            <CFG_steps data_id="1" steps="1"/>
+            <CFG_steps data_id="2" steps="1"/>
+            <CFG_steps data_id="3" steps="1"/>
+            <CFG_output data_id="1" pos="0" source_vr="0"/>
+            <CFG_output data_id="2" pos="0" source_vr="1"/>
+            <CFG_output data_id="3" pos="0" source_vr="2"/>
+            <CFG_target_network_information data_id="0">
+                <CAN/>
+            </CFG_target_network_information>
+            <CFG_target_network_information data_id="1">
+                <CAN/>
+            </CFG_target_network_information>
+            <CFG_target_network_information data_id="3">
+                <CAN/>
+            </CFG_target_network_information>
+            <CFG_scope data_id="1" scope="0"/>
+            <CFG_scope data_id="2" scope="0"/>
+            <CFG_scope data_id="3" scope="0"/>
+
+        </DcpSlave>
+        <DcpSlave uuid="8C159039-5F6F-F9EC-F862-5D13E1D0BCFF" dcpId="3">
+            <CFG_time_res numerator="1" denominator="100"/>
+            <CFG_input data_id="1" pos="0" target_vr="0" source_data_type="9"/>
+            <CFG_input data_id="2" pos="0" target_vr="1" source_data_type="9"/>
+            <CFG_input data_id="3" pos="0" target_vr="2" source_data_type="1"/>
+            <CFG_source_network_information data_id="0">
+                <CAN/>
+            </CFG_source_network_information>
+            <CFG_source_network_information data_id="1">
+                <CAN/>
+            </CFG_source_network_information>
+            <CFG_source_network_information data_id="3">
+                <CAN/>
+            </CFG_source_network_information>
+            <CFG_scope data_id="1" scope="0"/>
+            <CFG_scope data_id="2" scope="0"/>
+            <CFG_scope data_id="3" scope="0"/>
+        </DcpSlave>
+        <DcpSlave uuid="2612CD91-648D-EBDE-83A2-FD86FF50A728" dcpId="4">
+            <CFG_time_res numerator="1" denominator="100"/>
+            <CFG_input data_id="3" pos="0" target_vr="0" source_data_type="1"/>
+            <CFG_input data_id="3" pos="0" target_vr="1" source_data_type="1"/>
+            <CFG_source_network_information data_id="0">
+                <CAN/>
+            </CFG_source_network_information>
+            <CFG_scope data_id="3" scope="0"/>
+        </DcpSlave>
+    </ScenarioConfiguration>
+
+</DcpOverCan>

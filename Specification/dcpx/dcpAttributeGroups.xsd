@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:annotation>
+		<xs:documentation>Copyright(c) 2008-2011 MODELISAR consortium, 2012-2018 Modelica Association Project "FMI", 2015-2018 ACOSAR consortium, 2018-2019 Modelica Association Project "DCP".
+             All rights reserved.
+
+This file is licensed by the copyright holders under the 3-Clause BSD License
+(https://opensource.org/licenses/BSD-3-Clause):
+
+----------------------------------------------------------------------------
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+----------------------------------------------------------------------------
+		</xs:documentation>
+	</xs:annotation>
+	<xs:attributeGroup name="commonAttributes"/>
+	<xs:attributeGroup name="dcpInteger8Attributes">
+		<xs:attribute name="min" type="xs:byte"/>
+		<xs:attribute name="max" type="xs:byte">
+			<xs:annotation>
+				<xs:documentation/>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="gradient" type="xs:byte"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpInteger16Attributes">
+		<xs:attribute name="min" type="xs:short"/>
+		<xs:attribute name="max" type="xs:short">
+			<xs:annotation>
+				<xs:documentation/>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="gradient" type="xs:short"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpInteger32Attributes">
+		<xs:attribute name="min" type="xs:int"/>
+		<xs:attribute name="max" type="xs:int">
+			<xs:annotation>
+				<xs:documentation/>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="gradient" type="xs:int"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpInteger64Attributes">
+		<xs:attribute name="min" type="xs:long"/>
+		<xs:attribute name="max" type="xs:long">
+			<xs:annotation>
+				<xs:documentation/>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="gradient" type="xs:long"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpUnsignedInteger8Attributes">
+		<xs:attribute name="min" type="xs:unsignedByte"/>
+		<xs:attribute name="max" type="xs:unsignedByte"/>
+		<xs:attribute name="gradient" type="xs:unsignedByte"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpUnsignedInteger16Attributes">
+		<xs:attribute name="min" type="xs:unsignedShort"/>
+		<xs:attribute name="max" type="xs:unsignedShort"/>
+		<xs:attribute name="gradient" type="xs:unsignedShort"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpUnsignedInteger32Attributes">
+		<xs:attribute name="min" type="xs:unsignedInt"/>
+		<xs:attribute name="max" type="xs:unsignedInt"/>
+		<xs:attribute name="gradient" type="xs:unsignedInt"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpUnsignedInteger64Attributes">
+		<xs:attribute name="min" type="xs:unsignedLong"/>
+		<xs:attribute name="max" type="xs:unsignedLong"/>
+		<xs:attribute name="gradient" type="xs:unsignedLong"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpFloat32Attributes">
+		<xs:attribute name="min" type="xs:float"/>
+		<xs:attribute name="max" type="xs:float"/>
+		<xs:attribute name="nominal" type="xs:float"/>
+		<xs:attribute name="gradient" type="xs:float"/>
+		<xs:attributeGroup ref="dcpFloatAttributes"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpFloat64Attributes">
+		<xs:attribute name="min" type="xs:double"/>
+		<xs:attribute name="max" type="xs:double"/>
+		<xs:attribute name="nominal" type="xs:double"/>
+		<xs:attribute name="gradient" type="xs:double"/>
+		<xs:attributeGroup ref="dcpFloatAttributes"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpStringAttributes">
+		<xs:attribute name="maxSize" type="xs:unsignedInt"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpBinaryAttributes">
+		<xs:attribute name="mimeType" type="xs:normalizedString" default="application/octet-stream"/>
+		<xs:attribute name="maxSize" type="xs:unsignedInt"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="dcpFloatAttributes">
+		<xs:attribute name="quantity" type="xs:normalizedString"/>
+		<xs:attribute name="unit" type="xs:normalizedString"/>
+		<xs:attribute name="displayUnit" type="xs:normalizedString"/>
+	</xs:attributeGroup>
+</xs:schema>

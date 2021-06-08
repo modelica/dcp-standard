@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NetworkDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://kayak.2codeornot2code.org/1.0" xmlns:acosar="http"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/dschanoeh/Kayak/master/Kayak-kcd/src/main/resources/com/github/kayak/canio/kcd/loader/Definition.xsd">
+    <Document name="DCP CAN Message Catalog" version="1.0" author="DCP_over_CAN_to_KCD.xsl"
+        company="" date=""></Document>
+    <Node id="0" name="master"></Node>
+    <Node id="1" name="DCP Slave 1"></Node>
+    <Node id="3" name="DCP Slave 3"></Node>
+    <Node id="4" name="DCP Slave 4"></Node>
+    <Bus name="DCP Scenario">
+        <Message id="0x065" length="3" name="STC_register">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="op_mode" offset="16" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x066" length="2" name="STC_deregister">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x067" length="2" name="STC_prepare">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x068" length="2" name="STC_configure">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x069" length="2" name="STC_initialize">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x06A" length="2" name="STC_run">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x06B" length="3" name="STC_dostep">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="steps" offset="16" endianess="little" length="32">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x000" length="2" name="STC_send_outputs">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x06D" length="2" name="STC_stop">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x06E" length="2" name="STC_reset">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="8" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x06F" length="1" name="INF_state_request">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x070" length="1" name="INF_error_request">
+            <Producer>
+                <NodeRef id="0"></NodeRef>
+            </Producer>
+            <Signal name="receiver" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="1"></NodeRef>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x071" length="1" name="NTF_state_changed sender=1">
+            <Producer>
+                <NodeRef id="1"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x072" length="1" name="NTF_state_changed sender=3">
+            <Producer>
+                <NodeRef id="3"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x073" length="1" name="NTF_state_changed sender=3">
+            <Producer>
+                <NodeRef id="3"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x074" length="0" name="RSP_ack sender=1">
+            <Producer>
+                <NodeRef id="1"></NodeRef>
+            </Producer>
+        </Message>
+        <Message id="0x075" length="0" name="RSP_ack sender=3">
+            <Producer>
+                <NodeRef id="3"></NodeRef>
+            </Producer>
+        </Message>
+        <Message id="0x076" length="0" name="RSP_ack sender=4">
+            <Producer>
+                <NodeRef id="4"></NodeRef>
+            </Producer>
+        </Message>
+        <Message id="0x077" length="1" name="RSP_nack sender=1">
+            <Producer>
+                <NodeRef id="1"></NodeRef>
+            </Producer>
+            <Signal name="error_code" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x078" length="1" name="RSP_nack sender=3">
+            <Producer>
+                <NodeRef id="3"></NodeRef>
+            </Producer>
+            <Signal name="error_code" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x079" length="1" name="RSP_nack sender=4">
+            <Producer>
+                <NodeRef id="4"></NodeRef>
+            </Producer>
+            <Signal name="error_code" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x07A" length="1" name="RSP_state_ack sender=1">
+            <Producer>
+                <NodeRef id="1"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x07B" length="1" name="RSP_state_ack sender=3">
+            <Producer>
+                <NodeRef id="3"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x07C" length="1" name="RSP_state_ack sender=4">
+            <Producer>
+                <NodeRef id="4"></NodeRef>
+            </Producer>
+            <Signal name="state_id" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x07D" length="1" name="RSP_error_ack sender=1">
+            <Producer>
+                <NodeRef id="1"></NodeRef>
+            </Producer>
+            <Signal name="error_code" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x07E" length="1" name="RSP_error_ack sender=3">
+            <Producer>
+                <NodeRef id="3"></NodeRef>
+            </Producer>
+            <Signal name="error_code" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x07F" length="1" name="RSP_error_ack sender=4">
+            <Producer>
+                <NodeRef id="4"></NodeRef>
+            </Producer>
+            <Signal name="error_code" offset="0" endianess="little" length="8">
+                <Consumer>
+                    <NodeRef id="0"></NodeRef>
+                </Consumer>
+                <Value type="unsigned"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x00A" length="8" name="DAT_input_output data_id=1">
+            <Producer>
+                <NodeRef id="1"></NodeRef>
+            </Producer>
+            <Signal name="y1" offset="0" length="64" endianess="little">
+                <Consumer>
+                    <NodeRef id="3"></NodeRef>
+                </Consumer>
+                <Value type="double"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x00B" length="8" name="DAT_input_output data_id=2">
+            <Producer>
+                <NodeRef id="1"></NodeRef>
+            </Producer>
+            <Signal name="y2" offset="0" length="64" endianess="little">
+                <Consumer>
+                    <NodeRef id="3"></NodeRef>
+                </Consumer>
+                <Value type="double"></Value>
+            </Signal>
+        </Message>
+        <Message id="0x00C" length="2" name="DAT_input_output data_id=3">
+            <Producer>
+                <NodeRef id="1"></NodeRef>
+            </Producer>
+            <Signal name="y3" offset="0" length="16" endianess="little">
+                <Consumer>
+                    <NodeRef id="3"></NodeRef>
+                    <NodeRef id="4"></NodeRef>
+                </Consumer>
+                <Value type="signed"></Value>
+            </Signal>
+        </Message>
+    </Bus>
+</NetworkDefinition>

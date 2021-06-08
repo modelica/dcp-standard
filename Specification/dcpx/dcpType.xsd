@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ds="http://www.dcp-standard.org/dcpType.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>Copyright(c) 2008-2011 MODELISAR consortium, 2012-2018 Modelica Association Project "FMI", 2015-2018 ACOSAR consortium, 2018-2019 Modelica Association Project "DCP".
+             All rights reserved.
+
+This file is licensed by the copyright holders under the 3-Clause BSD License
+(https://opensource.org/licenses/BSD-3-Clause):
+
+----------------------------------------------------------------------------
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+----------------------------------------------------------------------------
+		</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="dcpAttributeGroups.xsd"/>
+	<xs:include schemaLocation="dcpDataTypes.xsd"/>
+	<xs:complexType name="dcpSimpleType">
+		<xs:annotation>
+			<xs:documentation>Type attributes of a scalar variable</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="Int8">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="dcpInteger8Type"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Int16" type="dcpInteger16Type"/>
+			<xs:element name="Int32" type="dcpInteger32Type"/>
+			<xs:element name="Int64" type="dcpInteger64Type"/>
+			<xs:element name="Uint8" type="dcpUnsignedInteger8Type"/>
+			<xs:element name="Uint16" type="dcpUnsignedInteger16Type"/>
+			<xs:element name="Uint32" type="dcpUnsignedInteger32Type"/>
+			<xs:element name="Uint64" type="dcpUnsignedInteger64Type"/>
+			<xs:element name="Float32" type="dcpFloat32Type"/>
+			<xs:element name="Float64" type="dcpFloat64Type"/>
+			<xs:element name="String" type="dcpStringType"/>
+			<xs:element name="Binary" type="dcpBinaryType"/>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:normalizedString" use="required">
+			<xs:annotation>
+				<xs:documentation>Name of SimpleType element. "name" must be unique with respect to all other elements of the TypeDefinitions list. Furthermore,  "name" of a SimpleType must be different to all "name"s of ScalarVariable.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Description of the SimpleType</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>
