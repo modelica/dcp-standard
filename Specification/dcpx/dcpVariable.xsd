@@ -21,7 +21,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ----------------------------------------------------------------------------
 		</xs:documentation>
 	</xs:annotation>
-	<xs:override schemaLocation="dcpType.xsd"/>
+	<xs:include schemaLocation="dcpType.xsd"/>
 	<xs:include schemaLocation="dcpAnnotation.xsd"/>
 	<xs:include schemaLocation="dcpDataTypes.xsd"/>
 	<xs:attribute name="declaredType" type="xs:normalizedString">
